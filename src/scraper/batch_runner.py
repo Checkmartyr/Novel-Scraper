@@ -131,6 +131,11 @@ class BatchScraperRunner:
                     if healer_llm and getattr(healer_llm, "last_interaction_id", None):
                         self.previous_interaction_id = healer_llm.last_interaction_id
                     self.log(f"Self-healed! Updated extractor for '{link.title}'.", "info")
+                    try:
+                        from src.agent.domain_memory import domain_memory
+                        domain_memory.update_chapter_plan(link.url, updated_plan, sample_url=link.url)
+                    except Exception as e:
+                        logger.warning(f"Failed syncing healed plan to domain memory: {e}")
                 else:
                     self.log(f"Could not extract content for '{link.title}'. Saving placeholder.", "error")
 

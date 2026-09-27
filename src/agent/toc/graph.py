@@ -12,6 +12,7 @@ from src.agent.toc.tools import (
     InteractiveDomExpander,
     PaginatedTocCrawler,
     TocAuditor,
+    TocSynthesizer,
 )
 from src.core.obscura_client import ObscuraClient
 
@@ -53,6 +54,7 @@ class TocGraphWorkflow:
         workflow.add_node("extract_dom", self._node_extract_dom)
         workflow.add_node("audit", self._node_audit)
         workflow.add_node("interactive_expand", self._node_interactive_expand)
+        workflow.add_node("self_heal_toc", self._node_self_heal_toc)
         workflow.add_node("crawl_pagination", self._node_crawl_pagination)
         workflow.add_node("finalize", self._node_finalize)
 
@@ -82,12 +84,16 @@ class TocGraphWorkflow:
             {
                 "finalize": "finalize",
                 "interactive_expand": "interactive_expand",
+                "self_heal_toc": "self_heal_toc",
                 "crawl_pagination": "crawl_pagination",
             }
         )
 
         # After expanding DOM, re-extract from enriched HTML
         workflow.add_edge("interactive_expand", "extract_dom")
+
+        # After self-healing, re-audit
+        workflow.add_edge("self_heal_toc", "audit")
 
         # After crawling pagination, re-audit
         workflow.add_edge("crawl_pagination", "audit")
@@ -214,6 +220,37 @@ class TocGraphWorkflow:
             self._emit_log(err_msg, "warning")
             logs.append(err_msg)
             return {"logs": logs}
+
+    async def _node_self_heal_toc(self, state: TocState) -> Dict[str, Any]:
+        """Self-heal TOC extraction using DOM synthesis clustering."""
+        logs = list(state.get("logs", []))
+        self._emit_log("[SelfHealTOC] Attempting DOM clustering synthesis...")
+        logs.append("[SelfHealTOC] Attempting DOM clustering synthesis...")
+
+        chapters, c_sel, l_sel = TocSynthesizer.synthesize(
+            state["html"], state["url"], state.get("claimed_chapter_count")
+        )
+        current = state.get("extracted_chapters", [])
+        if len(chapters) > len(current):
+            heal_msg = f"[SelfHealTOC] Synthesizer recovered {len(chapters)} chapters (container='{c_sel}', link='{l_sel}')."
+            self._emit_log(heal_msg)
+            logs.append(heal_msg)
+            return {
+                "extracted_chapters": chapters,
+                "custom_container_selector": c_sel,
+                "custom_link_selector": l_sel,
+                "extraction_strategy": "self_healed_dom",
+                "heal_attempted": True,
+                "logs": logs,
+            }
+        else:
+            fail_msg = f"[SelfHealTOC] Synthesizer found {len(chapters)} chapters (not better than current {len(current)})."
+            self._emit_log(fail_msg)
+            logs.append(fail_msg)
+            return {
+                "heal_attempted": True,
+                "logs": logs,
+            }
 
     async def _node_crawl_pagination(self, state: TocState) -> Dict[str, Any]:
         """Action: Crawls subsequent TOC pages concurrently if multi-page TOC is detected."""
@@ -353,16 +390,27 @@ class TocGraphWorkflow:
         if state.get("is_complete", False):
             return "finalize"
 
+        # Try interactive expand if unexpanded sections are explicitly flagged
+        if state.get("has_unexpanded_sections"):
+            return "interactive_expand"
+
+        # Self-heal TOC via synthesizer if incomplete and not attempted yet
+        if not state.get("heal_attempted", False):
+            claimed = state.get("claimed_chapter_count")
+            count = len(state.get("extracted_chapters", []))
+            if count == 0 or (claimed and count < claimed):
+                return "self_heal_toc"
+
         iteration = state.get("iteration", 0)
         max_iter = state.get("max_iterations", 3)
         if iteration >= max_iter:
             logger.info(f"Reached max iterations ({max_iter}). Finalizing best-effort.")
             return "finalize"
 
-        # If discrepancy, unexpanded sections, or zero chapters found on first try
+        # If discrepancy or zero chapters found and iterations remain, try expand
         claimed = state.get("claimed_chapter_count")
         count = len(state.get("extracted_chapters", []))
-        if (claimed and count < claimed) or state.get("has_unexpanded_sections") or (count == 0 and iteration < max_iter):
+        if count == 0 or (claimed and count < claimed):
             return "interactive_expand"
 
         return "finalize"

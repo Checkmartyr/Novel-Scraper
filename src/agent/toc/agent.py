@@ -108,6 +108,22 @@ class TocAgent:
             f"TocAgent LangGraph completed! Total Chapters: {len(final_state['extracted_chapters'])}, "
             f"Strategy: {final_state['extraction_strategy']}, Confidence: {final_state['confidence_score']}"
         )
+
+        conf = final_state.get("confidence_score", 0.0)
+        ch_count = len(final_state.get("extracted_chapters", []))
+        if conf >= 0.8 and ch_count > 0:
+            try:
+                from src.agent.domain_memory import domain_memory
+                domain_memory.update_toc_plan(
+                    domain_or_url=url,
+                    toc_strategy=final_state.get("extraction_strategy", "dom_heuristic"),
+                    container_selector=final_state.get("custom_container_selector"),
+                    link_selector=final_state.get("custom_link_selector"),
+                    sample_url=url,
+                )
+            except Exception as e:
+                logger.debug(f"Failed to auto-update TOC recipe in domain memory: {e}")
+
         return final_state
 
     async def to_classification_result(self, url: str, html: Optional[str] = None) -> ClassificationResult:

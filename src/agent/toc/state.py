@@ -35,6 +35,11 @@ class TocState(TypedDict):
     pagination_urls: List[str]
     is_complete: bool
     
+    # Self-healing synthesis
+    heal_attempted: bool
+    custom_container_selector: Optional[str]
+    custom_link_selector: Optional[str]
+
     # Lifecycle control
     iteration: int
     max_iterations: int

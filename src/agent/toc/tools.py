@@ -685,3 +685,88 @@ class TocAuditor:
                 issues.append(f"Only {count} chapters found and page structure may be incomplete.")
 
         return is_complete, confidence, has_unexpanded_sections, has_pagination, issues
+
+
+class TocSynthesizer:
+    """Synthesizes custom chapter list container and link selectors when heuristics fall short."""
+
+    @staticmethod
+    def synthesize(
+        html: str,
+        url: str,
+        claimed_count: Optional[int] = None,
+    ) -> Tuple[List[ChapterLink], Optional[str], Optional[str]]:
+        """Cluster links by container and score candidates to recover novel chapter links."""
+        soup = BeautifulSoup(html, "lxml")
+
+        # Action button and nav link filter
+        action_btn_re = re.compile(
+            r"^(?:read\s*(?:first|latest|now)|first\s*chapter|last\s*chapter|continue\s*reading|bookmark|share|follow|1話目から読む|最初から読む|login|sign\s*up|home|catalog|search)\b",
+            re.I,
+        )
+
+        clusters: Dict[str, List[Tuple[str, str]]] = {}
+        for a in soup.find_all("a", href=True):
+            href = a.get("href", "").strip()
+            if not href or href.startswith("javascript:") or href.startswith("#"):
+                continue
+            text = a.get_text(" ", strip=True)
+            text_clean = re.sub(r"[\s\xa0]+", " ", text).strip()
+            if not text_clean or len(text_clean) > 200 or action_btn_re.search(text_clean):
+                continue
+
+            full_url = urljoin(url, href)
+            parent = a.parent
+            parent_sel = ""
+            if parent and parent.name not in ["html", "body"]:
+                classes = parent.get("class", [])
+                valid_classes = [c for c in classes if re.match(r"^[a-zA-Z_-][a-zA-Z0-9_-]*$", c)]
+                if valid_classes:
+                    parent_sel = f"{parent.name}.{'.'.join(valid_classes[:2])}"
+                elif parent.get("id"):
+                    parent_sel = f"{parent.name}#{parent['id']}"
+                else:
+                    parent_sel = parent.name
+
+            a_classes = [c for c in a.get("class", []) if re.match(r"^[a-zA-Z_-][a-zA-Z0-9_-]*$", c)]
+            a_sel = f"a.{'.'.join(a_classes[:2])}" if a_classes else "a"
+            combined_key = f"{parent_sel} {a_sel}".strip()
+
+            clusters.setdefault(combined_key, []).append((text_clean, full_url))
+
+        best_cluster_key = None
+        best_score = -1.0
+        best_items: List[Tuple[str, str]] = []
+
+        for key, items in clusters.items():
+            if len(items) < 2:
+                continue
+
+            has_num = sum(1 for t, u in items if re.search(r"(?:chapter|ch[\.-]?|ep[\.-]?|第|\b)\d+", f"{t} {u}", re.I))
+            num_ratio = has_num / len(items)
+
+            count_score = 1.0
+            if claimed_count and claimed_count > 0:
+                count_score = 1.0 - min(abs(len(items) - claimed_count) / claimed_count, 1.0)
+
+            score = (len(items) * 0.4) + (num_ratio * 40.0) + (count_score * 30.0)
+            if score > best_score:
+                best_score = score
+                best_cluster_key = key
+                best_items = items
+
+        chapters: List[ChapterLink] = []
+        if best_items and (best_score >= 10.0 or len(best_items) >= 3):
+            seen_urls = set()
+            for text, u in best_items:
+                if u not in seen_urls:
+                    seen_urls.add(u)
+                    chapters.append(ChapterLink(
+                        index=len(chapters) + 1,
+                        title=text,
+                        url=u
+                    ))
+
+        container_sel = best_cluster_key.split()[0] if best_cluster_key and " " in best_cluster_key else best_cluster_key
+        link_sel = best_cluster_key.split()[-1] if best_cluster_key and " " in best_cluster_key else "a[href]"
+        return chapters, container_sel, link_sel

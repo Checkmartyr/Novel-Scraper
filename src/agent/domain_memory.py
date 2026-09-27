@@ -265,13 +265,46 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Standalone scraper for {recipe.domain}")
     parser.add_argument("--toc", help="URL of the novel Table of Contents")
     parser.add_argument("--chapter", help="URL of a chapter page")
+    parser.add_argument("--batch", action="store_true", help="Scrape all chapters discovered via TOC")
+    parser.add_argument("--output-dir", default="novels", help="Target directory for batch download")
     args = parser.parse_args()
 
     headers = {{
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
     }}
 
-    if args.toc:
+    if args.batch:
+        if not args.toc:
+            print("Error: --batch requires --toc <URL>")
+            sys.exit(1)
+        from pathlib import Path
+        print(f"Fetching TOC for batch: {{args.toc}}...")
+        resp = httpx.get(args.toc, headers=headers, follow_redirects=True)
+        chapters = extract_toc(resp.text, args.toc)
+        print(f"Found {{len(chapters)}} chapters. Starting batch scrape into '{{args.output_dir}}'...")
+        out_dir = Path(args.output_dir) / "{recipe.domain}"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        for ch in chapters:
+            c_url = ch["url"]
+            c_idx = ch["index"]
+            c_title = ch["title"]
+            print(f"[{{c_idx}}/{{len(chapters)}}] Fetching: {{c_title}} ({{c_url}})...")
+            try:
+                c_resp = httpx.get(c_url, headers=headers, follow_redirects=True)
+                c_data = extract_chapter(c_resp.text)
+                title = c_data.get("title") or c_title
+                content = c_data.get("content") or ""
+                clean_title = re.sub(r'[\x5c/*?:"<>|]', "", title)[:60].strip()
+                filename = f"{{c_idx:04d}} - {{clean_title}}.md"
+                fpath = out_dir / filename
+                with open(fpath, "w", encoding="utf-8") as f:
+                    f.write(f"# {{title}}\\n\\nSource: {{c_url}}\\n\\n{{content}}\\n")
+                print(f"  -> Saved {{len(content)}} chars to {{fpath.name}}")
+            except Exception as e:
+                print(f"  -> Error scraping chapter {{c_idx}}: {{e}}")
+        print("Batch scrape completed successfully!")
+
+    elif args.toc:
         print(f"Fetching TOC: {{args.toc}}...")
         resp = httpx.get(args.toc, headers=headers, follow_redirects=True)
         chapters = extract_toc(resp.text, args.toc)
@@ -350,6 +383,114 @@ if __name__ == "__main__":
         self._cache[domain] = recipe
         logger.info(f"Successfully saved recipe for domain '{domain}' in {self.recipes_dir}")
         return recipe
+
+    def update_chapter_plan(
+        self,
+        domain_or_url: str,
+        plan: DOMStructurePlan,
+        sample_url: str = "",
+        quality_score: float = 1.0,
+    ) -> DomainRecipe:
+        """Update or create chapter extraction configuration for a domain."""
+        domain = self.normalize_domain(domain_or_url)
+        existing = self.get_recipe(domain)
+        generator = ChapterCodeGenerator(plan)
+        chapter_script = generator.generate_code_string()
+
+        chapter_config = ChapterRecipeConfig(
+            title_selector=plan.title_selector,
+            content_selector=plan.content_selector,
+            remove_selectors=plan.remove_selectors,
+            clean_paragraphs=plan.clean_paragraphs,
+            quality_score=quality_score,
+            code_script=chapter_script,
+        )
+
+        now_str = datetime.now(timezone.utc).isoformat()
+        if existing:
+            existing.chapter_config = chapter_config
+            existing.updated_at = now_str
+            if sample_url:
+                existing.sample_chapter_url = sample_url
+            self._save_recipe_files(existing)
+            self._cache[domain] = existing
+            logger.info(f"Updated chapter recipe for domain '{domain}'")
+            return existing
+        else:
+            toc_config = TocRecipeConfig(strategy="dom_heuristic")
+            toc_config.code_script = self.generate_toc_script(toc_config, domain)
+            recipe = DomainRecipe(
+                domain=domain,
+                created_at=now_str,
+                updated_at=now_str,
+                sample_toc_url="",
+                sample_chapter_url=sample_url,
+                toc_config=toc_config,
+                chapter_config=chapter_config,
+                times_used=0,
+            )
+            self._save_recipe_files(recipe)
+            self._cache[domain] = recipe
+            logger.info(f"Created new recipe with chapter plan for domain '{domain}'")
+            return recipe
+
+    def update_toc_plan(
+        self,
+        domain_or_url: str,
+        toc_strategy: str = "dom_heuristic",
+        container_selector: Optional[str] = None,
+        link_selector: Optional[str] = None,
+        sample_url: str = "",
+    ) -> DomainRecipe:
+        """Update or create TOC extraction configuration for a domain."""
+        domain = self.normalize_domain(domain_or_url)
+        existing = self.get_recipe(domain)
+        now_str = datetime.now(timezone.utc).isoformat()
+
+        toc_config = TocRecipeConfig(
+            strategy=toc_strategy,
+            link_selector=link_selector,
+            container_selector=container_selector,
+        )
+        toc_config.code_script = self.generate_toc_script(toc_config, domain)
+
+        if existing:
+            existing.toc_config = toc_config
+            existing.updated_at = now_str
+            if sample_url:
+                existing.sample_toc_url = sample_url
+            self._save_recipe_files(existing)
+            self._cache[domain] = existing
+            logger.info(f"Updated TOC recipe for domain '{domain}'")
+            return existing
+        else:
+            default_chapter_plan = DOMStructurePlan(
+                title_selector="h1",
+                content_selector="body",
+            )
+            generator = ChapterCodeGenerator(default_chapter_plan)
+            chapter_config = ChapterRecipeConfig(
+                title_selector=default_chapter_plan.title_selector,
+                content_selector=default_chapter_plan.content_selector,
+                remove_selectors=[],
+                clean_paragraphs=True,
+                quality_score=0.5,
+                code_script=generator.generate_code_string(),
+            )
+            recipe = DomainRecipe(
+                domain=domain,
+                created_at=now_str,
+                updated_at=now_str,
+                sample_toc_url=sample_url,
+                sample_chapter_url="",
+                toc_config=toc_config,
+                chapter_config=chapter_config,
+                times_used=0,
+            )
+            self._save_recipe_files(recipe)
+            self._cache[domain] = recipe
+            logger.info(f"Created new recipe with TOC plan for domain '{domain}'")
+            return recipe
 
     def _save_recipe_files(self, recipe: DomainRecipe) -> None:
         """Write recipe to both JSON and standalone .py script."""
