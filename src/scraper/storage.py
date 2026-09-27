@@ -26,13 +26,18 @@ class NovelStorage:
         base_output_dir: Optional[Path] = None,
         include_frontmatter: bool = INCLUDE_FRONTMATTER,
         romanize_folder: bool = ROMANIZE_FOLDER,
+        direct_output: bool = False,
     ):
         self.base_output_dir = base_output_dir or OUTPUT_DIR
         self.include_frontmatter = include_frontmatter
         self.romanize_folder = romanize_folder
+        self.direct_output = direct_output
 
     def get_novel_dir(self, novel_title: str) -> Path:
         """Get or create novel directory (romanized if enabled)."""
+        if self.direct_output:
+            self.base_output_dir.mkdir(parents=True, exist_ok=True)
+            return self.base_output_dir
         folder_name = romanize_text(novel_title) if self.romanize_folder else novel_title
         safe_title = sanitize_filename(folder_name)
         novel_dir = self.base_output_dir / safe_title
