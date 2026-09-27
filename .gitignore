@@ -6,6 +6,7 @@ novels/
 logs/
 .pytest_cache/
 src/bin/*
+src/recipes/*
 !src/bin/.gitkeep
 *.png
 *.html
