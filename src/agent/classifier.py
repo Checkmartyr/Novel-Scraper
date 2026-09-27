@@ -6,7 +6,7 @@ from typing import List, Optional, Any
 from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 
-from src.agent.llm_client import LLMClient
+from src.agent.llm import LLMClient
 from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
 
 logger = logging.getLogger("agent.classifier")
@@ -285,7 +285,7 @@ Analyze the page:
                 logger.warning(f"TocAgent extraction warning: {e}. Keeping classified result.")
 
         if result.page_type == "CHAPTER":
-            from src.core.webnovel_handler import is_webnovel_url, parse_webnovel_url
+            from src.handlers.webnovel import is_webnovel_url, parse_webnovel_url
             if is_webnovel_url(url):
                 book_id, book_slug, chapter_id = parse_webnovel_url(url)
                 if book_id:
@@ -434,7 +434,7 @@ Analyze the page:
                 chapter_links=chapter_links,
             )
         else:
-            from src.core.webnovel_handler import is_webnovel_url, parse_webnovel_url
+            from src.handlers.webnovel import is_webnovel_url, parse_webnovel_url
             toc_url = toc_candidates[0] if toc_candidates else None
             if not toc_url and is_webnovel_url(url):
                 book_id, book_slug, chapter_id = parse_webnovel_url(url)

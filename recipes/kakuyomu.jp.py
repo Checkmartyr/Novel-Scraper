@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Autonomous Scraper Recipe for: kakuyomu.jp
-Generated: 2026-09-27 11:35:33 UTC
+Generated: 2026-09-27 11:56:30 UTC
 Sample TOC URL: https://kakuyomu.jp/works/999
 Sample Chapter URL: https://kakuyomu.jp/works/16817330663722833570/episodes/16817330663722869163
 Quality Score: 1.0/1.0

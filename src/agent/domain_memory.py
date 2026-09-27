@@ -17,9 +17,8 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 
 from src.config import RECIPES_DIR
-from src.agent.analyzer import DOMStructurePlan
+from src.agent.ch import DOMStructurePlan, ChapterCodeGenerator, ExtractedChapter, ParserVerificationResult
 from src.agent.classifier import ChapterLink
-from src.agent.code_generator import ChapterCodeGenerator, ExtractedChapter, ParserVerificationResult
 
 logger = logging.getLogger("agent.domain_memory")
 
@@ -596,3 +595,4 @@ if __name__ == "__main__":
 
 # Global singleton manager instance
 domain_memory = DomainMemoryManager()
+DomainMemory = DomainMemoryManager

@@ -219,32 +219,16 @@ class ObscuraClient:
         wait_until: str = WAIT_UNTIL,
     ) -> str:
         """Fetch page HTML using Playwright over Obscura CDP, with automatic Cloudflare fallback."""
-        from src.core.nekopost_handler import is_nekopost_url, handle_nekopost_url
-        if is_nekopost_url(url):
+        # Check platform handler registry for direct API or synthesized HTML bypass
+        from src.handlers import registry
+        handler = registry.find_handler(url)
+        if handler:
             try:
-                neko_html = await handle_nekopost_url(url)
-                if neko_html:
-                    return neko_html
+                result = await handler.handle(url, obscura_client=self)
+                if result:
+                    return result
             except Exception as e:
-                logger.warning(f"Nekopost direct handler error for {url}: {e}. Falling back to browser.")
-
-        from src.core.dekd_handler import is_dekd_url, handle_dekd_url
-        if is_dekd_url(url):
-            try:
-                dekd_html = await handle_dekd_url(url)
-                if dekd_html:
-                    return dekd_html
-            except Exception as e:
-                logger.warning(f"Dek-D direct handler error for {url}: {e}. Falling back to browser.")
-
-        from src.core.webnovel_handler import is_webnovel_url, handle_webnovel_url
-        if is_webnovel_url(url):
-            try:
-                wn_html = await handle_webnovel_url(url, obscura_client=self)
-                if wn_html:
-                    return wn_html
-            except Exception as e:
-                logger.warning(f"WebNovel direct handler error for {url}: {e}. Falling back to browser.")
+                logger.warning(f"Platform handler error for {url}: {e}. Falling back to browser.")
 
         # Fast HTTP attempt (avoids browser overhead & ad context crashes on static novel pages)
         import httpx

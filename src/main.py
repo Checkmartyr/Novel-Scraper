@@ -14,9 +14,9 @@ from src.core.binary_manager import ensure_obscura
 from src.core.obscura_client import ObscuraClient
 from src.agent.classifier import PageClassifier, ChapterLink
 from src.agent.toc.agent import TocAgent
-from src.agent.analyzer import ChapterAnalyzer
-from src.agent.code_generator import ChapterCodeGenerator
-from src.agent.review_loop import ReviewLoopOrchestrator
+from src.agent.ch.analyzer import ChapterAnalyzer
+from src.agent.ch.code_generator import ChapterCodeGenerator
+from src.agent.ch.review_loop import ReviewLoopOrchestrator
 import logging
 from src.scraper.batch_runner import BatchScraperRunner
 from src.scraper.storage import NovelStorage
@@ -89,7 +89,7 @@ async def run_headless(url: str, concurrency: int = DEFAULT_CONCURRENCY) -> None
             chapter_list = [ChapterLink(index=1, title=classification.chapter_title or "Chapter 1", url=url)]
             
         # Automatically create novel directory and save metadata.json with all chapter links
-        from src.agent.token_tracker import token_tracker
+        from src.agent.llm import token_tracker
         novel_folder = storage.get_novel_dir(classification.novel_title)
         meta_file = await storage.save_metadata(
             novel_title=classification.novel_title,

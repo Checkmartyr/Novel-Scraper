@@ -21,10 +21,14 @@ from rich.syntax import Syntax
 
 from src.core.obscura_client import ObscuraClient
 from src.agent.classifier import PageClassifier, ClassificationResult, ChapterLink
-from src.agent.analyzer import ChapterAnalyzer, DOMStructurePlan
+from src.agent.ch import (
+    ChapterAnalyzer,
+    DOMStructurePlan,
+    ChapterCodeGenerator,
+    ParserVerificationResult,
+    ReviewLoopOrchestrator,
+)
 from src.agent.toc.agent import TocAgent
-from src.agent.code_generator import ChapterCodeGenerator, ParserVerificationResult
-from src.agent.review_loop import ReviewLoopOrchestrator
 from src.scraper.batch_runner import BatchScraperRunner
 from src.scraper.storage import NovelStorage
 from src.ui.widgets.reader import RichMarkdownReader
@@ -336,7 +340,7 @@ class NovelScraperApp(App):
 
     def update_token_display(self) -> None:
         """Update tokens widget from central token tracker."""
-        from src.agent.token_tracker import token_tracker
+        from src.agent.llm import token_tracker
         summary = token_tracker.get_summary()
         tot = summary["total_tokens"]
         inp = summary["prompt_tokens"]
@@ -643,7 +647,7 @@ class NovelScraperApp(App):
             )
 
             # Automatically create novel directory and save metadata.json with all chapter links
-            from src.agent.token_tracker import token_tracker
+            from src.agent.llm import token_tracker
             novel_folder = self.storage.get_novel_dir(self.classification.novel_title)
             meta_path = await self.storage.save_metadata(
                 novel_title=self.classification.novel_title,
@@ -701,7 +705,7 @@ class NovelScraperApp(App):
             self.log_msg(f"Observer Review Complete: Score={loop_result.review.quality_score}/1.0 | Selectors Verified.", "info")
             
             # Log cumulative token usage
-            from src.agent.token_tracker import token_tracker
+            from src.agent.llm import token_tracker
             tok_summary = token_tracker.get_summary()
             if tok_summary["total_tokens"] > 0:
                 self.log_msg(f"Tokens consumed so far: {tok_summary['total_tokens']:,} (Prompt: {tok_summary['prompt_tokens']:,} | Output: {tok_summary['completion_tokens']:,})", "info")

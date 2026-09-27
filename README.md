@@ -8,21 +8,21 @@ The agent follows an **Analyze-Once, Synthesize Deterministically, Self-Heal on 
 
 ## Key Features
 
-- **Domain Memory & Recipe Cache (0-Token Fast Path)**: Automatically caches validated TOC strategies and chapter extraction plans into `recipes/<domain>.json` and standalone Python scripts (`recipes/<domain>.py`). Subsequent visits to previously analyzed domains bypass LLM calls entirely for maximum speed and cost efficiency.
-- **Autonomous Table of Contents (TOC) LangGraph Agent**: Self-healing cyclic StateGraph ([`TocAgent`](file:///D:/Code/Novel_scraping_agent/src/agent/toc/agent.py)) featuring claim inspection, embedded state hydration extraction (Next.js Apollo `__NEXT_DATA__`, JSON-LD), DOM link heuristics, and strict audit loops to guarantee 100% chapter completeness without human-in-the-loop.
+- **Domain Memory & Recipe Cache**: Caches TOC strategies and chapter extraction plans in `recipes/<domain>.json`, with generated extractor scripts in `recipes/<domain>.py`. Recipes are checked against the current page before reuse, avoiding repeated model work when the cached plan still matches.
+- **Autonomous Table of Contents (TOC) LangGraph Agent**: [`TocAgent`](src/agent/toc/agent.py) coordinates metadata inspection, embedded-state extraction (including Apollo and JSON-LD), DOM link discovery, completeness audits, pagination, and interactive expansion.
 - **Specialized Platform Handlers**: Built-in support and bypasses for complex novel platforms including:
-  - **Dek-D** ([`dekd_handler.py`](file:///D:/Code/Novel_scraping_agent/src/core/dekd_handler.py)): Native API handler and synthetic HTML generator for writer.dek-d.com & novel.dek-d.com.
-  - **Nekopost** ([`nekopost_handler.py`](file:///D:/Code/Novel_scraping_agent/src/core/nekopost_handler.py)): Automated JSON project detail decoding and episode parsing.
+  - **Dek-D** ([`src/handlers/dekd.py`](src/handlers/dekd.py)): API-backed TOC handling and synthetic HTML for Dek-D pages.
+  - **Nekopost** ([`src/handlers/nekopost.py`](src/handlers/nekopost.py)): Project and chapter data handling, including encrypted chapter content.
   - **Kakuyomu**: Next.js Apollo state deserialization and WorkTocSection title cleaning.
   - **Syosetu (小説家になろう)**, **FreeWebNovel**, **EmpireNovel**, and **XSZJ**.
 - **Obscura Anti-Detect Browser Engine**: Integrated Rust-based headless browser with stealth fingerprinting, Cloudflare/Turnstile/Akamai bypass, and CDP server support.
 - **Gemini Interactions API & LangChain**: Native multi-turn state chaining via `previous_interaction_id` to preserve reasoning context across analysis, refinement, and self-healing turns.
-- **Actor-Critic Quality Review Loop**: Generator ([`ChapterAnalyzer`](file:///D:/Code/Novel_scraping_agent/src/agent/analyzer.py)) and Critic ([`ExtractionObserver`](file:///D:/Code/Novel_scraping_agent/src/agent/observer.py)) iteratively audit sample extractions (scoring 0.0 to 1.0) to eliminate residual ads, navigation buttons, and incorrect chapter titles before batch scraping.
+- **Actor-Critic Quality Review Loop**: [`ChapterAnalyzer`](src/agent/ch/analyzer.py) and [`ExtractionObserver`](src/agent/ch/observer.py) review a sample extraction for title accuracy, clutter, and content quality before batch scraping.
 - **Interactive Textual TUI**: Modern terminal interface featuring:
   - **Interactive TOC Table**: Dynamic `DataTable` where clicking or pressing `Enter` on any chapter instantly switches to the preview tab and displays that chapter's parsed markdown.
   - **Automatic Tab Navigation**: Seamlessly shifts to `Live Logs` during analysis and switches to `Table of Contents` or `Chapter Preview` upon completion.
-  - **Focusable Scrollable Reader**: Custom [`RichMarkdownReader`](file:///D:/Code/Novel_scraping_agent/src/ui/widgets/reader.py) inheriting from `VerticalScroll` with full keyboard arrow, PageUp/PageDown, and mouse-wheel scrolling.
-  - **Generated Code View**: Displays the synthesized Python parser with Monokai syntax highlighting.
+  - **Focusable Scrollable Reader**: Custom [`RichMarkdownReader`](src/ui/widgets/reader.py) displays chapter previews in a scrollable Markdown view.
+  - **Generated Code View**: Displays the synthesized Python parser with syntax highlighting.
 - **Paginated Multi-Page Chapter Stitching**: Seamlessly detects and stitches multi-page chapters (`下一页`, `next page`, `?page=N`) into a unified markdown chapter while stripping pagination badges (e.g. `（1/3）`) from titles.
 - **Self-Healing Batch Scraper**: Resilient scraper that monitors chapter length and syntax during batch extraction, triggering Gemini with prior reasoning state to patch shifted DOM selectors on-the-fly.
 - **Persistent Multi-Level File Logging**: Automatically logs all TUI and CLI sessions with ANSI-stripped plain text into `logs/tui_<timestamp>.log` and `logs/scraper_<timestamp>.log` alongside symlinked `latest` logs.
@@ -35,8 +35,8 @@ The agent follows an **Analyze-Once, Synthesize Deterministically, Self-Heal on 
 ## Architecture & Workflow Guides
 
 For detailed technical explanations, Mermaid diagrams, and pipeline breakdowns, see:
-- 📖 [Agent Workflow & Architecture Guide](docs/AGENT_WORKFLOW.md): Step-by-step lifecycle from ingestion to persistence.
-- 🏗️ [Agent Architecture & Pipeline Documentation](docs/agent_architecture.md): Deep-dive into TocAgent LangGraph, ReviewLoop, Domain Memory, and batch mechanics.
+- [Agent Workflow](docs/AGENT_WORKFLOW.md): End-to-end scrape lifecycle from URL input through persistence.
+- [Architecture and Project Structure](docs/agent_architecture.md): Current source tree, package responsibilities, runtime flow, and extension points.
 
 ---
 
@@ -99,7 +99,7 @@ All settings can be customized in `.env` or passed as environment variables:
 | `MAX_DELAY_SECONDS` | `1.5` | Maximum polite jitter delay between requests (in seconds) |
 | `INCLUDE_FRONTMATTER` | `false` | When `true`, prepends YAML frontmatter to chapter markdown files |
 | `ROMANIZE_FOLDER` | `true` | When `true`, romanizes folder names to Latin script (`GuiMiZhiZhu`) |
-| `MAX_REVIEW_ITERATIONS`| `3` | Maximum review iterations for the Actor-Critic Observer loop |
+| `MAX_REVIEW_ITERATIONS`| `32` | Maximum review iterations for the Actor-Critic Observer loop |
 | `MIN_QUALITY_SCORE` | `0.85` | Minimum quality score (0.0 - 1.0) required for Observer approval |
 | `OBSCURA_GITHUB_REPO` | `h4ckf0r0day/obscura` | GitHub repository for downloading Obscura releases |
 
@@ -188,6 +188,8 @@ By default (`INCLUDE_FRONTMATTER=false`), chapters contain clean raw Markdown:
   "source_url": "https://kakuyomu.jp/works/...",
   "total_chapters": 120,
   "completed_chapters": 120,
+  "extraction_strategy": "embedded_state",
+  "audit_passed": true,
   "token_usage": {
     "prompt_tokens": 12450,
     "completion_tokens": 2890,
@@ -195,12 +197,14 @@ By default (`INCLUDE_FRONTMATTER=false`), chapters contain clean raw Markdown:
     "total_tokens": 16190,
     "call_count": 3
   },
+  "created_at": "2026-09-17T12:00:00+00:00",
   "last_updated": "2026-09-17T12:00:00+00:00",
   "chapters": [
     {
       "index": 1,
       "title": "悪役貴族、姉妹ができる",
       "url": "https://kakuyomu.jp/works/.../episodes/...",
+      "downloaded": true,
       "success": true
     }
   ]
@@ -211,87 +215,52 @@ By default (`INCLUDE_FRONTMATTER=false`), chapters contain clean raw Markdown:
 
 ## Project Structure
 
-```
+The README shows the main packages; the [Architecture and Project Structure guide](docs/agent_architecture.md) documents the current source tree and each module in more detail.
+
+```text
 Novel_scraping_agent/
-├── bin/                       # Automatically downloaded Obscura binaries (obscura.exe)
-├── docs/
-│   ├── AGENT_WORKFLOW.md      # High-level architecture & sequence diagrams
-│   └── agent_architecture.md  # In-depth technical breakdown of TocAgent & ReviewLoop
-├── logs/                      # Persistent session log files (tui_*.log, scraper_*.log)
-├── novels/                    # Output directory for downloaded novels and metadata
-├── recipes/                   # Cached domain extraction recipes (*.json, *.py)
+├── docs/                      # Architecture and end-to-end workflow guides
+├── bin/                       # Obscura binary location
+├── logs/                      # Runtime session logs
+├── novels/                    # Downloaded chapters and metadata
+├── recipes/                   # Cached domain recipes and generated extractors
+├── scripts/
+│   └── repair_scraped_novels.py
 ├── src/
-│   ├── config.py              # Central environment and configuration settings
-│   ├── main.py                # CLI entrypoint and headless pipeline runner
-│   ├── agent/                 # Agent reasoning and LLM orchestration layer
-│   │   ├── analyzer.py        # DOM structure analysis and selector planning
-│   │   ├── classifier.py      # TOC vs Chapter classification and smart link prioritization
-│   │   ├── code_generator.py  # Deterministic Python BeautifulSoup parser synthesis
-│   │   ├── domain_memory.py   # Domain recipe persistence and 0-token bypass manager
-│   │   ├── interactions_model.py # Native Gemini Interactions API LangChain wrapper
-│   │   ├── llm_client.py      # LLM client with LCEL pipelines and state tracking
-│   │   ├── observer.py        # Actor-Critic quality reviewer and clutter auditor
-│   │   ├── review_loop.py     # Generator <-> Critic review & refinement loop
-│   │   ├── self_healer.py     # Runtime selector self-healing with prior interaction state
-│   │   ├── token_tracker.py   # Thread-safe prompt, completion, and thought token tracking
-│   │   └── toc/               # Autonomous LangGraph TOC extraction agent
-│   │       ├── agent.py       # TocAgent coordinator and domain memory integration
-│   │       ├── graph.py       # Cyclic StateGraph definition and node routers
-│   │       ├── state.py       # TocState TypedDict definition
-│   │       └── tools.py       # ClaimInspector, EmbeddedStateExtractor, DomLinkExtractor, TocAuditor
-│   ├── core/                  # Headless browsing & platform handlers
-│   │   ├── binary_manager.py  # Automatic Obscura binary download and verification
-│   │   ├── dekd_handler.py    # Specialized Dek-D API decoder and synthetic HTML builder
-│   │   ├── nekopost_handler.py# Specialized Nekopost project decoder and chapter resolver
-│   │   └── obscura_client.py  # Obscura CLI subprocess driver and CDP Playwright integration
-│   ├── scraper/               # Polite concurrent batch execution & persistence
-│   │   ├── batch_runner.py    # Async queue, subpage stitching, pause/resume, and jitter
-│   │   └── storage.py         # Markdown output formatting, frontmatter toggle, and metadata.json
-│   ├── ui/                    # Textual Terminal User Interface (TUI)
-│   │   ├── app.py             # Main Textual application with tabs, controls, and details
-│   │   └── widgets/
-│   │       ├── progress.py    # Compound progress widget with rate calculation and status
-│   │       └── reader.py      # Focusable, scrollable Rich Markdown reader preview
-│   └── utils/
-│       ├── logger.py          # Session file logging, latest symlink, and clean markup
-│       └── romanizer.py       # Multi-language romanizer (Japanese, Chinese, Korean, Russian)
-├── tests/                     # Comprehensive test suite (92 tests across 16 test modules)
-├── .env.example               # Complete environment variable template
-├── pyproject.toml             # Project metadata, dependencies, and script entrypoints
-└── README.md                  # Project overview and documentation
+│   ├── config.py              # Environment-backed configuration and paths
+│   ├── main.py                # CLI entrypoint and headless pipeline
+│   ├── agent/
+│   │   ├── ch/                # Chapter analysis, parser, review, and self-healing
+│   │   ├── llm/               # Gemini/LangChain client and token tracking
+│   │   ├── toc/               # LangGraph table-of-contents extraction
+│   │   ├── classifier.py      # Page classification and TOC/chapter metadata
+│   │   ├── domain_memory.py   # Validated per-domain extraction recipes
+│   │   └── *.py               # Public exports and backward-compatibility shims
+│   ├── core/                  # Obscura browser and binary management
+│   ├── handlers/              # Dek-D, Nekopost, and WebNovel integrations
+│   ├── scraper/               # Concurrent batch scraping and output storage
+│   ├── ui/                    # Textual application and reader/progress widgets
+│   └── utils/                 # Logging, romanization, and title/content cleanup
+├── tests/                     # Unit, integration, site-specific, and TUI tests
+├── .env.example               # Environment configuration template
+├── pyproject.toml             # Package metadata, dependencies, and CLI script
+├── uv.lock                    # Locked dependency versions
+└── README.md
 ```
+
+`dist/`, `.venv/`, and cache directories are generated or local development artifacts and are not part of the source package.
 
 ---
 
 ## Testing
 
-The project maintains a rigorous automated test suite (**92 tests across 16 test modules**) verifying every component from network resilience to DOM heuristics and TUI interactivity:
+Run the test suite from the repository root:
 
-```powershell
-# Run the entire test suite:
-pytest tests/
+```bash
+uv run pytest
 ```
 
-### Module Breakdown:
-
-| Test Module | Coverage Area |
-| :--- | :--- |
-| [`test_dekd_handler.py`](file:///D:/Code/Novel_scraping_agent/tests/test_dekd_handler.py) | Dek-D URL detection, API pagination decoding, synthetic HTML construction |
-| [`test_domain_memory.py`](file:///D:/Code/Novel_scraping_agent/tests/test_domain_memory.py) | Recipe saving, loading, validation, and standalone script synthesis |
-| [`test_e2e.py`](file:///D:/Code/Novel_scraping_agent/tests/test_e2e.py) | End-to-end headless pipeline execution with mock local HTTP server |
-| [`test_empirenovel_toc.py`](file:///D:/Code/Novel_scraping_agent/tests/test_empirenovel_toc.py) | EmpireNovel accordion unpacking, pagination, and TOC claim auditing |
-| [`test_freewebnovel.py`](file:///D:/Code/Novel_scraping_agent/tests/test_freewebnovel.py) | FreeWebNovel multi-page TOC discovery and chapter index synthesis |
-| [`test_kakuyomu.py`](file:///D:/Code/Novel_scraping_agent/tests/test_kakuyomu.py) | Kakuyomu Apollo state hydration, episode extraction, and title cleaning |
-| [`test_logger.py`](file:///D:/Code/Novel_scraping_agent/tests/test_logger.py) | Multi-level file logging, clean markup stripping, and session persistence |
-| [`test_nekopost.py`](file:///D:/Code/Novel_scraping_agent/tests/test_nekopost.py) | Nekopost project API handling, episode link mapping, and live TOC verification |
-| [`test_observer.py`](file:///D:/Code/Novel_scraping_agent/tests/test_observer.py) | Actor-Critic review loop iterations, clutter auditing, and self-healing |
-| [`test_romanizer.py`](file:///D:/Code/Novel_scraping_agent/tests/test_romanizer.py) | Romanization across Japanese (Romaji), Chinese (Pinyin), Korean, and Cyrillic |
-| [`test_scraper.py`](file:///D:/Code/Novel_scraping_agent/tests/test_scraper.py) | Obscura binary download, batch queue jitter, and storage formatting |
-| [`test_syosetu_toc.py`](file:///D:/Code/Novel_scraping_agent/tests/test_syosetu_toc.py) | Syosetu multi-page episode pagination and subtitle selector extraction |
-| [`test_toc_agent.py`](file:///D:/Code/Novel_scraping_agent/tests/test_toc_agent.py) | LangGraph cyclic StateGraph, claim inspection, and audit edge routing |
-| [`test_token_tracker.py`](file:///D:/Code/Novel_scraping_agent/tests/test_token_tracker.py) | Prompt, completion, and thought token tracking across LLM calls |
-| [`test_tui.py`](file:///D:/Code/Novel_scraping_agent/tests/test_tui.py) | Textual app composition, TOC row selection, dynamic preview, and safe_call |
-| [`test_xszj.py`](file:///D:/Code/Novel_scraping_agent/tests/test_xszj.py) | Multi-page subpage chapter stitching (`下一页`) and title cleaning |
+Tests cover classification and TOC extraction, chapter parser generation and review, domain recipes, platform handlers, batch scraping and storage, shared utilities, and the Textual interface. See [`tests/`](tests/) for the current test modules.
 
 ---
 

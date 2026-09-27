@@ -8,9 +8,12 @@ from typing import List, Optional, Callable, Dict, Any
 from bs4 import BeautifulSoup
 
 from src.agent.classifier import ChapterLink
-from src.agent.analyzer import DOMStructurePlan
-from src.agent.code_generator import ChapterCodeGenerator, ExtractedChapter
-from src.agent.self_healer import SelfHealer
+from src.agent.ch import (
+    DOMStructurePlan,
+    ChapterCodeGenerator,
+    ExtractedChapter,
+    SelfHealer,
+)
 from src.core.obscura_client import ObscuraClient
 from src.scraper.storage import NovelStorage
 from src.config import DEFAULT_CONCURRENCY, MIN_DELAY_SECONDS, MAX_DELAY_SECONDS
@@ -275,7 +278,7 @@ class BatchScraperRunner:
         await asyncio.gather(*tasks, return_exceptions=True)
 
         # Update metadata.json
-        from src.agent.token_tracker import token_tracker
+        from src.agent.llm import token_tracker
         tokens_summary = token_tracker.get_summary()
         await self.storage.save_metadata(
             novel_title=self.novel_title,
