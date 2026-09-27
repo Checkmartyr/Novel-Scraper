@@ -33,7 +33,7 @@ async def run_headless(url: str, concurrency: int = DEFAULT_CONCURRENCY) -> None
 
     console.print(f"[cyan]Ensuring Obscura binary...[/cyan]")
     ensure_obscura()
-    
+
     obscura = ObscuraClient()
     try:
         def cli_log_step(msg: str, level: str = "info"):
@@ -51,17 +51,17 @@ async def run_headless(url: str, concurrency: int = DEFAULT_CONCURRENCY) -> None
         classifier = PageClassifier(obscura_client=obscura, toc_agent=toc_agent)
         analyzer = ChapterAnalyzer()
         storage = NovelStorage()
-        
+
         console.print(f"[cyan]Fetching and classifying URL:[/cyan] {url}")
         html = await obscura.fetch_html(url, stealth=True)
         classification = await classifier.classify(url, html)
-        
+
         console.print(f"[green]Page Classified:[/green] {classification.page_type}")
         console.print(f"[green]Novel Title:[/green] {classification.novel_title}")
-        
+
         sample_url = url
         chapter_list = classification.chapter_links
-        
+
         if classification.page_type == "TOC":
             toc_state = classification.toc_state
             if not toc_state:
@@ -82,12 +82,12 @@ async def run_headless(url: str, concurrency: int = DEFAULT_CONCURRENCY) -> None
                 chapter_list = toc_state["extracted_chapters"]
                 classification.novel_title = toc_state.get("novel_title") or classification.novel_title
                 console.print(f"[bold green]TOC Extracted from Chapter Link:[/bold green] {len(chapter_list)} chapters discovered.")
-                
+
         if chapter_list:
             sample_url = chapter_list[0].url
         else:
             chapter_list = [ChapterLink(index=1, title=classification.chapter_title or "Chapter 1", url=url)]
-            
+
         # Automatically create novel directory and save metadata.json with all chapter links
         from src.agent.llm import token_tracker
         novel_folder = storage.get_novel_dir(classification.novel_title)
@@ -121,15 +121,15 @@ async def run_headless(url: str, concurrency: int = DEFAULT_CONCURRENCY) -> None
         console.print(f"[cyan]Analyzing sample chapter with Observer Review Loop:[/cyan] {sample_url}")
         sample_html = await obscura.fetch_html(sample_url, stealth=True)
         loop_result = await orchestrator.run(sample_html, sample_url, on_progress=log_review_step)
-        
+
         plan = loop_result.plan
         verification = loop_result.verification
         review = loop_result.review
-        
+
         if not verification.success:
             console.print(f"[red]Selector verification failed: {verification.error}[/red]")
             sys.exit(1)
-            
+
         approval_status = "Approved" if loop_result.approved else "Best Effort"
         console.print(f"[green]Observer Review Complete ({approval_status})![/green] Title: '{verification.chapter_title}', Words: {verification.word_count}, Score: {review.quality_score}/1.0")
 
@@ -144,12 +144,12 @@ async def run_headless(url: str, concurrency: int = DEFAULT_CONCURRENCY) -> None
                 chapter_plan=plan,
                 quality_score=review.quality_score,
             )
-            console.print(f"[bold cyan]Domain recipe saved for '{saved_recipe.domain}':[/bold cyan] recipes/{saved_recipe.domain}.json & .py")
+            console.print(f"[bold cyan]Domain recipe saved for '{saved_recipe.domain}':[/bold cyan] src/recipes/{saved_recipe.domain}.json & .py")
         except Exception as e:
             cli_logger.warning(f"Failed to save domain recipe: {e}")
 
         console.print(f"[cyan]Starting batch download of {len(chapter_list)} chapters...[/cyan]")
-        
+
         runner = BatchScraperRunner(
             novel_title=classification.novel_title,
             initial_plan=plan,
@@ -159,7 +159,7 @@ async def run_headless(url: str, concurrency: int = DEFAULT_CONCURRENCY) -> None
             on_log=lambda msg, lvl: console.print(f"[{lvl}]{msg}[/{lvl}]"),
             previous_interaction_id=loop_result.last_interaction_id,
         )
-        
+
         summary = await runner.run(
             chapters=chapter_list,
             source_url=url,

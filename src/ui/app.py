@@ -38,7 +38,7 @@ from src.utils.logger import setup_file_logging, clean_markup
 
 class NovelScraperApp(App):
     """Textual TUI for Obscura Agentic Novel Scraper."""
-    
+
     TITLE = "Novel Scraping Agent"
     SUB_TITLE = "Obscura Headless Engine & Gemini Agent"
     CSS = """
@@ -47,7 +47,7 @@ class NovelScraperApp(App):
         background: #1a1b26;
         color: #c0caf5;
     }
-    
+
     #top-bar {
         height: 4;
         width: 100%;
@@ -63,7 +63,7 @@ class NovelScraperApp(App):
         color: #bb9af7;
         text-style: bold;
     }
-    
+
     #url-input {
         width: 50%;
         margin-right: 1;
@@ -74,7 +74,7 @@ class NovelScraperApp(App):
     #url-input:focus {
         border: tall #7aa2f7;
     }
-    
+
     #btn-analyze {
         width: 14%;
         margin-right: 1;
@@ -85,7 +85,7 @@ class NovelScraperApp(App):
     #btn-analyze:hover {
         background: #7dcfff;
     }
-    
+
     #concurrency-input {
         width: 10%;
         margin-right: 1;
@@ -93,17 +93,17 @@ class NovelScraperApp(App):
         border: tall #3b4261;
         color: #c0caf5;
     }
-    
+
     #stealth-check {
         width: 12%;
         color: #9ece6a;
     }
-    
+
     #main-content {
         height: 1fr;
         width: 100%;
     }
-    
+
     #left-panel {
         width: 32%;
         height: 100%;
@@ -111,20 +111,20 @@ class NovelScraperApp(App):
         border-right: solid #7aa2f7;
         background: #16161e;
     }
-    
+
     #right-panel {
         width: 68%;
         height: 100%;
         background: #1a1b26;
     }
-    
+
     .panel-box {
         border: round #3b4261;
         background: #1f2335;
         padding: 1;
         margin-bottom: 1;
     }
-    
+
     .card-header {
         color: #bb9af7;
         text-style: bold;
@@ -150,7 +150,7 @@ class NovelScraperApp(App):
     .step-pending {
         color: #565f89;
     }
-    
+
     .btn-action {
         width: 100%;
         margin-bottom: 1;
@@ -187,7 +187,7 @@ class NovelScraperApp(App):
         background: #1a1b26;
     }
     """
-    
+
     BINDINGS = [
         ("q", "quit", "Quit"),
         ("ctrl+c", "quit", "Quit"),
@@ -216,7 +216,7 @@ class NovelScraperApp(App):
         self.classifier = PageClassifier(obscura_client=self.obscura, toc_agent=self.toc_agent)
         self.analyzer = ChapterAnalyzer()
         self.storage = NovelStorage()
-        
+
         # State
         self.current_url: str = ""
         self.classification: Optional[ClassificationResult] = None
@@ -232,7 +232,7 @@ class NovelScraperApp(App):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        
+
         with Horizontal(id="top-bar"):
             yield Static("(=^･ω･^=) Cristina: IDLE", id="mascot-badge")
             yield Input(
@@ -247,7 +247,7 @@ class NovelScraperApp(App):
                 id="concurrency-input"
             )
             yield Checkbox("🛡️ Stealth", value=True, id="stealth-check")
-            
+
         with Horizontal(id="main-content"):
             with Vertical(id="left-panel"):
                 with Vertical(classes="panel-box", id="stepper-box"):
@@ -266,7 +266,7 @@ class NovelScraperApp(App):
                     yield Static("Strategy: -", id="detail-strategy")
                     yield Static("Audit: -", id="detail-audit")
                     yield Static("Tokens: 0", id="detail-tokens")
-                
+
                 with Vertical(classes="panel-box"):
                     yield Static("Actions", classes="card-header text-bold")
                     yield Button("🚀 Approve & Download", variant="success", id="btn-approve", classes="btn-action", disabled=True)
@@ -287,7 +287,7 @@ class NovelScraperApp(App):
                         yield RichLog(id="log-widget", max_lines=1000, highlight=True, markup=True)
                     with TabPane("Domain Recipes", id="tab-recipes"):
                         yield DataTable(id="recipes-table", cursor_type="row")
-                        
+
         yield BatchProgressWidget(id="progress-widget")
         yield Footer()
 
@@ -472,18 +472,18 @@ class NovelScraperApp(App):
             if not row or len(row) < 3:
                 return
             index_str, title, chapter_url = str(row[0]), str(row[1]), str(row[2])
-            
+
             # Switch to preview tab
             tabs = self.query_one("#tabs", TabbedContent)
             tabs.active = "tab-preview"
-            
+
             reader = self.query_one("#reader-widget", RichMarkdownReader)
-            
+
             # If this is the sample chapter already verified, display immediately
             if self.sample_chapter_url and chapter_url == self.sample_chapter_url and self.verification and self.verification.preview_markdown:
                 reader.update_markdown(self.verification.preview_markdown, title=f"Chapter {index_str}: {title}")
                 return
-                
+
             # If we have an extraction plan, load the chapter preview dynamically
             if self.plan:
                 reader.set_loading(f"Fetching Chapter {index_str}: {title}...")
@@ -506,7 +506,7 @@ class NovelScraperApp(App):
                 reader = self.query_one("#reader-widget", RichMarkdownReader)
                 reader.update_markdown(f"*Failed to load HTML for chapter: {chapter_url}*", title=f"Chapter {index_str}: {title}")
                 return
-                
+
             generator = ChapterCodeGenerator(self.plan)
             extracted = generator.extract(ch_html)
             reader = self.query_one("#reader-widget", RichMarkdownReader)
@@ -531,16 +531,16 @@ class NovelScraperApp(App):
         if not url:
             self.log_msg("Please enter a valid URL.", "warning")
             return
-            
+
         self.current_url = url
         stealth = self.query_one("#stealth-check", Checkbox).value
-        
+
         progress = self.query_one("#progress-widget", BatchProgressWidget)
         progress.set_status("Analyzing page structure with Obscura...")
         self.set_pipeline_step(2)
         self.set_mascot_status("ANALYZING 🔄")
         self.log_msg(f"Fetching URL via Obscura (stealth={stealth}): {url}")
-        
+
         # Switch to logs tab so user can monitor real-time analysis progress
         try:
             self.query_one("#tabs", TabbedContent).active = "tab-logs"
@@ -550,24 +550,24 @@ class NovelScraperApp(App):
         # Disable analyze button during work
         btn_analyze = self.query_one("#btn-analyze", Button)
         btn_analyze.disabled = True
-        
+
         try:
             # 1. Fetch target page HTML
             html = await self.obscura.fetch_html(url, stealth=stealth)
             self.log_msg(f"Page fetched successfully ({len(html)} bytes). Classifying...", "info")
-            
+
             # 2. Classify page
             self.classification = await self.classifier.classify(url, html)
             self.update_token_display()
             self.log_msg(f"Classified as: {self.classification.page_type} | Novel: '{self.classification.novel_title}'", "info")
-            
+
             # Update left panel details
             self.query_one("#detail-title", Static).update(f"Title: {self.classification.novel_title}")
             self.query_one("#detail-author", Static).update(f"Author: {self.classification.author or 'Unknown'}")
             self.query_one("#detail-type", Static).update(f"Page Type: {self.classification.page_type}")
-            
+
             sample_chapter_url = ""
-            
+
             if self.classification.page_type == "TOC":
                 self.toc_state = self.classification.toc_state
                 if not self.toc_state:
@@ -584,21 +584,21 @@ class NovelScraperApp(App):
 
                 total_ch = len(self.classification.chapter_links)
                 self.query_one("#detail-chapters", Static).update(f"Chapters Found: {total_ch}")
-                
+
                 strategy = (self.toc_state or {}).get("extraction_strategy", "dom")
                 confidence = (self.toc_state or {}).get("confidence_score", 1.0)
                 audit_passed = (self.toc_state or {}).get("audit_passed", True)
                 claimed = (self.toc_state or {}).get("claimed_chapters")
-                
+
                 self.query_one("#detail-strategy", Static).update(f"Strategy: {strategy} ({int(confidence * 100)}%)")
                 audit_str = "Passed" if audit_passed else "Warning"
                 if claimed:
                     audit_str += f" ({total_ch}/{claimed})"
                 self.query_one("#detail-audit", Static).update(f"Audit: {audit_str}")
-                
+
                 # Populate DataTable
                 self.populate_toc_table(self.classification.chapter_links)
-                
+
                 if total_ch > 0:
                     sample_chapter_url = self.classification.chapter_links[0].url
                 else:
@@ -610,7 +610,7 @@ class NovelScraperApp(App):
                 self.query_one("#detail-strategy", Static).update("Strategy: single_chapter")
                 self.query_one("#detail-audit", Static).update("Audit: N/A")
                 sample_chapter_url = url
-                
+
                 # Check if TOC found to expand
                 if self.classification.toc_url:
                     self.log_msg(f"Found TOC link: {self.classification.toc_url}. Extracting TOC index...", "info")
@@ -629,7 +629,7 @@ class NovelScraperApp(App):
                         confidence = self.toc_state.get("confidence_score", 1.0)
                         self.query_one("#detail-strategy", Static).update(f"Strategy: {strategy} ({int(confidence * 100)}%)")
                         self.query_one("#detail-audit", Static).update("Audit: Passed" if self.toc_state.get("audit_passed") else "Audit: Warning")
-                        
+
                         self.populate_toc_table(self.classification.chapter_links)
                         self.log_msg(f"TOC loaded! Discovered {total_ch} chapters.", "info")
 
@@ -674,7 +674,7 @@ class NovelScraperApp(App):
                 self.sample_html = html
             else:
                 self.sample_html = await self.obscura.fetch_html(sample_chapter_url, stealth=stealth)
-                
+
             # 4. Analyze sample chapter DOM with Observer Review Loop
             self.set_pipeline_step(3)
             self.log_msg("Initiating Observer Review & Refinement Loop...", "info")
@@ -696,14 +696,14 @@ class NovelScraperApp(App):
             self.verification = loop_result.verification
             self.last_interaction_id = loop_result.last_interaction_id
             self.update_token_display()
-            
+
             # Update detail card with observer score badge
             observer_badge = f"Quality: {int(loop_result.review.quality_score * 100)}%"
             if loop_result.approved:
                 observer_badge += " (Approved)"
             self.query_one("#detail-type", Static).update(f"Page Type: {self.classification.page_type} | {observer_badge}")
             self.log_msg(f"Observer Review Complete: Score={loop_result.review.quality_score}/1.0 | Selectors Verified.", "info")
-            
+
             # Log cumulative token usage
             from src.agent.llm import token_tracker
             tok_summary = token_tracker.get_summary()
@@ -714,7 +714,7 @@ class NovelScraperApp(App):
                     source_url=self.current_url,
                     token_usage=tok_summary,
                 )
-            
+
             # Update Preview widget
             reader = self.query_one("#reader-widget", RichMarkdownReader)
             preview_title = (
@@ -723,11 +723,11 @@ class NovelScraperApp(App):
                 or "Sample Chapter Preview"
             )
             reader.update_markdown(self.verification.preview_markdown, title=preview_title)
-            
+
             # Update Code widget
             code_view = self.query_one("#code-widget", Static)
             code_view.update(Syntax(self.verification.generated_code, "python", theme="monokai", line_numbers=True))
-            
+
             if self.verification.success:
                 try:
                     from src.agent.domain_memory import domain_memory
@@ -739,7 +739,7 @@ class NovelScraperApp(App):
                         chapter_plan=self.plan,
                         quality_score=loop_result.review.quality_score,
                     )
-                    self.log_msg(f"Domain recipe saved: recipes/{saved_recipe.domain}.json & .py", "info")
+                    self.log_msg(f"Domain recipe saved: src/recipes/{saved_recipe.domain}.json & .py", "info")
                     full_script = domain_memory.generate_full_standalone_script(saved_recipe)
                     code_view.update(Syntax(full_script, "python", theme="monokai", line_numbers=True))
                     self.load_recipes_table()
@@ -767,7 +767,7 @@ class NovelScraperApp(App):
                     self.query_one("#tabs", TabbedContent).active = "tab-preview"
                 except Exception:
                     pass
-                
+
         except Exception as e:
             self.log_msg(f"Analysis failed: {e}", "error")
             progress.set_status("Analysis failed.")
@@ -778,22 +778,22 @@ class NovelScraperApp(App):
         """Start batch scraping after approval."""
         if not self.classification or not self.plan:
             return
-            
+
         btn_approve = self.query_one("#btn-approve", Button)
         btn_approve.disabled = True
         self.query_one("#btn-pause", Button).disabled = False
         self.query_one("#btn-cancel", Button).disabled = False
         self.set_mascot_status("DOWNLOADING ⚡")
-        
+
         # Read workers concurrency setting
         try:
             conc_input = self.query_one("#concurrency-input", Input).value.strip()
             concurrency = int(conc_input)
         except ValueError:
             concurrency = DEFAULT_CONCURRENCY
-            
+
         progress_widget = self.query_one("#progress-widget", BatchProgressWidget)
-        
+
         # Setup batch runner
         self.batch_runner = BatchScraperRunner(
             novel_title=self.classification.novel_title,
@@ -807,14 +807,14 @@ class NovelScraperApp(App):
             on_log=lambda msg, lvl: self.safe_call(self.log_msg, msg, lvl),
             previous_interaction_id=self.last_interaction_id,
         )
-        
+
         chapter_list = self.classification.chapter_links
         # If single chapter link without TOC list, create single item
         if not chapter_list:
             chapter_list = [
                 ChapterLink(index=1, title=self.classification.chapter_title or "Chapter 1", url=self.current_url)
             ]
-            
+
         asyncio.create_task(self._execute_batch(chapter_list))
 
     async def _execute_batch(self, chapter_list: List[ChapterLink]) -> None:
@@ -862,4 +862,3 @@ class NovelScraperApp(App):
             self.logger.info("TUI session ended.")
         if hasattr(self, "obscura") and self.obscura:
             await self.obscura.close()
-

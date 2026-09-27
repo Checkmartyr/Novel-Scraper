@@ -68,7 +68,7 @@ The loop refines selectors until the review is approved or the configured iterat
 
 ### 4. Save reusable domain knowledge
 
-`src/agent/domain_memory.py` stores TOC and chapter extraction settings in `recipes/<domain>.json` and emits corresponding Python extractor code in `recipes/<domain>.py`. Recipes are validated against current HTML before use; a failed check falls back to normal classification or analysis rather than treating a stale recipe as authoritative.
+`src/agent/domain_memory.py` stores TOC and chapter extraction settings in `src/recipes/<domain>.json` and emits corresponding Python extractor code in `src/recipes/<domain>.py`. Recipes are validated against current HTML before use; a failed check falls back to normal classification or analysis rather than treating a stale recipe as authoritative.
 
 ### 5. Scrape and save chapters
 

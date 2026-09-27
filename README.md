@@ -8,7 +8,7 @@ The agent follows an **Analyze-Once, Synthesize Deterministically, Self-Heal on 
 
 ## Key Features
 
-- **Domain Memory & Recipe Cache**: Caches TOC strategies and chapter extraction plans in `recipes/<domain>.json`, with generated extractor scripts in `recipes/<domain>.py`. Recipes are checked against the current page before reuse, avoiding repeated model work when the cached plan still matches.
+- **Domain Memory & Recipe Cache**: Caches TOC strategies and chapter extraction plans in `src/recipes/<domain>.json`, with generated extractor scripts in `src/recipes/<domain>.py`. Recipes are checked against the current page before reuse, avoiding repeated model work when the cached plan still matches.
 - **Autonomous Table of Contents (TOC) LangGraph Agent**: [`TocAgent`](src/agent/toc/agent.py) coordinates metadata inspection, embedded-state extraction (including Apollo and JSON-LD), DOM link discovery, completeness audits, pagination, and interactive expansion.
 - **Specialized Platform Handlers**: Built-in support and bypasses for complex novel platforms including:
   - **Dek-D** ([`src/handlers/dekd.py`](src/handlers/dekd.py)): API-backed TOC handling and synthetic HTML for Dek-D pages.
@@ -88,12 +88,12 @@ All settings can be customized in `.env` or passed as environment variables:
 | :--- | :--- | :--- |
 | `GEMINI_API_KEY` | *(Required)* | Google Gemini API key for agent reasoning and code generation |
 | `GEMINI_MODEL` | `gemini-2.5-flash` | Gemini model ID (`gemini-2.5-flash`, `gemini-2.5-pro`, `gemini-3.5-flash-lite`) |
-| `OBSCURA_BIN_PATH` | *(auto)* | Custom path to `obscura.exe` binary. Auto-downloads into `./bin/` if empty |
+| `OBSCURA_BIN_PATH` | *(auto)* | Custom path to `obscura.exe` binary. Auto-downloads into `./src/bin/` if empty |
 | `NAVIGATION_TIMEOUT` | `30` | Obscura page fetch timeout in seconds |
 | `WAIT_UNTIL` | `networkidle` | Navigation wait condition (`networkidle`, `domcontentloaded`, `load`) |
 | `OUTPUT_DIR` | `./novels` | Directory where scraped novels and metadata are saved |
 | `LOGS_DIR` | `./logs` | Directory for persistent session log files (`tui_*.log`, `scraper_*.log`) |
-| `RECIPES_DIR` | `./recipes` | Directory for cached domain recipes (`*.json`, `*.py`) |
+| `RECIPES_DIR` | `./src/recipes` | Directory for cached domain recipes (`*.json`, `*.py`) |
 | `DEFAULT_CONCURRENCY` | `3` | Default number of concurrent scraper worker tasks (clamped 1-10) |
 | `MIN_DELAY_SECONDS` | `0.5` | Minimum polite jitter delay between requests (in seconds) |
 | `MAX_DELAY_SECONDS` | `1.5` | Maximum polite jitter delay between requests (in seconds) |
@@ -220,13 +220,13 @@ The README shows the main packages; the [Architecture and Project Structure guid
 ```text
 Novel_scraping_agent/
 ├── docs/                      # Architecture and end-to-end workflow guides
-├── bin/                       # Obscura binary location
 ├── logs/                      # Runtime session logs
 ├── novels/                    # Downloaded chapters and metadata
-├── recipes/                   # Cached domain recipes and generated extractors
 ├── scripts/
 │   └── repair_scraped_novels.py
 ├── src/
+│   ├── bin/                   # Obscura binary location
+│   ├── recipes/               # Cached domain recipes and generated extractors
 │   ├── config.py              # Environment-backed configuration and paths
 │   ├── main.py                # CLI entrypoint and headless pipeline
 │   ├── agent/

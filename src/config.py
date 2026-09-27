@@ -6,10 +6,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-BIN_DIR = BASE_DIR / "bin"
+SRC_DIR = Path(__file__).resolve().parent
+BIN_DIR = SRC_DIR / "bin"
 OUTPUT_DIR = Path(os.getenv("OUTPUT_DIR", str(BASE_DIR / "novels")))
 LOGS_DIR = Path(os.getenv("LOGS_DIR", str(BASE_DIR / "logs")))
-RECIPES_DIR = Path(os.getenv("RECIPES_DIR", str(BASE_DIR / "recipes")))
+RECIPES_DIR = Path(os.getenv("RECIPES_DIR", str(SRC_DIR / "recipes")))
 
 # Obscura binary configuration
 OBSCURA_BIN_PATH = os.getenv("OBSCURA_BIN_PATH", "")

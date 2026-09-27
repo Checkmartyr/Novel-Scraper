@@ -33,7 +33,7 @@ graph TD
 
     subgraph "Memory & Persistence"
         Mem[DomainMemoryManager<br/>src/agent/domain_memory.py]
-        FastPath[(recipes/&lt;domain&gt;.json<br/>recipes/&lt;domain&gt;.py)]
+        FastPath[(src/recipes/&lt;domain&gt;.json<br/>src/recipes/&lt;domain&gt;.py)]
         Mem <--> FastPath
     end
 
@@ -180,7 +180,7 @@ sequenceDiagram
     CodeGen->>Observer: Provide ParserVerificationResult
     Observer->>Observer: Audit title accuracy, word count, residual ads
     alt Quality Score >= 0.85
-        Observer-->>Memory: Save Recipe to recipes/<domain>.json & .py
+        Observer-->>Memory: Save Recipe to src/recipes/<domain>.json & .py
     else Quality Score < 0.85 (Iterate <= 3)
         Observer-->>Analyzer: Return Review feedback + recommended selectors
         Analyzer->>CodeGen: Refine DOMStructurePlan
@@ -193,8 +193,8 @@ sequenceDiagram
 
 To eliminate redundant LLM calls and minimize latency/costs:
 1. When **TOC Agent** or **Chapter Agent** completes a verified extraction, [`DomainMemoryManager`](file:///D:/Code/Novel_scraping_agent/src/agent/domain_memory.py) persists:
-   - `recipes/<domain>.json`: Serialized selectors and configuration.
-   - `recipes/<domain>.py`: Generated Python extractor script containing the recipe's TOC and chapter extraction logic (uses the project's parsing dependencies).
+   - `src/recipes/<domain>.json`: Serialized selectors and configuration.
+   - `src/recipes/<domain>.py`: Generated Python extractor script containing the recipe's TOC and chapter extraction logic (uses the project's parsing dependencies).
 2. On subsequent scrape requests for the same domain:
    - The agent checks domain memory.
    - If a recipe is cached and validates against the current HTML, the matching extraction/classification step can run without another LLM call.

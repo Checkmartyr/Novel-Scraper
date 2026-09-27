@@ -5,8 +5,8 @@ __pycache__/
 novels/
 logs/
 .pytest_cache/
-bin/*
-!bin/.gitkeep
+src/bin/*
+!src/bin/.gitkeep
 *.png
 *.html
 *_chapters.txt

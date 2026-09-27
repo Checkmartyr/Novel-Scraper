@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Domain Memory & Recipe Caching (`src/agent/domain_memory.py`)**:
-  - Validated extraction plans and TOC strategies are now automatically persisted to `recipes/<domain>.json`.
-  - Generates standalone, self-contained Python extractors (`recipes/<domain>.py`) for external or offline use.
+  - Validated extraction plans and TOC strategies are now automatically persisted to `src/recipes/<domain>.json`.
+  - Generates standalone, self-contained Python extractors (`src/recipes/<domain>.py`) for external or offline use.
   - Implemented 0-token fast-path bypass for known domains, skipping LLM classification and selector synthesis entirely.
 - **Autonomous TocAgent with LangGraph (`src/agent/toc/`)**:
   - Implemented cyclic StateGraph workflow with `ClaimInspector`, `EmbeddedStateExtractor`, `DomLinkExtractor`, `InteractiveDomExpander`, and `TocAuditor`.

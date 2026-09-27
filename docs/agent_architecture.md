@@ -32,11 +32,9 @@ A known-domain recipe is a validated optimization, not an unconditional shortcut
 
 ```text
 Novel_scraping_agent/
-├── bin/                         # Obscura binary location
 ├── docs/                        # Architecture and workflow guides
 ├── logs/                        # Runtime session logs
 ├── novels/                      # Downloaded novels and metadata
-├── recipes/                     # Per-domain JSON recipes and generated Python extractors
 ├── scratch/                     # Local scratch workspace
 ├── scripts/
 │   └── repair_scraped_novels.py  # Repair utility for existing scraped output
@@ -44,6 +42,8 @@ Novel_scraping_agent/
 │   ├── __init__.py
 │   ├── config.py                # Environment-backed settings and runtime paths
 │   ├── main.py                  # CLI entrypoint and headless pipeline
+│   ├── bin/                     # Obscura binary location
+│   ├── recipes/                 # Per-domain JSON recipes and generated Python extractors
 │   ├── agent/                   # Classification, extraction agents, memory, and LLM support
 │   │   ├── __init__.py          # Public convenience exports
 │   │   ├── analyzer.py          # Compatibility re-export for agent.ch.analyzer
@@ -113,7 +113,7 @@ Novel_scraping_agent/
 └── uv.lock                      # Locked dependency versions
 ```
 
-`bin/`, `logs/`, `novels/`, and `recipes/` are runtime data directories. `dist/`, `.venv/`, Python bytecode, and test caches are generated artifacts rather than source modules. Keep machine-specific secrets in a local `.env`; do not commit them.
+`src/bin/` and `src/recipes/` hold the Obscura executable and per-domain recipe data; `logs/` and `novels/` hold runtime logs and downloaded output. `dist/`, `.venv/`, Python bytecode, and test caches are generated artifacts rather than source modules. Keep machine-specific secrets in a local `.env`; do not commit them.
 
 ## Source package responsibilities
 
@@ -129,7 +129,7 @@ Novel_scraping_agent/
 - **TOC extraction — `toc/`:** `TocAgent` wraps the compiled LangGraph workflow. `TocState` carries the current page, extracted `ChapterLink` items, metadata, strategy, confidence/audit signals, pagination, healing state, and logs. `tools.py` contains `ClaimInspector`, `EmbeddedStateExtractor`, `DomLinkExtractor`, `InteractiveDomExpander`, `PaginatedTocCrawler`, `TocAuditor`, and `TocSynthesizer`.
 - **Chapter extraction — `ch/`:** `ChapterAnalyzer` produces a `DOMStructurePlan`; `ChapterCodeGenerator` generates and tests a deterministic BeautifulSoup parser; `ExtractionObserver` returns a structured quality review; `ReviewLoopOrchestrator` coordinates refinement; and `SelfHealer` attempts repair when batch extraction fails.
 - **LLM integration — `llm/`:** `LLMClient` provides the shared model interface, `ChatGeminiInteractions` integrates the Gemini Interactions API with LangChain, and `tracker.py` records token usage.
-- **Domain memory — `domain_memory.py`:** stores validated TOC and chapter plans as `recipes/<domain>.json` and generated extractor code as `recipes/<domain>.py`. Consumers validate a saved plan against the current HTML before using it.
+- **Domain memory — `domain_memory.py`:** stores validated TOC and chapter plans as `src/recipes/<domain>.json` and generated extractor code as `src/recipes/<domain>.py`. Consumers validate a saved plan against the current HTML before using it.
 - **Compatibility exports:** root-level modules such as `agent/analyzer.py` and `agent/llm_client.py` re-export implementations from the `ch/` and `llm/` packages. Keep these shims when moving public symbols so existing imports continue to work.
 
 ### Browser and platform integration
@@ -163,10 +163,10 @@ The TOC graph and chapter review loop are independent mechanisms: TOC completene
 
 ## Runtime data and output
 
-- `recipes/<domain>.json` stores domain-level selectors, strategy, sample URLs, quality information, and usage timestamps; `recipes/<domain>.py` stores generated extraction code.
+- `src/recipes/<domain>.json` stores domain-level selectors, strategy, sample URLs, quality information, and usage timestamps; `src/recipes/<domain>.py` stores generated extraction code.
 - `novels/<Romanized_Title>/` contains zero-padded chapter Markdown files and `metadata.json`.
 - `logs/` contains timestamped CLI/TUI logs and a latest-session log.
-- `bin/` is the configured Obscura binary location. The executable can also be selected with `OBSCURA_BIN_PATH`.
+- `src/bin/` is the default Obscura binary location. The executable can also be selected with `OBSCURA_BIN_PATH`.
 
 ## Tests and extension points
 
