@@ -8,6 +8,7 @@ logs/
 src/bin/*
 src/recipes/*
 !src/bin/.gitkeep
+!src/recipes/.gitkeep
 *.png
 *.html
 *_chapters.txt
