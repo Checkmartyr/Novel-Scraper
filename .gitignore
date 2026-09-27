@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+novels/
+logs/
+.pytest_cache/
+bin/*
+!bin/.gitkeep
+*.png
+*.html
+*_chapters.txt
