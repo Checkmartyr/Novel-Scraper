@@ -343,3 +343,61 @@ async def test_tui_single_chapter_fallback_populates_toc_and_preview(tmp_path):
             reader = app.query_one("#reader-widget", RichMarkdownReader)
             assert "Once upon a time..." in reader.markdown_text
 
+
+@pytest.mark.asyncio
+async def test_tui_toc_search_filtering(tmp_path):
+    """Verify typing into #toc-search-input filters DataTable rows in real-time."""
+    app = NovelScraperApp(logs_dir=tmp_path / "logs")
+    async with app.run_test() as pilot:
+        chapters = [
+            ChapterLink(index=1, title="The Beginning of Time", url="https://example.com/1"),
+            ChapterLink(index=2, title="Middle Journey", url="https://example.com/2"),
+            ChapterLink(index=3, title="The Grand Finale", url="https://example.com/3"),
+        ]
+        app.populate_toc_table(chapters)
+        await pilot.pause()
+
+        table = app.query_one("#toc-table", DataTable)
+        assert table.row_count == 3
+
+        search_input = app.query_one("#toc-search-input", Input)
+        search_input.value = "Grand"
+        await pilot.pause()
+
+        assert table.row_count == 1
+
+        search_input.value = ""
+        await pilot.pause()
+        assert table.row_count == 3
+
+
+@pytest.mark.asyncio
+async def test_tui_stepper_and_mascot(tmp_path):
+    """Verify pipeline stepper updates classes and mascot status changes."""
+    app = NovelScraperApp(logs_dir=tmp_path / "logs")
+    async with app.run_test() as pilot:
+        app.set_pipeline_step(2)
+        step_url = app.query_one("#step-url", Static)
+        step_toc = app.query_one("#step-toc", Static)
+        assert "✓" in str(step_url.content)
+        assert "▶" in str(step_toc.content)
+
+        app.set_mascot_status("TESTING (=^･ω･^=)")
+        badge = app.query_one("#mascot-badge", Static)
+        assert "TESTING" in str(badge.content)
+
+
+def test_calculate_reading_stats():
+    """Verify reading time and word/char count calculations."""
+    from src.ui.widgets.reader import calculate_reading_stats
+    text = "Word " * 400
+    words, chars, time_est = calculate_reading_stats(text)
+    assert words == 400
+    assert time_est == "2 min"
+
+    # CJK text
+    cjk_text = "日本語の小説テキスト。" * 50
+    words_cjk, chars_cjk, time_cjk = calculate_reading_stats(cjk_text)
+    assert chars_cjk > 0
+    assert "min" in time_cjk
+

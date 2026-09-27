@@ -40,34 +40,59 @@ class NovelScraperApp(App):
     CSS = """
     Screen {
         layout: vertical;
-        background: $surface;
+        background: #1a1b26;
+        color: #c0caf5;
     }
     
     #top-bar {
         height: 4;
         width: 100%;
         padding: 0 1;
-        background: $surface-darken-1;
-        border-bottom: solid $primary;
+        background: #16161e;
+        border-bottom: solid #7aa2f7;
+        align: center middle;
+    }
+
+    #mascot-badge {
+        width: auto;
+        margin-right: 1;
+        color: #bb9af7;
+        text-style: bold;
     }
     
     #url-input {
-        width: 60%;
+        width: 50%;
         margin-right: 1;
+        background: #24283b;
+        border: tall #3b4261;
+        color: #c0caf5;
+    }
+    #url-input:focus {
+        border: tall #7aa2f7;
     }
     
     #btn-analyze {
-        width: 15%;
+        width: 14%;
         margin-right: 1;
+        background: #7aa2f7;
+        color: #1a1b26;
+        text-style: bold;
+    }
+    #btn-analyze:hover {
+        background: #7dcfff;
     }
     
     #concurrency-input {
         width: 10%;
         margin-right: 1;
+        background: #24283b;
+        border: tall #3b4261;
+        color: #c0caf5;
     }
     
     #stealth-check {
         width: 12%;
+        color: #9ece6a;
     }
     
     #main-content {
@@ -79,35 +104,91 @@ class NovelScraperApp(App):
         width: 32%;
         height: 100%;
         padding: 1;
-        border-right: solid $primary;
-        background: $surface-darken-1;
+        border-right: solid #7aa2f7;
+        background: #16161e;
     }
     
     #right-panel {
         width: 68%;
         height: 100%;
+        background: #1a1b26;
     }
     
     .panel-box {
-        border: round $accent;
+        border: round #3b4261;
+        background: #1f2335;
         padding: 1;
         margin-bottom: 1;
+    }
+    
+    .card-header {
+        color: #bb9af7;
+        text-style: bold;
+        border-bottom: solid #3b4261;
+        margin-bottom: 1;
+        padding-bottom: 0;
+    }
+
+    .step-item {
+        padding-left: 1;
+        height: 1;
+    }
+
+    .step-active {
+        color: #7dcfff;
+        text-style: bold;
+    }
+
+    .step-done {
+        color: #9ece6a;
+    }
+
+    .step-pending {
+        color: #565f89;
     }
     
     .btn-action {
         width: 100%;
         margin-bottom: 1;
+        text-style: bold;
+    }
+
+    #toc-search-input {
+        width: 100%;
+        margin-bottom: 1;
+        background: #24283b;
+        border: tall #3b4261;
+        color: #c0caf5;
+    }
+    #toc-search-input:focus {
+        border: tall #7aa2f7;
     }
 
     #toc-table {
+        height: 1fr;
+        width: 100%;
+        background: #1a1b26;
+    }
+
+    #code-widget {
+        padding: 1 2;
+        background: #1a1b26;
+        height: 100%;
+        overflow-y: scroll;
+    }
+
+    #recipes-table {
         height: 100%;
         width: 100%;
+        background: #1a1b26;
     }
     """
     
     BINDINGS = [
         ("q", "quit", "Quit"),
         ("ctrl+c", "quit", "Quit"),
+        ("f5", "analyze", "Analyze URL"),
+        ("ctrl+d", "start_batch", "Download"),
     ]
 
     def __init__(
@@ -143,28 +224,37 @@ class NovelScraperApp(App):
         self.sample_chapter_url: str = ""
         self.sample_chapter_title: str = ""
         self.last_interaction_id: Optional[str] = None
+        self.all_chapter_links: List[ChapterLink] = []
 
     def compose(self) -> ComposeResult:
         yield Header()
         
         with Horizontal(id="top-bar"):
+            yield Static("(=^･ω･^=) Cristina: IDLE", id="mascot-badge")
             yield Input(
-                placeholder="Enter novel TOC or chapter URL...",
+                placeholder="Enter novel TOC or chapter URL (Enter to analyze)...",
                 value=self.initial_url,
                 id="url-input"
             )
-            yield Button("Analyze URL", variant="primary", id="btn-analyze")
+            yield Button("🔍 Analyze", variant="primary", id="btn-analyze")
             yield Input(
                 placeholder="Workers",
                 value=str(self.initial_concurrency),
                 id="concurrency-input"
             )
-            yield Checkbox("Stealth", value=True, id="stealth-check")
+            yield Checkbox("🛡️ Stealth", value=True, id="stealth-check")
             
         with Horizontal(id="main-content"):
             with Vertical(id="left-panel"):
+                with Vertical(classes="panel-box", id="stepper-box"):
+                    yield Static("Scraping Pipeline", classes="card-header text-bold")
+                    yield Static("① Target URL", id="step-url", classes="step-item step-active")
+                    yield Static("② TOC Discovery", id="step-toc", classes="step-item step-pending")
+                    yield Static("③ DOM Synthesis", id="step-analysis", classes="step-item step-pending")
+                    yield Static("④ Batch Scrape", id="step-batch", classes="step-item step-pending")
+
                 with Vertical(classes="panel-box"):
-                    yield Static("Novel Details", classes="accent text-bold")
+                    yield Static("Novel Details", classes="card-header text-bold")
                     yield Static("Title: -", id="detail-title")
                     yield Static("Author: -", id="detail-author")
                     yield Static("Page Type: -", id="detail-type")
@@ -174,14 +264,16 @@ class NovelScraperApp(App):
                     yield Static("Tokens: 0", id="detail-tokens")
                 
                 with Vertical(classes="panel-box"):
-                    yield Static("Actions", classes="accent text-bold")
-                    yield Button("Approve & Download", variant="success", id="btn-approve", classes="btn-action", disabled=True)
-                    yield Button("Pause / Resume", variant="warning", id="btn-pause", classes="btn-action", disabled=True)
-                    yield Button("Cancel", variant="error", id="btn-cancel", classes="btn-action", disabled=True)
+                    yield Static("Actions", classes="card-header text-bold")
+                    yield Button("🚀 Approve & Download", variant="success", id="btn-approve", classes="btn-action", disabled=True)
+                    yield Button("⏸️ Pause / Resume", variant="warning", id="btn-pause", classes="btn-action", disabled=True)
+                    yield Button("⏹️ Cancel", variant="error", id="btn-cancel", classes="btn-action", disabled=True)
+                    yield Button("📂 Open Folder", variant="default", id="btn-open-folder", classes="btn-action", disabled=True)
 
             with Vertical(id="right-panel"):
                 with TabbedContent(id="tabs"):
                     with TabPane("Table of Contents", id="tab-toc"):
+                        yield Input(placeholder="🔎 Filter chapters by title or index...", id="toc-search-input")
                         yield DataTable(id="toc-table", cursor_type="row")
                     with TabPane("Sample Chapter Preview", id="tab-preview"):
                         yield RichMarkdownReader(id="reader-widget")
@@ -189,6 +281,8 @@ class NovelScraperApp(App):
                         yield Static("# Parser code will appear here after analysis", id="code-widget")
                     with TabPane("Live Logs", id="tab-logs"):
                         yield RichLog(id="log-widget", max_lines=1000, highlight=True, markup=True)
+                    with TabPane("Domain Recipes", id="tab-recipes"):
+                        yield DataTable(id="recipes-table", cursor_type="row")
                         
         yield BatchProgressWidget(id="progress-widget")
         yield Footer()
@@ -197,6 +291,11 @@ class NovelScraperApp(App):
         """Initialize DataTable columns, log session info, and setup UI state on mount."""
         table = self.query_one("#toc-table", DataTable)
         table.add_columns("#", "Chapter Title", "URL")
+
+        recipes_table = self.query_one("#recipes-table", DataTable)
+        recipes_table.add_columns("Domain", "Strategy", "Title Sel", "Content Sel", "Quality", "Used")
+        self.load_recipes_table()
+
         self.log_msg(
             f"Local file logging active: {self.session_log_path.name} & {self.latest_log_path.name} (in folder {self.logs_dir.name}/)",
             "info",
@@ -244,6 +343,96 @@ class NovelScraperApp(App):
         out = summary["completion_tokens"]
         self.query_one("#detail-tokens", Static).update(f"Tokens: {tot:,} (In: {inp:,} | Out: {out:,})")
 
+    def set_pipeline_step(self, step_num: int) -> None:
+        """Update visual pipeline stepper (1=URL, 2=TOC, 3=DOM, 4=Batch)."""
+        steps = [
+            ("#step-url", "① Target URL"),
+            ("#step-toc", "② TOC Discovery"),
+            ("#step-analysis", "③ DOM Synthesis"),
+            ("#step-batch", "④ Batch Scrape"),
+        ]
+        for idx, (elem_id, label) in enumerate(steps, start=1):
+            try:
+                el = self.query_one(elem_id, Static)
+                el.remove_class("step-active", "step-done", "step-pending")
+                if idx < step_num:
+                    el.add_class("step-done")
+                    el.update(f"[bold green]✓[/bold green] {label}")
+                elif idx == step_num:
+                    el.add_class("step-active")
+                    el.update(f"[bold cyan]▶[/bold cyan] [bold]{label}[/bold]")
+                else:
+                    el.add_class("step-pending")
+                    el.update(f"[dim]○ {label}[/dim]")
+            except Exception:
+                pass
+
+    def set_mascot_status(self, status: str) -> None:
+        """Update mascot badge in top bar."""
+        try:
+            badge = self.query_one("#mascot-badge", Static)
+            badge.update(f"(=^･ω･^=) Cristina: {status}")
+        except Exception:
+            pass
+
+    def load_recipes_table(self) -> None:
+        """Populate recipes table with learned domain recipes."""
+        try:
+            from src.agent.domain_memory import domain_memory
+            table = self.query_one("#recipes-table", DataTable)
+            table.clear()
+            recipes = domain_memory.list_recipes()
+            for r in recipes:
+                table.add_row(
+                    r["domain"],
+                    r["strategy"],
+                    r["title_selector"][:25],
+                    r["content_selector"][:25],
+                    f"{r['quality_score']*100:.0f}%",
+                    str(r["times_used"]),
+                )
+        except Exception:
+            pass
+
+    def action_open_folder(self) -> None:
+        """Open the downloaded novel directory in the OS file explorer."""
+        if not self.classification or not self.classification.novel_title:
+            return
+        novel_folder = self.storage.get_novel_dir(self.classification.novel_title)
+        import os
+        import subprocess
+        try:
+            if os.name == "nt":
+                os.startfile(str(novel_folder))
+            else:
+                subprocess.Popen(["xdg-open", str(novel_folder)])
+            self.log_msg(f"Opened novel folder: '{novel_folder}'", "info")
+        except Exception as e:
+            self.log_msg(f"Novel folder path: '{novel_folder}' ({e})", "info")
+
+    def on_input_changed(self, event: Input.Changed) -> None:
+        """Handle real-time search filtering in TOC table."""
+        if event.input.id == "toc-search-input":
+            query = event.value.strip().lower()
+            table = self.query_one("#toc-table", DataTable)
+            table.clear()
+            matching = [
+                ch for ch in self.all_chapter_links
+                if query in ch.title.lower() or query in str(ch.index) or query in ch.url.lower()
+            ] if query else self.all_chapter_links
+            for ch in matching:
+                table.add_row(str(ch.index), ch.title, ch.url)
+            if matching:
+                try:
+                    table.move_cursor(row=0)
+                except Exception:
+                    pass
+
+    async def on_input_submitted(self, event: Input.Submitted) -> None:
+        """Submit URL when Enter is pressed in #url-input."""
+        if event.input.id == "url-input":
+            await self.action_analyze()
+
     async def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle UI button clicks."""
         if event.button.id == "btn-analyze":
@@ -254,9 +443,12 @@ class NovelScraperApp(App):
             self.action_toggle_pause()
         elif event.button.id == "btn-cancel":
             self.action_cancel_scrape()
+        elif event.button.id == "btn-open-folder":
+            self.action_open_folder()
 
     def populate_toc_table(self, chapter_links: List[ChapterLink]) -> None:
         """Populate DataTable with chapter links and highlight first row if available."""
+        self.all_chapter_links = list(chapter_links)
         table = self.query_one("#toc-table", DataTable)
         table.clear()
         for ch in chapter_links:
@@ -269,6 +461,8 @@ class NovelScraperApp(App):
 
     async def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
         """Handle chapter selection in TOC table: switch to preview tab and load chapter preview."""
+        if event.data_table.id != "toc-table":
+            return
         try:
             row = event.data_table.get_row(event.row_key)
             if not row or len(row) < 3:
@@ -339,6 +533,8 @@ class NovelScraperApp(App):
         
         progress = self.query_one("#progress-widget", BatchProgressWidget)
         progress.set_status("Analyzing page structure with Obscura...")
+        self.set_pipeline_step(2)
+        self.set_mascot_status("ANALYZING 🔄")
         self.log_msg(f"Fetching URL via Obscura (stealth={stealth}): {url}")
         
         # Switch to logs tab so user can monitor real-time analysis progress
@@ -463,6 +659,10 @@ class NovelScraperApp(App):
             )
             self.log_msg(f"Novel folder created: '{novel_folder}'", "info")
             self.log_msg(f"Saved initial metadata.json with {len(self.classification.chapter_links)} chapters: '{meta_path.name}'", "info")
+            try:
+                self.query_one("#btn-open-folder", Button).disabled = False
+            except Exception:
+                pass
 
             # 3. Fetch sample chapter HTML
             self.log_msg(f"Fetching sample chapter for selector synthesis: {sample_chapter_url}", "info")
@@ -472,6 +672,7 @@ class NovelScraperApp(App):
                 self.sample_html = await self.obscura.fetch_html(sample_chapter_url, stealth=stealth)
                 
             # 4. Analyze sample chapter DOM with Observer Review Loop
+            self.set_pipeline_step(3)
             self.log_msg("Initiating Observer Review & Refinement Loop...", "info")
             orchestrator = ReviewLoopOrchestrator(analyzer=self.analyzer)
 
@@ -537,9 +738,12 @@ class NovelScraperApp(App):
                     self.log_msg(f"Domain recipe saved: recipes/{saved_recipe.domain}.json & .py", "info")
                     full_script = domain_memory.generate_full_standalone_script(saved_recipe)
                     code_view.update(Syntax(full_script, "python", theme="monokai", line_numbers=True))
+                    self.load_recipes_table()
                 except Exception as e:
                     self.log_msg(f"Failed saving domain recipe: {e}", "warning")
 
+                self.set_pipeline_step(4)
+                self.set_mascot_status("READY ✅")
                 self.log_msg(f"Verification passed! Chapter words: {self.verification.word_count}. Ready for approval.", "info")
                 self.query_one("#btn-approve", Button).disabled = False
                 progress.set_status("Ready. Please review preview and click Approve & Download.")
@@ -575,6 +779,7 @@ class NovelScraperApp(App):
         btn_approve.disabled = True
         self.query_one("#btn-pause", Button).disabled = False
         self.query_one("#btn-cancel", Button).disabled = False
+        self.set_mascot_status("DOWNLOADING ⚡")
         
         # Read workers concurrency setting
         try:
@@ -621,9 +826,11 @@ class NovelScraperApp(App):
             progress_widget.set_status(f"Completed! {summary['completed']}/{summary['total']} chapters saved.")
             novel_dest = self.storage.get_novel_dir(self.classification.novel_title)
             self.log_msg(f"Novel saved successfully to '{novel_dest}'!", "info")
+            self.set_mascot_status("COMPLETED ★ (=^･ω･^=)")
         except Exception as e:
             self.log_msg(f"Batch execution error: {e}", "error")
             progress_widget.set_status("Batch execution error.")
+            self.set_mascot_status("ERROR ❌")
         finally:
             self.query_one("#btn-pause", Button).disabled = True
             self.query_one("#btn-cancel", Button).disabled = True
