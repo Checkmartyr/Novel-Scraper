@@ -4,6 +4,13 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 
 from src.agent.analyzer import DOMStructurePlan
+from src.utils.title_cleaner import clean_chapter_title, clean_chapter_content
+
+DEFAULT_NOISE_SELECTORS = [
+    ".disclaimer", ".notice", ".alert", ".premium-notice", ".vip-notice",
+    ".membership", ".chapter-warning", ".post-views", ".entry-meta",
+    ".sharedaddy", ".jp-relatedposts"
+]
 
 class ExtractedChapter(BaseModel):
     title: str
@@ -12,6 +19,7 @@ class ExtractedChapter(BaseModel):
     char_count: int
     success: bool
     error: Optional[str] = None
+    is_paywalled: bool = False
 
 class ParserVerificationResult(BaseModel):
     success: bool
@@ -90,8 +98,9 @@ def extract_chapter(html: str) -> dict:
         """Execute extraction directly on HTML using the configured plan."""
         soup = BeautifulSoup(html, "lxml")
         
-        # Remove clutter
-        for sel in self.plan.remove_selectors:
+        # Remove clutter and aggregator noise
+        all_remove = set(self.plan.remove_selectors or []) | set(DEFAULT_NOISE_SELECTORS)
+        for sel in all_remove:
             try:
                 for tag in soup.select(sel):
                     tag.decompose()
@@ -114,6 +123,7 @@ def extract_chapter(html: str) -> dict:
                             break
                     except Exception:
                         pass
+        title = clean_chapter_title(title)
                 
         # Content containers: select all matches and filter to top-level containers
         content_elements = []
@@ -160,13 +170,15 @@ def extract_chapter(html: str) -> dict:
                     line = line.strip()
                     if line:
                         paragraphs.append(line)
-                    
-        content_md = "\n\n".join(paragraphs)
+
+        # Filter aggregator disclaimers and detect paywalls
+        clean_paras, is_paywalled = clean_chapter_content(paragraphs)
+        content_md = "\n\n".join(clean_paras)
         word_count = len(re.findall(r"\w+", content_md))
         char_count = len(content_md)
 
         # Fallback check: if extracted text is suspiciously short (< 150 chars), check if a known richer container exists on the page
-        if char_count < 150:
+        if char_count < 150 and not is_paywalled:
             for fb in ["div.p-novel__body", "#novel_honbun", ".entry-content", "article"]:
                 try:
                     fb_el = soup.select_one(fb)
@@ -180,17 +192,23 @@ def extract_chapter(html: str) -> dict:
                                     fb_paras.append(t)
                         else:
                             fb_paras = [l.strip() for l in fb_el.get_text("\n", strip=True).split("\n") if l.strip()]
-                        fb_md = "\n\n".join(fb_paras)
+                        fb_cleaned, fb_paywall = clean_chapter_content(fb_paras)
+                        fb_md = "\n\n".join(fb_cleaned)
                         if len(fb_md) > char_count + 200:
                             content_md = fb_md
                             word_count = len(re.findall(r"\w+", content_md))
                             char_count = len(content_md)
+                            is_paywalled = fb_paywall
                             break
                 except Exception:
                     pass
         
         success = char_count > 50
-        error = None if success else "Extracted text content too short (< 50 chars)."
+        if is_paywalled and char_count <= 100:
+            success = False
+            error = "Chapter appears to be paywalled or premium teaser."
+        else:
+            error = None if success else "Extracted text content too short (< 50 chars)."
         
         return ExtractedChapter(
             title=title,
@@ -198,7 +216,8 @@ def extract_chapter(html: str) -> dict:
             word_count=word_count,
             char_count=char_count,
             success=success,
-            error=error
+            error=error,
+            is_paywalled=is_paywalled
         )
 
     def test_and_verify(self, sample_html: str) -> ParserVerificationResult:

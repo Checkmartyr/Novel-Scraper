@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 
 from src.agent.llm_client import LLMClient
+from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
 
 logger = logging.getLogger("agent.classifier")
 
@@ -245,9 +246,11 @@ Analyze the page:
                     for c in result.chapter_links:
                         if c.url not in seen_urls:
                             seen_urls.add(c.url)
-                            c.title = re.sub(r"\s*[（\(\[]\s*\d+\s*/\s*\d+\s*[）\)\]]", "", c.title).strip() or c.title
-                            c.index = len(cleaned_links) + 1
+                            c.title = clean_chapter_title(c.title)
                             cleaned_links.append(c)
+                    cleaned_links, _ = detect_and_fix_reverse_order(cleaned_links)
+                    for idx, c in enumerate(cleaned_links, 1):
+                        c.index = idx
                     result.chapter_links = cleaned_links
                     
                 # If Apollo state contains a more complete TOC, merge/augment it
@@ -301,8 +304,12 @@ Analyze the page:
         next_candidates = []
         seen_urls = set()
         
+        # Decompose noisy sub-elements (views, dates, badges)
+        for noise in soup.select("time, .date, .view, .views, .count, .num-views, .chapter-release-date, .post-on, .chapter-time, .release-date, .badge, .small, .fst-italic"):
+            noise.decompose()
+
         for a in soup.find_all("a", href=True):
-            text = a.get_text(strip=True)
+            text = a.get_text(" ", strip=True)
             href = a["href"].strip()
             if not text or not href or href.startswith("javascript:") or href.startswith("#"):
                 continue
@@ -331,7 +338,7 @@ Analyze the page:
 
             if is_chapter and full_url not in seen_urls:
                 seen_urls.add(full_url)
-                clean_title = re.sub(r"\s*[（\(\[]\s*\d+\s*/\s*\d+\s*[）\)\]]", "", text).strip()
+                clean_title = clean_chapter_title(text)
                 chapter_links.append(ChapterLink(
                     index=len(chapter_links) + 1,
                     title=clean_title or text,
@@ -415,6 +422,10 @@ Analyze the page:
         novel_title = self._clean_novel_title(raw_title)
             
         if is_toc:
+            chapter_links, _ = detect_and_fix_reverse_order(chapter_links)
+            for idx, ch in enumerate(chapter_links, 1):
+                ch.index = idx
+                ch.title = clean_chapter_title(ch.title)
             return ClassificationResult(
                 page_type="TOC",
                 novel_title=novel_title,

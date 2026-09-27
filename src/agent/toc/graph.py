@@ -15,6 +15,7 @@ from src.agent.toc.tools import (
     TocSynthesizer,
 )
 from src.core.obscura_client import ObscuraClient
+from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
 
 logger = logging.getLogger("agent.toc.graph")
 
@@ -311,21 +312,17 @@ class TocGraphWorkflow:
                 self._emit_log(fail_log, "warning")
                 logs.append(fail_log)
 
-        # Check if chapters are in reverse chronological order (e.g. latest chapter first)
-        import re
-        if len(all_chapters) >= 2:
-            m_first = re.search(r"(\d+)", all_chapters[0].title) or re.search(r"/(\d+)/?$", all_chapters[0].url)
-            m_last = re.search(r"(\d+)", all_chapters[-1].title) or re.search(r"/(\d+)/?$", all_chapters[-1].url)
-            if m_first and m_last:
-                if int(m_first.group(1)) > int(m_last.group(1)):
-                    inv_msg = "[PaginationCrawler] Detected reverse chronological order. Inverting to reading order..."
-                    self._emit_log(inv_msg)
-                    logs.append(inv_msg)
-                    all_chapters.reverse()
+        # Check if chapters are in reverse chronological order
+        all_chapters, rev_detected = detect_and_fix_reverse_order(all_chapters)
+        if rev_detected:
+            inv_msg = "[PaginationCrawler] Detected reverse chronological order. Inverting to reading order..."
+            self._emit_log(inv_msg)
+            logs.append(inv_msg)
 
-        # Re-index chapters monotonically 1..N
+        # Re-index chapters monotonically 1..N and clean titles
         for idx, ch in enumerate(all_chapters, start=1):
             ch.index = idx
+            ch.title = clean_chapter_title(ch.title)
 
         # Update claimed chapter count if pagination discovery revealed full catalog
         claimed = state.get("claimed_chapter_count")
@@ -345,7 +342,7 @@ class TocGraphWorkflow:
         }
 
     async def _node_finalize(self, state: TocState) -> Dict[str, Any]:
-        """Finalize chapter list with deduplication, sequence re-indexing, and clean titles."""
+        """Finalize chapter list with deduplication, reverse order fix, sequence re-indexing, and clean titles."""
         logs = list(state.get("logs", []))
         raw_chapters = state.get("extracted_chapters", [])
         
@@ -356,9 +353,17 @@ class TocGraphWorkflow:
                 seen.add(ch.url)
                 clean_list.append(ch)
 
-        # Sort and re-index 1..N
+        # Detect and fix reverse order (e.g. latest chapter first)
+        clean_list, rev_detected = detect_and_fix_reverse_order(clean_list)
+        if rev_detected:
+            rev_msg = "[Finalize] Detected reverse chronological order. Inverted to ascending reading order."
+            self._emit_log(rev_msg)
+            logs.append(rev_msg)
+
+        # Sort and re-index 1..N, clean titles
         for idx, ch in enumerate(clean_list, 1):
             ch.index = idx
+            ch.title = clean_chapter_title(ch.title)
 
         log_msg = f"[Finalize] Outputting {len(clean_list)} clean chapters (Strategy: {state.get('extraction_strategy')}, Confidence: {state.get('confidence_score')})."
         self._emit_log(log_msg)

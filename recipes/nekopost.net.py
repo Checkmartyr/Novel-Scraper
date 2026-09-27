@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Autonomous Scraper Recipe for: example.com
-Generated: 2026-09-27 11:35:36 UTC
-Sample TOC URL: https://example.com/ch1
-Sample Chapter URL: https://example.com/ch1
-Quality Score: 1.0/1.0
+Autonomous Scraper Recipe for: nekopost.net
+Generated: 2026-09-27 11:33:13 UTC
+Sample TOC URL: https://www.nekopost.net/novel/17961
+Sample Chapter URL: 
+Quality Score: 0.5/1.0
 """
 
 import sys
@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup
 # ==============================================================================
 
 def extract_toc(html: str, base_url: str) -> list[dict]:
-    """Extract table of contents chapters from HTML for example.com."""
+    """Extract table of contents chapters from HTML for nekopost.net."""
     soup = BeautifulSoup(html, "lxml")
     chapters = []
     seen_urls = set()
@@ -107,7 +107,7 @@ def extract_chapter(html: str) -> dict:
         title = title_el.get_text(strip=True)
         
     # Extract Content
-    content_elements = soup.select(".content")
+    content_elements = soup.select("body")
     top_elements = [
         el for el in content_elements
         if not any(other is not el and other in el.parents for other in content_elements)
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     import argparse
     import httpx
 
-    parser = argparse.ArgumentParser(description="Standalone scraper for example.com")
+    parser = argparse.ArgumentParser(description="Standalone scraper for nekopost.net")
     parser.add_argument("--toc", help="URL of the novel Table of Contents")
     parser.add_argument("--chapter", help="URL of a chapter page")
     parser.add_argument("--batch", action="store_true", help="Scrape all chapters discovered via TOC")
@@ -171,7 +171,7 @@ if __name__ == "__main__":
         resp = httpx.get(args.toc, headers=headers, follow_redirects=True)
         chapters = extract_toc(resp.text, args.toc)
         print(f"Found {len(chapters)} chapters. Starting batch scrape into '{args.output_dir}'...")
-        out_dir = Path(args.output_dir) / "example.com"
+        out_dir = Path(args.output_dir) / "nekopost.net"
         out_dir.mkdir(parents=True, exist_ok=True)
         for ch in chapters:
             c_url = ch["url"]

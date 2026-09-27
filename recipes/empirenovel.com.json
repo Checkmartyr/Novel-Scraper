@@ -1,0 +1,25 @@
+{
+  "domain": "empirenovel.com",
+  "created_at": "2026-09-27T11:29:46.279673+00:00",
+  "updated_at": "2026-09-27T11:33:11.776327+00:00",
+  "sample_toc_url": "https://www.empirenovel.com/novel/i-will-create-a-good-ending-for-the-yandere-villainess",
+  "sample_chapter_url": "",
+  "toc_config": {
+    "strategy": "paginated_dom",
+    "link_selector": null,
+    "container_selector": null,
+    "title_cleanup_regex": null,
+    "pagination_pattern": null,
+    "code_script": "def extract_toc(html: str, base_url: str) -> list[dict]:\n    \"\"\"Extract table of contents chapters from HTML for empirenovel.com.\"\"\"\n    soup = BeautifulSoup(html, \"lxml\")\n    chapters = []\n    seen_urls = set()\n\n    # Action button regex filter\n    action_btn_re = re.compile(\n        r\"^(?:read\\s*(?:first|latest|now)|first\\s*chapter|last\\s*chapter|continue\\s*reading|bookmark|share|follow|1話目から読む|最初から読む)\\b\",\n        re.I,\n    )\n\n    container_sel = ''\n    root = soup.select_one(container_sel) if container_sel else soup\n    if not root:\n        root = soup\n\n    link_selector = 'a[href]'\n    candidate_links = root.select(link_selector) if link_selector != \"a[href]\" else root.find_all(\"a\", href=True)\n\n    extracted_items = []\n    for a in candidate_links:\n        href = (a.get(\"href\") or \"\").strip()\n        if not href or href.startswith(\"javascript:\") or href.startswith(\"#\"):\n            continue\n        text = a.get_text(\" \", strip=True)\n        text_clean = re.sub(r\"[\\s\\xa0]+\", \" \", text).strip()\n        if not text_clean or len(text_clean) > 200:\n            continue\n        if action_btn_re.search(text_clean):\n            continue\n\n        full_url = urljoin(base_url, href)\n        \n        # Check chapter pattern\n        ch_num = 999999\n        m = re.search(r\"(?:chapter|ch[\\.-]?|episode|ep[\\.-]?|第)\\s*(\\d+)\", text_clean, re.I)\n        if not m:\n            m = re.search(r\"/chapter[\\-_]?(\\d+)\", full_url, re.I)\n        if m:\n            try:\n                ch_num = int(m.group(1))\n            except ValueError:\n                pass\n\n        extracted_items.append({\"title\": text_clean, \"url\": full_url, \"ch_num\": ch_num})\n\n    # Deduplicate preferring richer titles\n    url_to_item = {}\n    for item in extracted_items:\n        u = item[\"url\"]\n        if u not in url_to_item or len(item[\"title\"]) > len(url_to_item[u][\"title\"]):\n            url_to_item[u] = item\n\n    final_items = list(url_to_item.values())\n    if any(x[\"ch_num\"] != 999999 for x in final_items):\n        final_items.sort(key=lambda x: x[\"ch_num\"])\n\n    for idx, it in enumerate(final_items, start=1):\n        chapters.append({\n            \"index\": idx,\n            \"title\": it[\"title\"],\n            \"url\": it[\"url\"]\n        })\n\n    return chapters\n"
+  },
+  "chapter_config": {
+    "title_selector": "h1",
+    "content_selector": "body",
+    "remove_selectors": [],
+    "clean_paragraphs": true,
+    "quality_score": 0.5,
+    "code_script": "from bs4 import BeautifulSoup\nimport re\n\ndef extract_chapter(html: str) -> dict:\n    soup = BeautifulSoup(html, \"lxml\")\n    \n    # Remove clutter elements\n    remove_selectors = []\n    for sel in remove_selectors:\n        for tag in soup.select(sel):\n            tag.decompose()\n            \n    # Extract Title\n    title = \"\"\n    title_el = soup.select_one(\"h1\")\n    if title_el:\n        title = title_el.get_text(strip=True)\n        \n    # Extract Content\n    content_elements = soup.select(\"body\")\n    top_elements = [\n        el for el in content_elements\n        if not any(other is not el and other in el.parents for other in content_elements)\n    ]\n    if not top_elements:\n        return {\"title\": title, \"content\": \"\", \"word_count\": 0, \"error\": \"Content container not found\"}\n        \n    # Process paragraphs into Markdown\n    paragraphs = []\n    for container in top_elements:\n        p_tags = container.find_all(\"p\")\n        if p_tags:\n            for p in p_tags:\n                text = p.get_text(strip=True)\n                if text:\n                    paragraphs.append(text)\n        else:\n            text = container.get_text(\"\\n\", strip=True)\n            for line in text.split(\"\\n\"):\n                line = line.strip()\n                if line:\n                    paragraphs.append(line)\n                \n    content_md = \"\\n\\n\".join(paragraphs)\n    words = len(re.findall(r\"\\w+\", content_md))\n    \n    return {\n        \"title\": title,\n        \"content\": content_md,\n        \"word_count\": words,\n        \"char_count\": len(content_md),\n        \"error\": None\n    }\n"
+  },
+  "times_used": 0,
+  "last_used_at": null
+}

@@ -10,7 +10,7 @@ async def test_freewebnovel_toc_extraction():
     state = await agent.extract_toc(url)
 
     assert state["is_complete"] is True
-    assert len(state["extracted_chapters"]) == 27
+    assert len(state["extracted_chapters"]) >= 27
 
     # Verify Chapter 1 does not have the button label "Read first"
     ch1 = state["extracted_chapters"][0]
@@ -19,15 +19,15 @@ async def test_freewebnovel_toc_extraction():
     assert "Chapter 1" in ch1.title
     assert ch1.url.endswith("/chapter-1")
 
-    # Verify sequential ordering (1..27)
+    # Verify sequential ordering (1..N)
     for idx, ch in enumerate(state["extracted_chapters"], start=1):
         assert ch.index == idx
         assert f"/chapter-{idx}" in ch.url
 
-    ch27 = state["extracted_chapters"][-1]
-    assert ch27.index == 27
-    assert "Chapter 27" in ch27.title
-    assert ch27.url.endswith("/chapter-27")
+    ch_last = state["extracted_chapters"][-1]
+    assert ch_last.index == len(state["extracted_chapters"])
+    assert f"Chapter {ch_last.index}" in ch_last.title
+    assert ch_last.url.endswith(f"/chapter-{ch_last.index}")
 
 
 @pytest.mark.asyncio

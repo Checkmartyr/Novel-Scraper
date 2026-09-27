@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 from src.agent.classifier import ChapterLink
 from src.core.obscura_client import ObscuraClient
+from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
 
 logger = logging.getLogger("agent.toc.tools")
 
@@ -447,12 +448,10 @@ class DomLinkExtractor:
 
             if is_chapter:
                 a_copy = BeautifulSoup(str(a), "lxml")
-                for sub in a_copy.select(".small, .fst-italic, time, .date"):
+                for sub in a_copy.select(".small, .fst-italic, time, .date, .view, .views, .count, .num-views, .chapter-release-date, .post-on, .chapter-time, .release-date, .badge"):
                     sub.decompose()
-                clean_text = a_copy.get_text(strip=True)
-                clean_title = re.sub(r"\s*[（\(\[]\s*\d+\s*/\s*\d+\s*[）\)\]]", "", clean_text).strip()
-                clean_title = re.sub(r"[\s\xa0]+", " ", clean_title).strip()
-                final_title = clean_title or text
+                clean_text = a_copy.get_text(" ", strip=True)
+                final_title = clean_chapter_title(clean_text or text)
 
                 # Parse chapter number
                 ch_num = None
@@ -497,10 +496,12 @@ class DomLinkExtractor:
             for idx, it in enumerate(extracted_items, start=1):
                 chapters.append(ChapterLink(
                     index=idx,
-                    title=it["title"],
+                    title=clean_chapter_title(it["title"]),
                     url=it["url"],
                     chapter_number=it["ch_num"],
                 ))
+
+            chapters, _ = detect_and_fix_reverse_order(chapters)
 
         return chapters
 
@@ -710,8 +711,12 @@ class TocSynthesizer:
             href = a.get("href", "").strip()
             if not href or href.startswith("javascript:") or href.startswith("#"):
                 continue
-            text = a.get_text(" ", strip=True)
-            text_clean = re.sub(r"[\s\xa0]+", " ", text).strip()
+
+            a_copy = BeautifulSoup(str(a), "lxml")
+            for sub in a_copy.select(".small, .fst-italic, time, .date, .view, .views, .count, .num-views, .chapter-release-date, .post-on, .chapter-time, .release-date, .badge"):
+                sub.decompose()
+            text = a_copy.get_text(" ", strip=True)
+            text_clean = clean_chapter_title(text)
             if not text_clean or len(text_clean) > 200 or action_btn_re.search(text_clean):
                 continue
 
@@ -763,9 +768,11 @@ class TocSynthesizer:
                     seen_urls.add(u)
                     chapters.append(ChapterLink(
                         index=len(chapters) + 1,
-                        title=text,
+                        title=clean_chapter_title(text),
                         url=u
                     ))
+
+            chapters, _ = detect_and_fix_reverse_order(chapters)
 
         container_sel = best_cluster_key.split()[0] if best_cluster_key and " " in best_cluster_key else best_cluster_key
         link_sel = best_cluster_key.split()[-1] if best_cluster_key and " " in best_cluster_key else "a[href]"

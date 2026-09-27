@@ -8,6 +8,7 @@ import aiofiles
 from src.config import OUTPUT_DIR, INCLUDE_FRONTMATTER, ROMANIZE_FOLDER
 from src.agent.code_generator import ExtractedChapter
 from src.utils.romanizer import romanize_text
+from src.utils.title_cleaner import clean_chapter_title
 
 def sanitize_filename(name: str) -> str:
     """Sanitize string to be safe across Windows and POSIX filesystems."""
@@ -49,7 +50,7 @@ class NovelStorage:
         """Save chapter as Markdown file with clean raw text or optional YAML frontmatter."""
         novel_dir = self.get_novel_dir(novel_title)
         raw_ch_title = chapter_title or chapter.title or f"Chapter {chapter_index}"
-        clean_ch_title = re.sub(r"\s*[（\(\[]\s*\d+\s*/\s*\d+\s*[）\)\]]", "", raw_ch_title).strip() or raw_ch_title
+        clean_ch_title = clean_chapter_title(raw_ch_title) or raw_ch_title
         safe_title = sanitize_filename(clean_ch_title)
         
         # 4-digit zero-padded index: e.g. 0001 - Title.md

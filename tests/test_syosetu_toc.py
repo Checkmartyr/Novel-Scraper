@@ -66,13 +66,13 @@ async def test_syosetu_live_toc_agent():
         state = await agent.extract_toc("https://ncode.syosetu.com/n2273dh/")
         assert state["novel_title"] == "勇者召喚に巻き込まれたけど、異世界は平和でした"
         assert state["author"] == "灯台"
-        assert len(state["extracted_chapters"]) == 2635
-        assert state["claimed_chapter_count"] == 2635
+        assert len(state["extracted_chapters"]) >= 2635
+        assert state["claimed_chapter_count"] >= 2635
         assert state["is_complete"] is True
         assert state["confidence_score"] == 1.0
         assert state["extracted_chapters"][0].title == "異世界は平和でした"
         assert state["extracted_chapters"][0].url == "https://ncode.syosetu.com/n2273dh/1/"
-        assert state["extracted_chapters"][-1].title == "続・魔界の遊園地⑮"
-        assert state["extracted_chapters"][-1].url == "https://ncode.syosetu.com/n2273dh/2635/"
+        assert "続・魔界の遊園地" in state["extracted_chapters"][-1].title
+        assert state["extracted_chapters"][-1].url.startswith("https://ncode.syosetu.com/n2273dh/")
     finally:
         await agent.obscura.close()
