@@ -29,9 +29,28 @@ from src.agent.ch.review_loop import ReviewLoopOrchestrator
 from src.scraper.batch_runner import BatchScraperRunner
 from src.scraper.storage import NovelStorage
 from src.config import DEFAULT_CONCURRENCY
+from src.utils.novel_url import belongs_to_recipe_novel
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("api_bridge")
+
+
+def _scope_chapters(url: str, chapters: List[ChapterLink]) -> List[ChapterLink]:
+    """Do not send links provably belonging to another novel to the batch runner."""
+    from src.agent.domain_memory import domain_memory
+
+    recipe = domain_memory.get_recipe(url)
+    if not recipe:
+        return chapters
+    scoped = [
+        chapter for chapter in chapters
+        if belongs_to_recipe_novel(
+            url, chapter.url, recipe.sample_toc_url, recipe.sample_chapter_url
+        ) is not False
+    ]
+    for index, chapter in enumerate(scoped, start=1):
+        chapter.index = index
+    return scoped
 
 
 async def inspect_novel_url(url: str) -> Dict[str, Any]:
@@ -60,7 +79,8 @@ async def inspect_novel_url(url: str) -> Dict[str, Any]:
                 chapter_list = toc_state["extracted_chapters"]
                 classification.novel_title = toc_state.get("novel_title") or classification.novel_title
 
-        if not chapter_list:
+        chapter_list = _scope_chapters(url, chapter_list)
+        if not chapter_list and classification.page_type == "CHAPTER":
             chapter_list = [
                 ChapterLink(index=1, title=classification.chapter_title or "Chapter 1", url=url)
             ]
@@ -139,6 +159,9 @@ async def extract_novel_chapters(
                 chapter_list = toc_state["extracted_chapters"]
                 classification.novel_title = toc_state.get("novel_title") or classification.novel_title
 
+        chapter_list = _scope_chapters(url, chapter_list)
+        if not chapter_list and classification.page_type == "TOC":
+            raise ValueError("No chapters belonging to the requested novel were found")
         if not chapter_list:
             chapter_list = [
                 ChapterLink(index=1, title=classification.chapter_title or "Chapter 1", url=url)

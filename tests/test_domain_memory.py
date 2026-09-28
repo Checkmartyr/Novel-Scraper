@@ -142,6 +142,31 @@ def test_toc_fast_path(tmp_path):
     assert chapters[2].title == "Chapter 3"
 
 
+@pytest.mark.parametrize("selector", ["div.catalog a", None])
+def test_toc_recipe_rejects_other_novels_on_same_domain(tmp_path, selector):
+    manager = DomainMemoryManager(recipes_dir=tmp_path)
+    recipe = manager.save_recipe(
+        domain_or_url="https://reader.example/book/old/catalog",
+        sample_toc_url="https://reader.example/book/old/catalog",
+        sample_chapter_url="https://reader.example/book/old/chapter-1",
+        toc_strategy="dom_heuristic",
+        chapter_plan=DOMStructurePlan(title_selector="h1", content_selector="body"),
+        toc_link_selector=selector,
+    )
+    html = '''<div class="catalog">
+      <a href="/book/old/chapter-1">Chapter 1: Other book</a>
+      <a href="/book/new/chapter-1">Chapter 1: This book</a>
+    </div>'''
+    ok, chapters = manager.test_toc_recipe(recipe, html, "https://reader.example/book/new/catalog")
+    assert ok
+    assert [chapter.url for chapter in chapters] == ["https://reader.example/book/new/chapter-1"]
+
+    wrong_only = '<div class="catalog"><a href="/book/old/chapter-1">Chapter 1</a></div>'
+    ok, chapters = manager.test_toc_recipe(recipe, wrong_only, "https://reader.example/book/new/catalog")
+    assert not ok
+    assert chapters == []
+
+
 def test_chapter_fast_path(tmp_path):
     manager = DomainMemoryManager(recipes_dir=tmp_path)
     plan = DOMStructurePlan(

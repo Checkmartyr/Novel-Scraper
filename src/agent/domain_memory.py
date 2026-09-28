@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field
 from src.config import RECIPES_DIR
 from src.agent.ch import DOMStructurePlan, ChapterCodeGenerator, ExtractedChapter, ParserVerificationResult
 from src.agent.classifier import ChapterLink
+from src.utils.novel_url import belongs_to_recipe_novel
 
 logger = logging.getLogger("agent.domain_memory")
 
@@ -78,11 +79,11 @@ class DomainMemoryManager:
         """Extract and normalize clean base domain name from a URL or raw domain string."""
         if not url_or_domain:
             return ""
-        
+
         target = url_or_domain.strip()
         if not (target.startswith("http://") or target.startswith("https://")):
             target = "https://" + target
-            
+
         parsed = urlparse(target)
         netloc = parsed.netloc.lower()
         # Remove port if present
@@ -90,7 +91,7 @@ class DomainMemoryManager:
         # Remove leading www.
         if host.startswith("www."):
             host = host[4:]
-            
+
         # Clean filesystem-unsafe characters
         return re.sub(r"[^\w\.-]", "_", host)
 
@@ -185,7 +186,7 @@ class DomainMemoryManager:
             continue
 
         full_url = urljoin(base_url, href)
-        
+
         # Check chapter pattern
         ch_num = 999999
         m = re.search(r"(?:chapter|ch[\\.-]?|episode|ep[\\.-]?|第)\\s*(\\d+)", text_clean, re.I)
@@ -508,8 +509,16 @@ if __name__ == "__main__":
         """Test the saved TOC recipe on given HTML."""
         try:
             from src.agent.toc.tools import DomLinkExtractor
-            parsed_base = urlparse(base_url)
-            base_path = parsed_base.path.rstrip("/")
+            def keep_current_novel(items: List[ChapterLink]) -> List[ChapterLink]:
+                scoped = [
+                    item for item in items
+                    if belongs_to_recipe_novel(
+                        base_url, item.url, recipe.sample_toc_url, recipe.sample_chapter_url
+                    ) is not False
+                ]
+                for index, item in enumerate(scoped, start=1):
+                    item.index = index
+                return scoped
 
             # 1. If explicit link_selector is specified and matches elements
             link_sel = recipe.toc_config.link_selector
@@ -533,20 +542,13 @@ if __name__ == "__main__":
                         title = a.get_text(" ", strip=True)
                         title = re.sub(r"[\s\xa0]+", " ", title).strip()
                         extracted.append(ChapterLink(index=len(extracted) + 1, title=title or f"Chapter {len(extracted) + 1}", url=full_url))
+                    extracted = keep_current_novel(extracted)
                     if extracted:
                         return True, extracted
 
             # 2. Use DomLinkExtractor with platform heuristics
-            chapters = DomLinkExtractor.extract(html, base_url)
-            if chapters and base_path and len(base_path) > 3:
-                same_novel = [c for c in chapters if base_path in c.url]
-                if len(same_novel) >= 1:
-                    # Re-index
-                    for idx, c in enumerate(same_novel, start=1):
-                        c.index = idx
-                    return True, same_novel
-
-            return len(chapters) >= 1, chapters
+            chapters = keep_current_novel(DomLinkExtractor.extract(html, base_url))
+            return bool(chapters), chapters
         except Exception as e:
             logger.warning(f"Error executing TOC recipe for {recipe.domain}: {e}")
             return False, []

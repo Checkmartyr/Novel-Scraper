@@ -8,8 +8,10 @@ from pydantic import BaseModel, Field
 
 from src.agent.llm import LLMClient
 from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
+from src.utils.novel_url import belongs_to_recipe_novel, recipe_page_kind, toc_url_from_recipe
 
 logger = logging.getLogger("agent.classifier")
+
 
 class ChapterLink(BaseModel):
     index: int
@@ -30,7 +32,7 @@ class ClassificationResult(BaseModel):
 
 class PageClassifier:
     """Classifies novel web pages into TOC landing page vs Single Chapter."""
-    
+
     def __init__(
         self,
         llm_client: Optional[LLMClient] = None,
@@ -60,19 +62,19 @@ class PageClassifier:
     def _extract_page_summary(self, html: str, base_url: str) -> dict:
         """Condense HTML into metadata and candidate links to save LLM tokens."""
         soup = BeautifulSoup(html, "lxml")
-        
+
         # Remove non-content tags
         for tag in soup(["script", "style", "svg", "noscript", "iframe"]):
             tag.decompose()
-            
+
         page_title = soup.title.get_text(strip=True) if soup.title else ""
         meta_desc = ""
         desc_tag = soup.find("meta", attrs={"name": "description"}) or soup.find("meta", attrs={"property": "og:description"})
         if desc_tag and desc_tag.get("content"):
             meta_desc = desc_tag["content"].strip()
-            
+
         h1_texts = [h.get_text(strip=True) for h in soup.find_all("h1")][:3]
-        
+
         # Collect candidate navigation links
         nav_links = []
         parsed_base = urlparse(base_url)
@@ -85,7 +87,7 @@ class PageClassifier:
                 continue
             full_url = urljoin(base_url, href)
             nav_links.append({"text": text, "url": full_url})
-            
+
         # Smart link prioritization: prioritize chapter/episode links
         def link_priority(link: dict) -> int:
             u = link["url"].lower()
@@ -156,16 +158,22 @@ class PageClassifier:
 
     async def classify(self, url: str, html: str) -> ClassificationResult:
         """Classify page using Gemini with fallback to deterministic heuristic parser."""
+        recipe = None
+        page_kind = None
+        derived_toc_url = None
+
         # 1. Check Domain Memory fast-path bypass
         try:
             from src.agent.domain_memory import domain_memory
             from src.agent.toc.tools import ClaimInspector, TocAuditor
             recipe = domain_memory.get_recipe(url)
             if recipe:
+                page_kind = recipe_page_kind(url, recipe.sample_toc_url, recipe.sample_chapter_url)
+                derived_toc_url = toc_url_from_recipe(url, recipe.sample_toc_url, recipe.sample_chapter_url)
                 claimed, title, author, desc = ClaimInspector.inspect(html, url)
                 # Check if this page is a TOC by testing saved TOC recipe
                 ok, chapters = domain_memory.test_toc_recipe(recipe, html, url)
-                if ok and len(chapters) >= 1:
+                if page_kind != "CHAPTER" and ok and len(chapters) >= 1:
                     is_complete, conf, unexp, pag, _ = TocAuditor.audit(chapters, claimed, html)
                     if not pag and not unexp and (conf >= 0.8 or claimed is None):
                         logger.info(f"[DomainMemory] Bypass: Detected domain '{recipe.domain}' TOC with {len(chapters)} chapters.")
@@ -197,7 +205,8 @@ class PageClassifier:
                 # Check if this page is a single chapter page
                 soup = BeautifulSoup(html, "lxml")
                 has_content = bool(soup.select_one(recipe.chapter_config.content_selector))
-                if has_content:
+                if (has_content and page_kind != "TOC" and
+                        (page_kind == "CHAPTER" or recipe.chapter_config.content_selector != "body")):
                     ch_verif = domain_memory.test_chapter_recipe(recipe, html)
                     if ch_verif.success:
                         logger.info(f"[DomainMemory] Bypass: Detected domain '{recipe.domain}' Chapter page ('{ch_verif.chapter_title}').")
@@ -207,14 +216,14 @@ class PageClassifier:
                             author=author,
                             description=desc,
                             chapter_title=ch_verif.chapter_title,
-                            toc_url=recipe.sample_toc_url or None,
+                            toc_url=derived_toc_url,
                         )
         except Exception as e:
             logger.debug(f"Domain memory classifier bypass check failed: {e}")
 
         summary = self._extract_page_summary(html, url)
         apollo_chapters = self._extract_apollo_chapters(url, html)
-        
+
         if self.llm.is_available:
             try:
                 prompt = f"""
@@ -238,7 +247,7 @@ Analyze the page:
                 )
                 if result.novel_title:
                     result.novel_title = self._clean_novel_title(result.novel_title)
-                
+
                 # Sanitize chapter links
                 if result.chapter_links:
                     seen_urls = set()
@@ -252,18 +261,24 @@ Analyze the page:
                     for idx, c in enumerate(cleaned_links, 1):
                         c.index = idx
                     result.chapter_links = cleaned_links
-                    
+
                 # If Apollo state contains a more complete TOC, merge/augment it
                 if apollo_chapters and len(apollo_chapters) > len(result.chapter_links):
                     result.page_type = "TOC"
                     result.chapter_links = apollo_chapters
-                    
+
             except Exception as e:
                 logger.warning(f"LLM classification failed: {e}. Falling back to heuristic classifier.")
                 result = self._heuristic_classify(url, html, summary)
         else:
             # Heuristic fallback
             result = self._heuristic_classify(url, html, summary)
+
+        if page_kind == "TOC":
+            result.page_type = "TOC"
+            result.toc_url = None
+        elif result.page_type == "CHAPTER" and recipe:
+            result.toc_url = derived_toc_url
 
         # Autonomous TOC refinement via LangGraph agent
         if result.page_type == "TOC":
@@ -284,6 +299,16 @@ Analyze the page:
             except Exception as e:
                 logger.warning(f"TocAgent extraction warning: {e}. Keeping classified result.")
 
+        if result.page_type == "TOC" and recipe:
+            result.chapter_links = [
+                chapter for chapter in result.chapter_links
+                if belongs_to_recipe_novel(url, chapter.url, recipe.sample_toc_url, recipe.sample_chapter_url) is not False
+            ]
+            for index, chapter in enumerate(result.chapter_links, start=1):
+                chapter.index = index
+            if result.toc_state and result.toc_state.get("extracted_chapters") is not None:
+                result.toc_state["extracted_chapters"] = result.chapter_links
+
         if result.page_type == "CHAPTER":
             from src.handlers.webnovel import is_webnovel_url, parse_webnovel_url
             if is_webnovel_url(url):
@@ -297,13 +322,13 @@ Analyze the page:
         """Deterministic heuristic fallback when LLM is unavailable."""
         soup = BeautifulSoup(html, "lxml")
         page_title = summary["title"]
-        
+
         # Look for chapter patterns in links
         chapter_links = []
         toc_candidates = []
         next_candidates = []
         seen_urls = set()
-        
+
         # Decompose noisy sub-elements (views, dates, badges)
         for noise in soup.select("time, .date, .view, .views, .count, .num-views, .chapter-release-date, .post-on, .chapter-time, .release-date, .badge, .small, .fst-italic"):
             noise.decompose()
@@ -316,15 +341,15 @@ Analyze the page:
             full_url = urljoin(url, href)
             lower_text = text.lower()
             lower_url = full_url.lower()
-            
+
             # Check for next chapter
             if "next" in lower_text or "下一章" in lower_text or "next chapter" in lower_text or "次へ" in lower_text:
                 next_candidates.append(full_url)
-                
+
             # Check for TOC / Index
             if lower_text in ["index", "toc", "table of contents", "chapters", "directory", "目录", "home", "目次"]:
                 toc_candidates.append(full_url)
-                
+
             # Chapter link detection
             is_chapter = False
             if re.search(r"\b(?:chapter|ch|episode|part)\b", lower_text, re.IGNORECASE):
@@ -344,29 +369,29 @@ Analyze the page:
                     title=clean_title or text,
                     url=full_url
                 ))
-                
+
         # Check Next.js Apollo state for complete TOC (e.g. Kakuyomu, etc.)
         next_data_script = soup.find("script", id="__NEXT_DATA__")
         if next_data_script and next_data_script.string:
             try:
                 data = json.loads(next_data_script.string)
                 apollo = data.get("props", {}).get("pageProps", {}).get("__APOLLO_STATE__", {})
-                
+
                 # Check for TableOfContentsChapter
                 toc_chapter = apollo.get("TableOfContentsChapter:", {})
                 episode_unions = toc_chapter.get("episodeUnions", [])
-                
+
                 # Check work object if not in default toc_chapter
                 work_match = re.search(r"/works/(\d+)", url)
                 work_id = work_match.group(1) if work_match else ""
                 work_obj = apollo.get(f"Work:{work_id}", {}) if work_id else {}
-                
+
                 if not episode_unions and "tableOfContentsV2" in work_obj:
                     for toc_ref in work_obj["tableOfContentsV2"]:
                         ref_key = toc_ref.get("__ref")
                         if ref_key and ref_key in apollo:
                             episode_unions.extend(apollo[ref_key].get("episodeUnions", []))
-                            
+
                 if episode_unions:
                     parsed_url = urlparse(url)
                     base_origin = f"{parsed_url.scheme}://{parsed_url.netloc}"
@@ -409,7 +434,7 @@ Analyze the page:
 
         # If more than 4 chapter links found, it's very likely a TOC page
         is_toc = len(chapter_links) >= 4
-        
+
         # Deduce author
         author = None
         author_el = soup.select_one(".author, [class*='author'], [itemprop='author'], a[href*='/users/']")
@@ -420,7 +445,7 @@ Analyze the page:
         # Deduce novel title
         raw_title = summary["h1s"][0] if summary["h1s"] else page_title.split("-")[0].split("|")[0].strip()
         novel_title = self._clean_novel_title(raw_title)
-            
+
         if is_toc:
             chapter_links, _ = detect_and_fix_reverse_order(chapter_links)
             for idx, ch in enumerate(chapter_links, 1):

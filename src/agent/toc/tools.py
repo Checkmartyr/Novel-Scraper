@@ -22,7 +22,7 @@ class ClaimInspector:
         """Return (claimed_count, novel_title, author, description)."""
         soup = BeautifulSoup(html, "lxml")
         claimed_count: Optional[int] = None
-        
+
         # 1. Title & Meta
         h1_el = soup.find("h1")
         h1_title = h1_el.get_text(strip=True) if h1_el else ""
@@ -175,21 +175,21 @@ class EmbeddedStateExtractor:
             try:
                 data = json.loads(next_data_script.string)
                 apollo = data.get("props", {}).get("pageProps", {}).get("__APOLLO_STATE__", {})
-                
+
                 # Check for TableOfContentsChapter
                 toc_chapter = apollo.get("TableOfContentsChapter:", {})
                 episode_unions = toc_chapter.get("episodeUnions", [])
-                
+
                 work_match = re.search(r"/works/(\d+)", url)
                 work_id = work_match.group(1) if work_match else ""
                 work_obj = apollo.get(f"Work:{work_id}", {}) if work_id else {}
-                
+
                 if not episode_unions and "tableOfContentsV2" in work_obj:
                     for toc_ref in work_obj["tableOfContentsV2"]:
                         ref_key = toc_ref.get("__ref")
                         if ref_key and ref_key in apollo:
                             episode_unions.extend(apollo[ref_key].get("episodeUnions", []))
-                            
+
                 if episode_unions:
                     parsed_url = urlparse(url)
                     base_origin = f"{parsed_url.scheme}://{parsed_url.netloc}"
@@ -318,10 +318,11 @@ class DomLinkExtractor:
                 if not href or "/episodes/" not in href:
                     continue
                 full_url = urljoin(url, href)
+
                 if full_url in seen_urls:
                     continue
                 seen_urls.add(full_url)
-                
+
                 title_el = a.select_one('[class*="WorkTocSection_title"]') or a
                 title = title_el.get_text(strip=True)
                 title = re.sub(r"\s*[（\(\[]\s*\d+\s*/\s*\d+\s*[）\)\]]", "", title).strip()
@@ -344,7 +345,7 @@ class DomLinkExtractor:
                 if full_url in seen_urls:
                     continue
                 seen_urls.add(full_url)
-                
+
                 title = a.get_text(strip=True)
                 title = re.sub(r"\s*[（\(\[]\s*\d+\s*/\s*\d+\s*[）\)\]]", "", title).strip()
                 chapters.append(ChapterLink(
@@ -427,10 +428,9 @@ class DomLinkExtractor:
             href = a["href"].strip()
             if not text or not href or href.startswith("javascript:") or href.startswith("#"):
                 continue
-            if action_btn_re.search(text):
-                continue
 
             full_url = urljoin(url, href)
+
             lower_text = text.lower()
             lower_url = full_url.lower()
 
@@ -598,7 +598,7 @@ class PaginatedTocCrawler:
             text = a.get_text(strip=True)
             if not href or href.startswith("javascript:") or href.startswith("#"):
                 continue
-            
+
             is_page = False
             if re.search(r"[?&](?:page|p)=\d+", href, re.I):
                 is_page = True
@@ -628,7 +628,7 @@ class TocAuditor:
         check_pagination: bool = True,
     ) -> Tuple[bool, float, bool, bool, List[str]]:
         """Evaluate extraction completeness.
-        
+
         Returns:
             is_complete (bool),
             confidence_score (float, 0.0 - 1.0),
@@ -638,12 +638,12 @@ class TocAuditor:
         """
         issues: List[str] = []
         count = len(chapters)
-        
+
         # Check for unexpanded accordions or load more
         has_unexpanded_sections = False
         if any(k in html for k in ["つづきを表示", "もっと見る", "WorkTocAccordion", "data-accordion"]):
             has_unexpanded_sections = True
-            
+
         # Check for multi-page pagination
         has_pagination = False
         if check_pagination and re.search(r"[?&](?:page|p)=\d+", html, re.I):
