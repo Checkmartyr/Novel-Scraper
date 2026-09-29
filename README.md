@@ -78,6 +78,8 @@ GEMINI_API_KEY=your_gemini_api_key_here
 GEMINI_MODEL=gemini-2.5-flash
 ```
 
+When Novel-Scraper runs inside NouSetsu Desktop, it uses NouSetsu's provider routing and shared API keys. `NOVEL_SCRAPER_MODEL` optionally overrides the scraper route; when unset, the scraper inherits `NOVEL_MODEL` (or NouSetsu's default). `NOVEL_FALLBACK_MODEL` is used for provider failover. Standalone Novel-Scraper continues to use `GEMINI_API_KEY` and `GEMINI_MODEL`.
+
 ---
 
 ## Configuration Reference

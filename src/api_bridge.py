@@ -23,6 +23,7 @@ if sys.platform == "win32":
 from src.core.binary_manager import ensure_obscura
 from src.core.obscura_client import ObscuraClient
 from src.agent.classifier import PageClassifier, ChapterLink
+from src.agent.llm import LLMClient
 from src.agent.toc.agent import TocAgent
 from src.agent.ch.analyzer import ChapterAnalyzer
 from src.agent.ch.review_loop import ReviewLoopOrchestrator
@@ -58,8 +59,13 @@ async def inspect_novel_url(url: str) -> Dict[str, Any]:
     ensure_obscura()
     obscura = ObscuraClient()
     try:
+        llm_client = LLMClient()
         toc_agent = TocAgent(obscura_client=obscura)
-        classifier = PageClassifier(obscura_client=obscura, toc_agent=toc_agent)
+        classifier = PageClassifier(
+            llm_client=llm_client,
+            obscura_client=obscura,
+            toc_agent=toc_agent,
+        )
 
         html = await obscura.fetch_html(url, stealth=True)
         classification = await classifier.classify(url, html)
@@ -139,9 +145,14 @@ async def extract_novel_chapters(
     )
 
     try:
+        llm_client = LLMClient()
         toc_agent = TocAgent(obscura_client=obscura)
-        classifier = PageClassifier(obscura_client=obscura, toc_agent=toc_agent)
-        analyzer = ChapterAnalyzer()
+        classifier = PageClassifier(
+            llm_client=llm_client,
+            obscura_client=obscura,
+            toc_agent=toc_agent,
+        )
+        analyzer = ChapterAnalyzer(llm_client=llm_client)
 
         html = await obscura.fetch_html(url, stealth=True)
         classification = await classifier.classify(url, html)
@@ -189,7 +200,10 @@ async def extract_novel_chapters(
         sample_url = filtered_chapters[0].url
 
         # Analyze sample chapter with ReviewLoopOrchestrator
-        orchestrator = ReviewLoopOrchestrator(analyzer=analyzer)
+        orchestrator = ReviewLoopOrchestrator(
+            analyzer=analyzer,
+            llm_client=llm_client,
+        )
         sample_html = await obscura.fetch_html(sample_url, stealth=True)
         loop_result = await orchestrator.run(sample_html, sample_url)
 
@@ -233,6 +247,7 @@ async def extract_novel_chapters(
             concurrency=concurrency,
             on_progress=batch_progress_cb,
             previous_interaction_id=loop_result.last_interaction_id,
+            llm_client=llm_client,
         )
 
         summary = await runner.run(

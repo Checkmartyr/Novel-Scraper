@@ -22,7 +22,7 @@ logger = logging.getLogger("scraper.batch")
 
 class BatchScraperRunner:
     """Orchestrates polite concurrent batch downloading with self-healing and progress tracking."""
-    
+
     def __init__(
         self,
         novel_title: str,
@@ -35,6 +35,7 @@ class BatchScraperRunner:
         on_progress: Optional[Callable[[int, int, str, float], None]] = None,
         on_log: Optional[Callable[[str, str], None]] = None,
         previous_interaction_id: Optional[str] = None,
+        llm_client: Optional[Any] = None,
     ):
         self.novel_title = novel_title
         self.plan = initial_plan
@@ -46,8 +47,8 @@ class BatchScraperRunner:
         self.on_progress = on_progress
         self.on_log = on_log
         self.previous_interaction_id = previous_interaction_id
-        
-        self.healer = SelfHealer()
+
+        self.healer = SelfHealer(llm_client=llm_client) if llm_client is not None else SelfHealer()
         self._is_paused = False
         self._is_cancelled = False
         self._pause_event = asyncio.Event()
@@ -177,14 +178,14 @@ class BatchScraperRunner:
         for _ in range(max_subpages):
             soup = BeautifulSoup(current_html, "lxml")
             next_subpage_url = None
-            
+
             # Find next page link (e.g. text "下一页" or "next page", or href with ?page=)
             for a in soup.find_all("a", href=True):
                 text = a.get_text(strip=True)
                 href = a["href"].strip()
                 if not href or href.startswith("javascript:") or href.startswith("#"):
                     continue
-                
+
                 # Check for "下一页" or "next page" (distinct from "下一章" / "next chapter")
                 is_subpage = False
                 if any(k in text for k in ["下一页", "下页"]) or re.search(r"\bnext\s*page\b", text, re.I):
@@ -245,9 +246,9 @@ class BatchScraperRunner:
         completed = 0
         failed = 0
         start_time = time.time()
-        
+
         self.log(f"Starting batch scrape for '{self.novel_title}' ({total} chapters, concurrency={self.concurrency})", "info")
-        
+
         semaphore = asyncio.Semaphore(self.concurrency)
         chapter_records: List[Dict[str, Any]] = []
 
@@ -258,13 +259,13 @@ class BatchScraperRunner:
                 completed += 1
             else:
                 failed += 1
-                
+
             elapsed = max(time.time() - start_time, 0.1)
             speed = (completed / elapsed) * 60.0  # chapters per minute
-            
+
             if self.on_progress:
                 self.on_progress(completed + failed, total, link.title, speed)
-                
+
             chapter_records.append({
                 "index": link.index,
                 "title": link.title,

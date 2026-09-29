@@ -1,6 +1,7 @@
 import json
 import logging
 import asyncio
+import os
 from typing import Type, TypeVar, Optional, Any, Dict, List, Mapping
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -31,6 +32,32 @@ from src.agent.llm.tracker import token_tracker
 logger = logging.getLogger("agent.llm")
 
 T = TypeVar("T", bound=BaseModel)
+
+
+def _load_nousetsu_llm_integration():
+    """Load NouSetsu routing only when this scraper runs inside NouSetsu."""
+    try:
+        from nousetsu.agents.llm import get_llm
+        from nousetsu.scraper import resolve_scraper_llm_settings
+    except ModuleNotFoundError as exc:
+        if exc.name and (exc.name == "nousetsu" or exc.name.startswith("nousetsu.")):
+            return None
+        raise
+    return get_llm, resolve_scraper_llm_settings
+
+
+def _has_configured_provider(model: Any) -> bool:
+    """Treat NouSetsu's deterministic mock model as unavailable for live scraping."""
+    if model is None or type(model).__name__ == "MockNovelLLM":
+        return False
+
+    nested_models = [
+        child for child in (getattr(model, "primary", None), getattr(model, "fallback", None))
+        if child is not None
+    ]
+    if nested_models:
+        return any(_has_configured_provider(child) for child in nested_models)
+    return True
 
 
 class ChatGeminiInteractions(BaseChatModel):
@@ -184,26 +211,76 @@ class ChatGeminiInteractions(BaseChatModel):
 
 
 class LLMClient:
-    """LangChain client powered by Gemini Interactions API with fallback support."""
+    """LangChain client using NouSetsu provider routing when embedded in the desktop app."""
 
     def __init__(self, api_key: Optional[str] = None, model: Optional[str] = None):
-        self.api_key = api_key or GEMINI_API_KEY
-        self.model = model or GEMINI_MODEL
+        self.api_key = (
+            api_key
+            or os.environ.get("GEMINI_API_KEY")
+            or os.environ.get("GOOGLE_API_KEY")
+            or GEMINI_API_KEY
+        )
         self.last_interaction_id: Optional[str] = None
-        self._chat_model = ChatGeminiInteractions(
-            model=self.model,
-            api_key=self.api_key,
-        ) if self.api_key else None
+        self._provider_factory = None
+        self._settings_resolver = None
+        integration = _load_nousetsu_llm_integration() if api_key is None else None
+
+        if integration:
+            self._provider_factory, self._settings_resolver = integration
+            settings = self._settings_resolver()
+            self.model = model or settings.model
+            self._chat_model = self._build_provider_model()
+            if not _has_configured_provider(self._chat_model):
+                self._chat_model = None
+        else:
+            self.model = model or GEMINI_MODEL
+            self._chat_model = ChatGeminiInteractions(
+                model=self.model,
+                api_key=self.api_key,
+            ) if self.api_key else None
 
         if not self._chat_model:
-            logger.warning("GEMINI_API_KEY not set. Operating in heuristic fallback mode.")
+            logger.warning(
+                "No API key is configured for scraper model %s. Operating in heuristic fallback mode.",
+                self.model,
+            )
+
+    def _build_provider_model(self) -> Any:
+        settings_resolver = self._settings_resolver
+        provider_factory = self._provider_factory
+        if settings_resolver is None or provider_factory is None:
+            raise RuntimeError("NouSetsu provider routing is not initialized.")
+
+        settings = settings_resolver()
+        model = self.model or settings.model
+        routed_model = provider_factory(
+            model_name=model,
+            fallback_model=settings.fallback_model,
+        )
+        primary = getattr(routed_model, "primary", None)
+        fallback = getattr(routed_model, "fallback", None)
+        primary_available = _has_configured_provider(primary)
+        fallback_available = _has_configured_provider(fallback)
+        if primary is not None and not primary_available and fallback_available:
+            return fallback
+        if primary_available and fallback is not None and not fallback_available:
+            return primary
+        return routed_model
 
     @property
     def is_available(self) -> bool:
         return self._chat_model is not None
 
-    def get_chat_model(self, previous_interaction_id: Optional[str] = None) -> ChatGeminiInteractions:
-        """Get LangChain ChatGeminiInteractions model with optional interaction chaining."""
+    def get_chat_model(self, previous_interaction_id: Optional[str] = None) -> Any:
+        """Get a configured provider model, preserving Gemini interaction chaining when available."""
+        if self._provider_factory:
+            chat_model = self._build_provider_model()
+            if previous_interaction_id:
+                primary = getattr(chat_model, "primary", chat_model)
+                if hasattr(primary, "previous_interaction_id"):
+                    primary.previous_interaction_id = previous_interaction_id
+            return chat_model
+
         return ChatGeminiInteractions(
             model=self.model,
             api_key=self.api_key,
@@ -217,9 +294,9 @@ class LLMClient:
         system_instruction: str = "You are an expert AI assistant that outputs strictly valid JSON.",
         previous_interaction_id: Optional[str] = None
     ) -> T:
-        """Run LangChain LCEL chain with Gemini Interactions API and PydanticOutputParser."""
+        """Run the configured LangChain provider and parse its response into the requested schema."""
         if not self.is_available:
-            raise RuntimeError("Gemini client unavailable (missing GEMINI_API_KEY).")
+            raise RuntimeError("Scraper LLM provider is unavailable or not configured.")
 
         parser = PydanticOutputParser(pydantic_object=schema)
 
@@ -232,11 +309,25 @@ class LLMClient:
 
         chain = prompt | chat | parser
 
-        result = await chain.ainvoke({
+        prompt_input = {
             "system_instruction": system_instruction,
             "format_instructions": parser.get_format_instructions(),
-            "prompt_text": prompt_text
-        })
+            "prompt_text": prompt_text,
+        }
+        if self._provider_factory:
+            from src.agent.llm.tracker import TokenCallbackHandler
 
-        self.last_interaction_id = chat.last_interaction_id
+            result = await chain.ainvoke(
+                prompt_input,
+                config={"callbacks": [TokenCallbackHandler(call_type="scraper")]},
+            )
+        else:
+            result = await chain.ainvoke(prompt_input)
+
+        candidates = [chat, getattr(chat, "primary", None), getattr(chat, "fallback", None)]
+        self.last_interaction_id = next(
+            (interaction_id for candidate in candidates if candidate is not None
+             if (interaction_id := getattr(candidate, "last_interaction_id", None))),
+            None,
+        )
         return result
