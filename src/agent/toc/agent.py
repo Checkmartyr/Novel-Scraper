@@ -1,6 +1,9 @@
 """High-level TocAgent wrapper executing the compiled LangGraph workflow."""
 
 import logging
+import asyncio
+import time
+from src.scraper.runtime import ScraperLimits
 from typing import Optional, List, Callable
 from pathlib import Path
 
@@ -22,13 +25,15 @@ class TocAgent:
     def __init__(
         self,
         obscura_client: Optional[ObscuraClient] = None,
-        max_iterations: int = 3,
+        max_iterations: Optional[int] = None,
         on_log: Optional[Callable[[str, str], None]] = None,
+        llm_client=None,
     ):
         self.obscura = obscura_client or ObscuraClient()
-        self.max_iterations = max_iterations
+        self.limits = ScraperLimits.from_env()
+        self.max_iterations = max_iterations or self.limits.toc_cycles
         self.on_log = on_log
-        self.workflow = TocGraphWorkflow(obscura_client=self.obscura, on_log=on_log)
+        self.workflow = TocGraphWorkflow(obscura_client=self.obscura, on_log=on_log, llm_client=llm_client)
         self.app = self.workflow.build()
 
     async def extract_toc(self, url: str, html: Optional[str] = None) -> TocState:
@@ -48,8 +53,7 @@ class TocAgent:
                 if ok and len(chapters) >= 1:
                     is_complete, conf, unexpanded, pagination, issues = TocAuditor.audit(chapters, claimed, html)
                     # Valid if confidence high or if no claimed count and no unexpanded accordions/pagination
-                    if not pagination and not unexpanded and (conf >= 0.8 or (claimed is None and len(chapters) >= 1)):
-                        conf = max(conf, 1.0)
+                    if is_complete and not pagination and not unexpanded:
                         log_msg = f"[DomainMemory] Successfully extracted {len(chapters)} chapters using saved recipe for '{recipe.domain}' (Confidence: {conf})."
                         logger.info(log_msg)
                         if self.on_log:
@@ -72,6 +76,7 @@ class TocAgent:
                             "has_pagination": False,
                             "pagination_urls": [],
                             "is_complete": True,
+                            "completeness_evidence": ["Advertised count covered" if claimed else "Observed catalog navigation exhausted"],
                             "iteration": 0,
                             "max_iterations": self.max_iterations,
                             "issues": [],
@@ -100,10 +105,20 @@ class TocAgent:
             "max_iterations": self.max_iterations,
             "issues": [],
             "logs": [],
+            "deadline": time.monotonic() + self.limits.discovery_seconds,
+            "last_count": -1,
+            "stagnant_attempts": 0,
+            "expanded": False,
+            "completeness_evidence": [],
         }
 
         logger.info(f"TocAgent launching LangGraph execution on {url}...")
-        final_state: TocState = await self.app.ainvoke(initial_state)
+        try:
+            final_state: TocState = await asyncio.wait_for(self.app.ainvoke(initial_state, config={"recursion_limit": max(50, self.max_iterations * 8)}), timeout=self.limits.discovery_seconds)
+        except asyncio.TimeoutError:
+            final_state = getattr(self.workflow, "last_state", initial_state).copy()
+            final_state["is_complete"] = False
+            final_state["issues"] = final_state.get("issues", []) + ["Discovery deadline exhausted"]
         logger.info(
             f"TocAgent LangGraph completed! Total Chapters: {len(final_state['extracted_chapters'])}, "
             f"Strategy: {final_state['extraction_strategy']}, Confidence: {final_state['confidence_score']}"
@@ -111,7 +126,7 @@ class TocAgent:
 
         conf = final_state.get("confidence_score", 0.0)
         ch_count = len(final_state.get("extracted_chapters", []))
-        if conf >= 0.8 and ch_count > 0:
+        if final_state.get("is_complete") and ch_count > 0:
             try:
                 from src.agent.domain_memory import domain_memory
                 domain_memory.update_toc_plan(

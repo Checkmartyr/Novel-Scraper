@@ -1,6 +1,14 @@
 import asyncio
 import subprocess
 import time
+import re
+import os
+import socket
+from urllib.parse import urlsplit
+from email.utils import parsedate_to_datetime
+from datetime import datetime, timezone
+import httpx
+from src.scraper.runtime import ScraperLimits, access_error
 from pathlib import Path
 from typing import Optional, Dict, Any
 from contextlib import asynccontextmanager
@@ -42,8 +50,12 @@ async def _is_port_open(host: str, port: int) -> bool:
 class ObscuraClient:
     """Client for driving Obscura via Playwright connected over CDP."""
 
-    def __init__(self, bin_path: Optional[Path] = None, cdp_port: int = 9222):
-        self.bin_path = bin_path or ensure_obscura()
+    def __init__(self, bin_path: Optional[Path] = None, cdp_port: Optional[int] = None):
+        self.bin_path = bin_path
+        if cdp_port is None:
+            with socket.socket() as candidate:
+                candidate.bind(("127.0.0.1", 0))
+                cdp_port = candidate.getsockname()[1]
         self.cdp_port = cdp_port
         self._server_process: Optional[asyncio.subprocess.Process] = None
         self._playwright: Optional[Playwright] = None
@@ -52,8 +64,17 @@ class ObscuraClient:
         self._lock = asyncio.Lock()
         self._cached_cookies: Dict[str, str] = {}
         self._cached_user_agent: Optional[str] = None
+        self.limits = ScraperLimits.from_env()
+        self._http_client = None
+        self._contexts = {}
+        self._page_limits = {}
+        self._origin_locks = {}
+        self._last_request = {}
+        self.network_responses = []
+        self.metrics = {"requests": 0, "rendered": 0, "recipe_hits": 0, "repair_calls": 0}
+        self._storage_state = os.getenv("NOVEL_SCRAPER_STORAGE_STATE") or None
 
-    async def start_cdp_server(self, stealth: bool = True, allow_private_network: bool = True) -> None:
+    async def start_cdp_server(self, stealth: bool = True, allow_private_network: bool = False) -> None:
         """Start obscura serve in background if not already running."""
         # If port is already open, server is already running and ready
         if await _is_port_open("127.0.0.1", self.cdp_port):
@@ -63,7 +84,7 @@ class ObscuraClient:
             return
 
         cmd = [
-            str(self.bin_path),
+            str(self.bin_path or ensure_obscura()),
             "serve",
             "-p", str(self.cdp_port),
             "--quiet",
@@ -92,11 +113,15 @@ class ObscuraClient:
                 self._server_process.terminate()
                 await asyncio.wait_for(self._server_process.wait(), timeout=3.0)
             except (asyncio.TimeoutError, ProcessLookupError):
-                self._server_process.kill()
+                try:
+                    self._server_process.kill()
+                except ProcessLookupError:
+                    pass
+                await self._server_process.wait()
             finally:
                 self._server_process = None
 
-    async def _ensure_browser(self, stealth: bool = True, allow_private_network: bool = True) -> Browser:
+    async def _ensure_browser(self, stealth: bool = True, allow_private_network: bool = False) -> Browser:
         """Ensure Playwright is running and connected to Obscura CDP server."""
         async with self._lock:
             await self.start_cdp_server(stealth=stealth, allow_private_network=allow_private_network)
@@ -116,6 +141,8 @@ class ObscuraClient:
                     pass
                 self._playwright = None
                 self._browser = None
+                self._contexts.clear()
+                self._page_limits.clear()
 
             self._playwright = await async_playwright().start()
             ws_endpoint = f"ws://127.0.0.1:{self.cdp_port}"
@@ -124,22 +151,39 @@ class ObscuraClient:
             return self._browser
 
     @asynccontextmanager
-    async def get_playwright_page(self, stealth: bool = True, allow_private_network: bool = True):
+    async def get_playwright_page(self, stealth: bool = True, allow_private_network: bool = False, origin: str = "default"):
         """Context manager to obtain a Playwright page connected to Obscura CDP."""
         browser = await self._ensure_browser(stealth=stealth, allow_private_network=allow_private_network)
-        context = await browser.new_context()
-        page: Page = await context.new_page()
-        try:
-            yield page
-        finally:
+        async with self._lock:
+            if origin not in self._contexts:
+                self._contexts[origin] = await browser.new_context(storage_state=self._storage_state)
+                self._page_limits[origin] = asyncio.Semaphore(self.limits.browser_pages)
+            context = self._contexts[origin]
+        async with self._page_limits[origin]:
+            page: Page = await context.new_page()
             try:
+                yield page
+            finally:
                 await page.close()
-            except Exception:
-                pass
-            try:
-                await context.close()
-            except Exception:
-                pass
+
+    async def pace(self, url: str):
+        origin = urlsplit(url).netloc
+        lock = self._origin_locks.setdefault(origin, asyncio.Lock())
+        async with lock:
+            delay = float(os.getenv("MIN_DELAY_SECONDS", "0.5"))
+            await asyncio.sleep(max(0, self._last_request.get(origin, 0) + delay - time.monotonic()))
+            self._last_request[origin] = time.monotonic()
+
+    async def http_client(self):
+        if self._http_client is None:
+            self._http_client = httpx.AsyncClient(follow_redirects=True, timeout=12,
+                headers={"User-Agent": self.get_user_agent() or "Mozilla/5.0", "Accept-Language": "en-US,ja,th;q=0.8"})
+            if self._storage_state:
+                import json
+                state = json.loads(Path(self._storage_state).read_text(encoding="utf-8"))
+                for cookie in state.get("cookies", []):
+                    self._http_client.cookies.set(cookie["name"], cookie["value"], domain=cookie.get("domain", ""), path=cookie.get("path", "/"))
+        return self._http_client
 
     def get_cookies(self) -> Dict[str, str]:
         """Return cached session cookies (e.g. cf_clearance) if available."""
@@ -215,15 +259,19 @@ class ObscuraClient:
         url: str,
         stealth: bool = True,
         timeout: int = NAVIGATION_TIMEOUT,
-        allow_private_network: bool = True,
+        allow_private_network: bool = False,
         wait_until: str = WAIT_UNTIL,
+        force_browser: bool = False,
+        content_selector: Optional[str] = None,
     ) -> str:
         """Fetch page HTML using Playwright over Obscura CDP, with automatic Cloudflare fallback."""
         # Check platform handler registry for direct API or synthesized HTML bypass
         from src.handlers import registry
         handler = registry.find_handler(url)
-        if handler:
+        if handler and not force_browser:
             try:
+                await self.pace(url)
+                self.metrics["requests"] += 1
                 result = await handler.handle(url, obscura_client=self)
                 if result:
                     return result
@@ -231,32 +279,68 @@ class ObscuraClient:
                 logger.warning(f"Platform handler error for {url}: {e}. Falling back to browser.")
 
         # Fast HTTP attempt (avoids browser overhead & ad context crashes on static novel pages)
-        import httpx
-        http_headers = {
-            "User-Agent": self.get_user_agent() or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "en-US,en;q=0.9,ja;q=0.8,th;q=0.7",
-        }
-        cookies = self.get_cookies()
-        try:
-            async with httpx.AsyncClient(headers=http_headers, cookies=cookies, follow_redirects=True, timeout=12.0) as http_client:
-                for attempt in range(3):
-                    resp = await http_client.get(url)
-                    if resp.status_code == 429:
-                        wait = 2.0 * (attempt + 1)
-                        logger.warning(f"HTTP 429 Rate limited on {url}. Backing off {wait}s...")
-                        await asyncio.sleep(wait)
-                        continue
+        if not force_browser:
+            client = await self.http_client()
+            for attempt in range(self.limits.request_attempts):
+                try:
+                    await self.pace(url)
+                    self.metrics["requests"] += 1
+                    resp = await client.get(url)
+                    if resp.status_code in (401, 403):
+                        # Browser state can carry tokens in local storage instead of cookies.
+                        break
+                    if resp.status_code == 429 or resp.status_code >= 500:
+                        retry = resp.headers.get("Retry-After", "")
+                        try:
+                            wait = float(retry)
+                        except ValueError:
+                            try:
+                                wait = max(0, (parsedate_to_datetime(retry) - datetime.now(timezone.utc)).total_seconds())
+                            except (TypeError, ValueError):
+                                wait = 2 ** attempt
+                        if attempt + 1 < self.limits.request_attempts:
+                            # All requests for this origin observe the cooldown.
+                            self._last_request[urlsplit(url).netloc] = time.monotonic() + min(wait, self.limits.discovery_seconds)
+                            continue
+                        raise RuntimeError(f"Source returned HTTP {resp.status_code} after bounded retries")
                     if resp.status_code == 200:
-                        text_html = resp.text
-                        if len(text_html) > 800 and not is_cloudflare_challenge(text_html):
-                            return text_html
+                        blocker = access_error(resp.text)
+                        if blocker:
+                            if self._storage_state:
+                                break
+                            raise PermissionError(blocker)
+                        if len(resp.text) > 200 and not is_cloudflare_challenge(resp.text):
+                            return resp.text
                     break
-        except Exception as e:
-            logger.debug(f"Fast HTTP fetch bypassed for {url} ({e}). Falling back to browser.")
+                except PermissionError:
+                    raise
+                except httpx.HTTPError:
+                    if attempt + 1 == self.limits.request_attempts:
+                        break
 
         content: Optional[str] = None
-        async with self.get_playwright_page(stealth=stealth, allow_private_network=allow_private_network) as page:
+        await self.pace(url)
+        self.metrics["requests"] += 1
+        self.metrics["rendered"] += 1
+        capture_tasks = set()
+        async def capture(response):
+            if urlsplit(response.url).netloc != urlsplit(url).netloc:
+                return
+            if "json" not in response.headers.get("content-type", ""):
+                return
+            try:
+                body = await response.body()
+                if len(body) <= 2_000_000 and len(self.network_responses) < 100:
+                    import json
+                    self.network_responses.append({"url": response.url, "data": json.loads(body)})
+            except Exception:
+                pass
+        def observe(response):
+            task = asyncio.create_task(capture(response))
+            capture_tasks.add(task)
+            task.add_done_callback(capture_tasks.discard)
+        async with self.get_playwright_page(stealth=stealth, allow_private_network=allow_private_network, origin=urlsplit(url).netloc) as page:
+            page.on("response", observe)
             # Block aggressive ad networks that crash frame execution contexts
             try:
                 ad_re = re.compile(
@@ -269,6 +353,8 @@ class ObscuraClient:
 
             try:
                 await page.goto(url, wait_until=wait_until, timeout=timeout * 1000)
+                if content_selector:
+                    await page.locator(content_selector).first.wait_for(state="attached", timeout=timeout * 1000)
                 content = await page.content()
             except Exception as e:
                 # If networkidle timed out or frame context was detached by ads
@@ -281,11 +367,14 @@ class ObscuraClient:
                         pass
                 if not content or (len(content) <= 300 and not is_cloudflare_challenge(content)):
                     if "evaluate" in str(e) or "TargetClosedError" in str(e):
-                        return await self._fetch_with_chrome_fallback(url, timeout=timeout)
+                        raise PermissionError("Browser could not access source; user action required") from e
                     raise e
 
-        if content and is_cloudflare_challenge(content):
-            return await self._fetch_with_chrome_fallback(url, timeout=timeout)
+            if capture_tasks:
+                await asyncio.gather(*list(capture_tasks), return_exceptions=True)
+        blocker = access_error(content or "")
+        if blocker or is_cloudflare_challenge(content or ""):
+            raise PermissionError(blocker or "Security challenge requires user action")
             
         return content or ""
 
@@ -294,7 +383,7 @@ class ObscuraClient:
         url: str,
         stealth: bool = True,
         timeout: int = NAVIGATION_TIMEOUT,
-        allow_private_network: bool = True,
+        allow_private_network: bool = False,
         wait_until: str = WAIT_UNTIL,
     ) -> str:
         """Fetch page converted to Markdown via Playwright HTML fetch and BeautifulSoup."""
@@ -310,7 +399,12 @@ class ObscuraClient:
 
     async def close(self) -> None:
         """Clean up Playwright browser, playwright context, and CDP server."""
-        if self._browser:
+        if self._http_client:
+            await self._http_client.aclose()
+            self._http_client = None
+        await asyncio.gather(*(context.close() for context in self._contexts.values()), return_exceptions=True)
+        self._contexts.clear()
+        if self._browser and self._server_process:
             try:
                 await self._browser.close()
             except Exception:

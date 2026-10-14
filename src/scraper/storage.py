@@ -4,6 +4,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, Dict, Any, List
 import aiofiles
+from src.scraper.runtime import atomic_write, atomic_json, canonical_url
+import hashlib
 
 from src.config import OUTPUT_DIR, INCLUDE_FRONTMATTER, ROMANIZE_FOLDER
 from src.agent.code_generator import ExtractedChapter
@@ -27,11 +29,28 @@ class NovelStorage:
         include_frontmatter: bool = INCLUDE_FRONTMATTER,
         romanize_folder: bool = ROMANIZE_FOLDER,
         direct_output: bool = False,
+        overwrite: bool = True,
+        state_dir: Optional[Path] = None,
     ):
         self.base_output_dir = base_output_dir or OUTPUT_DIR
         self.include_frontmatter = include_frontmatter
         self.romanize_folder = romanize_folder
         self.direct_output = direct_output
+        self.overwrite = overwrite
+        self.state_dir = state_dir or self.base_output_dir / ".scraper"
+        self.sources_path = self.state_dir / "sources.json"
+        self.sources_dir = self.state_dir / "receipts"
+        self.sources = json.loads(self.sources_path.read_text(encoding="utf-8")) if self.sources_path.exists() else {}
+        self._load_receipts()
+        self._sources_scope = None
+        self._directory_index = {}
+        self._directory_stamp = None
+
+    def _load_receipts(self):
+        for path in self.sources_dir.glob("*.json"):
+            receipt = json.loads(path.read_text(encoding="utf-8"))
+            self.sources[receipt.pop("source_url")] = receipt
+        self._source_owners = {value["file"]: key for key, value in self.sources.items()}
 
     def get_novel_dir(self, novel_title: str) -> Path:
         """Get or create novel directory (romanized if enabled)."""
@@ -42,6 +61,13 @@ class NovelStorage:
         safe_title = sanitize_filename(folder_name)
         novel_dir = self.base_output_dir / safe_title
         novel_dir.mkdir(parents=True, exist_ok=True)
+        if self._sources_scope != novel_dir:
+            scope = self.state_dir / hashlib.sha256(str(novel_dir.resolve()).encode()).hexdigest()[:12]
+            self.sources_path = scope / "sources.json"
+            self.sources_dir = scope / "receipts"
+            self.sources = json.loads(self.sources_path.read_text(encoding="utf-8")) if self.sources_path.exists() else {}
+            self._load_receipts()
+            self._sources_scope = novel_dir
         return novel_dir
 
     async def save_chapter(
@@ -53,6 +79,8 @@ class NovelStorage:
         source_url: str,
     ) -> Path:
         """Save chapter as Markdown file with clean raw text or optional YAML frontmatter."""
+        if not chapter.success or chapter.is_paywalled:
+            raise ValueError(chapter.error or "Unverified or paywalled chapter cannot be saved")
         novel_dir = self.get_novel_dir(novel_title)
         raw_ch_title = chapter_title or chapter.title or f"Chapter {chapter_index}"
         clean_ch_title = clean_chapter_title(raw_ch_title) or raw_ch_title
@@ -61,16 +89,41 @@ class NovelStorage:
         # 4-digit zero-padded index: e.g. 0001 - Title.md
         filename = f"{chapter_index:04d} - {safe_title}.md"
         filepath = novel_dir / filename
+        source_key = canonical_url(source_url)
+        existing = self.sources.get(source_key)
+        if existing and existing.get("file"):
+            previous = novel_dir / existing["file"]
+            if previous.parent == novel_dir:
+                filepath = previous
+        stamp = (novel_dir, novel_dir.stat().st_mtime_ns)
+        if stamp != self._directory_stamp:
+            self._directory_index = {}
+            for path in novel_dir.glob("*.md"):
+                match = re.match(r"^(\d+) - ", path.name)
+                if match:
+                    self._directory_index.setdefault(int(match.group(1)), []).append(path)
+            self._directory_stamp = stamp
+        collisions = self._directory_index.get(chapter_index, [])
+        for collision in collisions:
+            owner = self._source_owners.get(collision.name)
+            if owner and self.sources[owner].get("state") == "pending":
+                digest = hashlib.sha256(collision.read_bytes()).hexdigest()
+                if digest not in {self.sources[owner].get("sha256"), self.sources[owner].get("previous_sha256")}:
+                    owner = None
+            if owner != source_key:
+                raise FileExistsError(f"Chapter index {chapter_index} already belongs to another or unknown source")
+        if filepath.exists() and not self.overwrite:
+            raise FileExistsError(f"Overwrite disabled: {filepath.name}")
         
         timestamp = datetime.now(timezone.utc).isoformat()
         
         if self.include_frontmatter:
             content_lines = [
                 "---",
-                f'novel: "{novel_title}"',
+                f'novel: {json.dumps(novel_title, ensure_ascii=False)}',
                 f"chapter_number: {chapter_index}",
-                f'chapter_title: "{safe_title}"',
-                f'source_url: "{source_url}"',
+                f'chapter_title: {json.dumps(safe_title, ensure_ascii=False)}',
+                f'source_url: {json.dumps(source_url, ensure_ascii=False)}',
                 f"word_count: {chapter.word_count}",
                 f"char_count: {chapter.char_count}",
                 f'scraped_at: "{timestamp}"',
@@ -91,8 +144,19 @@ class NovelStorage:
         
         full_text = "\n".join(content_lines)
         
-        async with aiofiles.open(filepath, "w", encoding="utf-8") as f:
-            await f.write(full_text)
+        # Write the source receipt before the file so a crash after replacement is recoverable.
+        previous_hash = hashlib.sha256(filepath.read_bytes()).hexdigest() if filepath.exists() else None
+        self.sources[source_key] = {"file": filepath.name, "sha256": hashlib.sha256(full_text.encode("utf-8")).hexdigest(),
+                                    "state": "pending", "previous_sha256": previous_hash}
+        self._source_owners[filepath.name] = source_key
+        atomic_json(self.sources_dir / (hashlib.sha256(source_key.encode()).hexdigest() + ".json"),
+                    {"source_url": source_key, **self.sources[source_key]})
+        atomic_write(filepath, full_text, overwrite=self.overwrite)
+        self.sources[source_key]["state"] = "committed"
+        atomic_json(self.sources_dir / (hashlib.sha256(source_key.encode()).hexdigest() + ".json"),
+                    {"source_url": source_key, **self.sources[source_key]})
+        self._directory_index[chapter_index] = [filepath]
+        self._directory_stamp = (novel_dir, novel_dir.stat().st_mtime_ns)
             
         return filepath
 
@@ -133,7 +197,7 @@ class NovelStorage:
         author: Optional[str] = None,
         description: Optional[str] = None,
         total_chapters: int = 0,
-        completed_chapters: int = 0,
+        completed_chapters: Optional[int] = None,
         chapter_index_list: Optional[List[Any]] = None,
         token_usage: Optional[Dict[str, Any]] = None,
         extraction_strategy: Optional[str] = None,
@@ -164,7 +228,7 @@ class NovelStorage:
         
         # Calculate total chapters if not explicitly provided
         final_total = total_chapters or len(formatted_chapters) or existing_data.get("total_chapters", 0)
-        final_completed = completed_chapters if completed_chapters else existing_data.get("completed_chapters", 0)
+        final_completed = completed_chapters if completed_chapters is not None else existing_data.get("completed_chapters", 0)
 
         data = {
             "novel_title": novel_title,
@@ -182,7 +246,6 @@ class NovelStorage:
             "chapters": formatted_chapters
         }
 
-        async with aiofiles.open(metadata_file, "w", encoding="utf-8") as f:
-            await f.write(json.dumps(data, indent=2, ensure_ascii=False))
+        atomic_json(metadata_file, data)
 
         return metadata_file

@@ -45,3 +45,10 @@ class TocState(TypedDict):
     max_iterations: int
     issues: List[str]
     logs: List[str]
+    deadline: float
+    last_count: int
+    stagnant_attempts: int
+    expanded: bool
+    completeness_evidence: List[str]
+    crawl_issues: List[str]
+    expansion_incomplete: bool

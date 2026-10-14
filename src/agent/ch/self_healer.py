@@ -82,7 +82,7 @@ class SelfHealer:
                     previous_interaction_id=previous_interaction_id,
                 )
                 
-                if review.is_accurate:
+                if review.is_accurate and review.title_accurate and not review.has_clutter and review.quality_score >= 0.85:
                     logger.info(f"Self-healing succeeded & observer-verified (score={review.quality_score:.2f}) for {url}!")
                     return True, new_plan, result
                 else:
@@ -100,8 +100,14 @@ class SelfHealer:
                     refined_gen = ChapterCodeGenerator(refined_plan)
                     refined_res = refined_gen.extract(html)
                     if refined_res.success:
-                        logger.info(f"Self-healing refinement succeeded for {url}!")
-                        return True, refined_plan, refined_res
+                        refined_review = await self.observer.review(
+                            url=url, html=html, plan=refined_plan,
+                            verification=refined_gen.test_and_verify(html),
+                            previous_interaction_id=previous_interaction_id,
+                        )
+                        if refined_review.is_accurate and refined_review.title_accurate and not refined_review.has_clutter and refined_review.quality_score >= 0.85:
+                            return True, refined_plan, refined_res
+                        return False, current_plan, None
                     else:
                         logger.error(f"Self-healing refinement failed: {refined_res.error}")
                         return False, current_plan, None

@@ -1,4 +1,5 @@
 import logging
+from bs4 import BeautifulSoup
 from typing import Optional, Callable, List, Dict, Any
 from src.agent.ch.analyzer import ChapterAnalyzer, DOMStructurePlan
 from src.agent.ch.code_generator import ChapterCodeGenerator, ParserVerificationResult
@@ -66,11 +67,13 @@ class ReviewLoopOrchestrator:
         # Check Domain Memory for cached chapter extraction plan
         try:
             from src.agent.domain_memory import domain_memory
-            recipe = domain_memory.get_recipe(url)
+            recipe = domain_memory.get_chapter_recipe(url, html)
             if recipe and recipe.chapter_config:
                 saved_plan = recipe.chapter_config.to_plan()
                 verification = domain_memory.test_chapter_recipe(recipe, html)
-                if verification.success:
+                deterministic_review = self.observer._heuristic_review(html, saved_plan, verification)
+                selector_present = bool(BeautifulSoup(html, "lxml").select(saved_plan.content_selector))
+                if selector_present and verification.success and deterministic_review.is_accurate and recipe.chapter_config.quality_score >= MIN_QUALITY_SCORE:
                     logger.info(f"[DomainMemory] Successfully verified saved chapter recipe for '{recipe.domain}' ({verification.word_count} words).")
                     saved_review = ExtractionReview(
                         quality_score=recipe.chapter_config.quality_score or 1.0,
@@ -129,6 +132,11 @@ class ReviewLoopOrchestrator:
             # 2. Synthesize & test parser
             generator = ChapterCodeGenerator(current_plan)
             verification = generator.test_and_verify(html)
+            if verification.is_paywalled:
+                review = ExtractionReview(is_accurate=False, quality_score=0, issues=[verification.error or "Access blocked"])
+                return ReviewLoopResult(plan=current_plan, verification=verification, review=review,
+                    iterations=iteration, review_history=[*review_history, review], approved=False,
+                    last_interaction_id=last_interaction_id)
 
             # 3. Observer reviews extraction
             review = await self.observer.review(
@@ -159,7 +167,7 @@ class ReviewLoopOrchestrator:
                 best_review = review
 
             # 4. Check approval condition
-            if review.is_accurate and review.quality_score >= MIN_QUALITY_SCORE:
+            if verification.success and review.is_accurate and review.title_accurate and not review.has_clutter and review.quality_score >= MIN_QUALITY_SCORE:
                 logger.info(f"[Review Loop] Observer APPROVED extraction plan at iteration {iteration} (score={review.quality_score})!")
                 return ReviewLoopResult(
                     plan=current_plan,

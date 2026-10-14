@@ -183,12 +183,14 @@ async def test_batch_runner_auto_sync_on_heal(tmp_path):
 
     # Mock obscura to return valid HTML
     mock_obscura = MagicMock()
-    mock_obscura.fetch_html = AsyncMock(return_value="<html><body><h1>Old</h1><p>Too short</p></body></html>")
+    mock_obscura.fetch_html = AsyncMock(return_value='<html><h1 class="new-title">Chapter 1 Healed</h1><div class="new-body"><p>' + "A" * 600 + '</p></div></html>')
     runner.obscura = mock_obscura
 
     # Mock storage
     runner.storage = MagicMock()
-    runner.storage.save_chapter = AsyncMock(return_value=Path("/tmp/saved.md"))
+    saved_path = tmp_path / "saved.md"
+    saved_path.write_text("A" * 600, encoding="utf-8")
+    runner.storage.save_chapter = AsyncMock(return_value=saved_path)
 
     with patch("src.agent.domain_memory.domain_memory.update_chapter_plan") as mock_update:
         link = ChapterLink(index=1, title="Chapter 1", url="https://synctest.org/ch1")
@@ -197,6 +199,6 @@ async def test_batch_runner_auto_sync_on_heal(tmp_path):
         sem.__aexit__ = AsyncMock()
 
         success = await runner._scrape_single_chapter(link, sem)
-        assert success is True
-        assert runner.plan.title_selector == "h1.new-title"
-        mock_update.assert_called_once_with("https://synctest.org/ch1", mock_healed_plan, sample_url="https://synctest.org/ch1")
+        assert success["status"] == "saved"
+        assert any(plan.title_selector == "h1.new-title" for plan in runner._layout_plans.values())
+        assert mock_update.call_args.kwargs["sample_html"]

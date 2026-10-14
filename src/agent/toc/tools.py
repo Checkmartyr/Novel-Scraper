@@ -575,10 +575,16 @@ class PaginatedTocCrawler:
         # 1. Detect if a maximum page number is linked (e.g. Syosetu .c-pager__item--last, ?p=N, ?page=N)
         max_page = 1
         page_param = "p"
-        base_clean = base_url.split("?")[0]
+        from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
+        base_parts = urlsplit(base_url)
+        original_query = dict(parse_qsl(base_parts.query, keep_blank_values=True))
 
         for a in soup.find_all("a", href=True):
             href = a["href"].strip()
+            if urlsplit(urljoin(base_url, href)).path != base_parts.path:
+                continue
+            if re.search(r"chapter|episode|第.+[話章]|ตอน", a.get_text(" ", strip=True), re.I):
+                continue
             m = re.search(r"[?&](p|page)=(\d+)", href, re.I)
             if m:
                 p_name = m.group(1)
@@ -589,8 +595,10 @@ class PaginatedTocCrawler:
 
         # If a sequence of pages is detected, generate full range ?p=2..max_page
         if max_page > 1:
-            limit = min(max_page, 100)  # Safety ceiling of 100 pages (~10,000 chapters)
-            return [f"{base_clean}?{page_param}={i}" for i in range(2, limit + 1)]
+            from src.scraper.runtime import ScraperLimits
+            # Keep one overflow URL as evidence that the frontier is unfinished.
+            limit = min(max_page, ScraperLimits.from_env().toc_pages + 1)
+            return [urlunsplit(base_parts._replace(query=urlencode({**original_query, page_param: i}), fragment="")) for i in range(2, limit + 1)]
 
         # 2. Fallback: discover standard discrete pagination links
         for a in soup.find_all("a", href=True):
@@ -599,14 +607,19 @@ class PaginatedTocCrawler:
             if not href or href.startswith("javascript:") or href.startswith("#"):
                 continue
 
+            if re.search(r"chapter|episode|第.+[話章]|ตอน", text, re.I):
+                continue
+
             is_page = False
-            if re.search(r"[?&](?:page|p)=\d+", href, re.I):
+            if re.search(r"[?&](?:page|p)=\d+|[?&](?:cursor|offset|start)=", href, re.I):
                 is_page = True
             elif re.search(r"/page/\d+", href, re.I):
                 is_page = True
             elif text in ["2", "3", "4", "5", "6", "7", "8", "9", "Next", "次へ", "下一页"]:
                 if any(p in href.lower() for p in ["page", "p=", "index"]):
                     is_page = True
+            elif "next" in a.get("rel", []) and not re.search(r"chapter|episode|話|章|ตอน", text, re.I):
+                is_page = True
 
             if is_page:
                 full_u = urljoin(base_url, href)
@@ -614,7 +627,7 @@ class PaginatedTocCrawler:
                     seen.add(full_u)
                     cand_urls.append(full_u)
 
-        return cand_urls[:50]
+        return cand_urls
 
 
 class TocAuditor:
@@ -641,13 +654,21 @@ class TocAuditor:
 
         # Check for unexpanded accordions or load more
         has_unexpanded_sections = False
-        if any(k in html for k in ["つづきを表示", "もっと見る", "WorkTocAccordion", "data-accordion"]):
-            has_unexpanded_sections = True
+        soup = BeautifulSoup(html, "lxml")
+        for control in soup.select("button, [role=button], [aria-expanded=false]"):
+            if control.has_attr("disabled") or control.has_attr("hidden") or control.get("aria-disabled") == "true" or control.find_parent("form"):
+                continue
+            if control.get("aria-expanded") == "false" or re.search(r"load more|show more|つづきを表示|もっと見る|加载更多|เพิ่มเติม", control.get_text(" ", strip=True), re.I) or (control.get("aria-expanded") != "true" and "WorkTocAccordion_trigger" in control.get("class", [])):
+                has_unexpanded_sections = True
 
         # Check for multi-page pagination
         has_pagination = False
-        if check_pagination and re.search(r"[?&](?:page|p)=\d+", html, re.I):
-            has_pagination = True
+        if check_pagination:
+            for anchor in soup.select("a[href]"):
+                if re.search(r"chapter|episode|第.+[話章]|ตอน", anchor.get_text(" ", strip=True), re.I):
+                    continue
+                if re.search(r"[?&](?:page|p)=\d+|/page/\d+|[?&](?:cursor|offset|start)=", anchor["href"], re.I) or "next" in anchor.get("rel", []):
+                    has_pagination = True
 
         if count == 0:
             return False, 0.0, has_unexpanded_sections, has_pagination, ["Zero chapters extracted from page."]
@@ -658,10 +679,6 @@ class TocAuditor:
             if count >= claimed_count:
                 # Complete or exceeded
                 confidence = 1.0
-                is_complete = True
-            elif ratio >= 0.95:
-                # Within 95% margin
-                confidence = 0.95
                 is_complete = True
             else:
                 confidence = max(0.1, round(ratio, 2))
@@ -677,14 +694,18 @@ class TocAuditor:
                 confidence = 0.6
                 is_complete = False
                 issues.append("Page contains unexpanded accordion sections or 'load more' buttons.")
-            elif count >= 4:
-                confidence = 0.9
+            elif count >= 1:
+                confidence = 0.8
                 is_complete = True
             else:
                 confidence = 0.5
                 is_complete = False
                 issues.append(f"Only {count} chapters found and page structure may be incomplete.")
 
+        if is_complete and (has_unexpanded_sections or has_pagination):
+            is_complete = False
+            confidence = min(confidence, 0.6)
+            issues.append("Catalog navigation remains unresolved despite advertised count coverage.")
         return is_complete, confidence, has_unexpanded_sections, has_pagination, issues
 
 

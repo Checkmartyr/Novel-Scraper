@@ -693,6 +693,7 @@ class NovelScraperApp(App):
                 on_progress=tui_review_callback,
             )
             self.plan = loop_result.plan
+            self._plan_approved = loop_result.approved
             self.verification = loop_result.verification
             self.last_interaction_id = loop_result.last_interaction_id
             self.update_token_display()
@@ -728,7 +729,7 @@ class NovelScraperApp(App):
             code_view = self.query_one("#code-widget", Static)
             code_view.update(Syntax(self.verification.generated_code, "python", theme="monokai", line_numbers=True))
 
-            if self.verification.success:
+            if self.verification.success and loop_result.approved:
                 try:
                     from src.agent.domain_memory import domain_memory
                     saved_recipe = domain_memory.save_recipe(
@@ -738,6 +739,7 @@ class NovelScraperApp(App):
                         toc_strategy=(self.toc_state or {}).get("extraction_strategy", "dom_heuristic"),
                         chapter_plan=self.plan,
                         quality_score=loop_result.review.quality_score,
+                        sample_html=self.sample_html,
                     )
                     self.log_msg(f"Domain recipe saved: src/recipes/{saved_recipe.domain}.json & .py", "info")
                     full_script = domain_memory.generate_full_standalone_script(saved_recipe)
@@ -778,6 +780,9 @@ class NovelScraperApp(App):
         """Start batch scraping after approval."""
         if not self.classification or not self.plan:
             return
+        if not getattr(self, "_plan_approved", True):
+            self.log_msg("Extraction review rejected this plan; analyze again before downloading", "warning")
+            return
 
         btn_approve = self.query_one("#btn-approve", Button)
         btn_approve.disabled = True
@@ -802,7 +807,7 @@ class NovelScraperApp(App):
             storage=self.storage,
             concurrency=concurrency,
             on_progress=lambda comp, tot, title, spd: self.safe_call(
-                progress_widget.update_progress, comp, tot, title, spd
+                progress_widget.update_progress, comp, tot, title, getattr(self.batch_runner, "chapters_per_minute", 0)
             ),
             on_log=lambda msg, lvl: self.safe_call(self.log_msg, msg, lvl),
             previous_interaction_id=self.last_interaction_id,

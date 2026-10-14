@@ -7,6 +7,8 @@ On subsequent scrapes from the same domain, allows instant 0-token fast-path exe
 
 import json
 import logging
+import hashlib
+from src.scraper.runtime import atomic_json, atomic_write, fingerprint, route_family
 import os
 import re
 from datetime import datetime, timezone
@@ -53,6 +55,8 @@ class ChapterRecipeConfig(BaseModel):
 
 
 class DomainRecipe(BaseModel):
+    version: str = "legacy"
+    route: str = ""
     """Persisted scraping recipe for a specific website domain."""
     domain: str
     created_at: str
@@ -136,6 +140,17 @@ class DomainMemoryManager:
                     return recipe
             except Exception as e:
                 logger.warning(f"Error reading recipe file {json_path}: {e}")
+        return None
+
+    def get_chapter_recipe(self, url: str, html: str):
+        directory = self.recipes_dir / "versions" / self.normalize_domain(url)
+        for path in sorted(directory.glob("*.json"), reverse=True):
+            recipe = DomainRecipe.model_validate(json.loads(path.read_text(encoding="utf-8")))
+            if recipe.version == fingerprint(html) and recipe.route == route_family(url):
+                return recipe
+        recipe = self.get_recipe(url)
+        if recipe and recipe.version in {"legacy", fingerprint(html)}:
+            return recipe
         return None
 
     def record_usage(self, domain: str) -> None:
@@ -337,6 +352,7 @@ if __name__ == "__main__":
         toc_link_selector: Optional[str] = None,
         toc_container_selector: Optional[str] = None,
         quality_score: float = 1.0,
+        sample_html: str = "",
     ) -> DomainRecipe:
         """Save or update a domain recipe to both JSON metadata and standalone Python script."""
         domain = self.normalize_domain(domain_or_url)
@@ -368,6 +384,8 @@ if __name__ == "__main__":
         )
 
         recipe = DomainRecipe(
+            version=fingerprint(sample_html) if sample_html else "legacy",
+            route=route_family(sample_chapter_url),
             domain=domain,
             created_at=created_at,
             updated_at=now_str,
@@ -390,10 +408,18 @@ if __name__ == "__main__":
         plan: DOMStructurePlan,
         sample_url: str = "",
         quality_score: float = 1.0,
+        sample_html: str = "",
     ) -> DomainRecipe:
         """Update or create chapter extraction configuration for a domain."""
         domain = self.normalize_domain(domain_or_url)
         existing = self.get_recipe(domain)
+        if sample_html:
+            recipe = self.save_recipe(domain_or_url, existing.sample_toc_url if existing else "", sample_url,
+                existing.toc_config.strategy if existing else "dom_heuristic", plan,
+                toc_link_selector=existing.toc_config.link_selector if existing else None,
+                toc_container_selector=existing.toc_config.container_selector if existing else None,
+                quality_score=quality_score, sample_html=sample_html)
+            return recipe
         generator = ChapterCodeGenerator(plan)
         chapter_script = generator.generate_code_string()
 
@@ -496,17 +522,23 @@ if __name__ == "__main__":
         """Write recipe to both JSON and standalone .py script."""
         # 1. Write JSON
         json_path = self._get_json_path(recipe.domain)
-        with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(recipe.model_dump(), f, indent=2, ensure_ascii=False)
+        if json_path.exists():
+            previous = DomainRecipe.model_validate(json.loads(json_path.read_text(encoding="utf-8")))
+            archive = self.recipes_dir / "versions" / previous.domain / f"{previous.version}-{hashlib.sha256(previous.route.encode()).hexdigest()[:12]}.json"
+            atomic_json(archive, previous.model_dump())
+        atomic_json(json_path, recipe.model_dump())
+        version_path = self.recipes_dir / "versions" / recipe.domain / f"{recipe.version}-{hashlib.sha256(recipe.route.encode()).hexdigest()[:12]}.json"
+        atomic_json(version_path, recipe.model_dump())
 
         # 2. Write Python script
         script_path = self._get_script_path(recipe.domain)
         standalone_code = self.generate_full_standalone_script(recipe)
-        with open(script_path, "w", encoding="utf-8") as f:
-            f.write(standalone_code)
+        atomic_write(script_path, standalone_code)
 
     def test_toc_recipe(self, recipe: DomainRecipe, html: str, base_url: str) -> Tuple[bool, List[ChapterLink]]:
         """Test the saved TOC recipe on given HTML."""
+        if recipe.toc_config.strategy == "chapter_navigation":
+            return False, []
         try:
             from src.agent.toc.tools import DomLinkExtractor
             def keep_current_novel(items: List[ChapterLink]) -> List[ChapterLink]:

@@ -117,6 +117,8 @@ async def test_self_healer_recovers_using_candidate_containers():
     mock_review = MagicMock()
     mock_review.is_accurate = True
     mock_review.quality_score = 1.0
+    mock_review.title_accurate = True
+    mock_review.has_clutter = False
     healer.observer.review = AsyncMock(return_value=mock_review)
 
     healed, healed_plan, healed_res = await healer.attempt_heal(
@@ -155,6 +157,7 @@ async def test_batch_runner_assigns_healed_result(tmp_path):
     # Mock storage
     mock_storage = MagicMock()
     mock_storage.save_chapter = AsyncMock(return_value=tmp_path / "0005.md")
+    (tmp_path / "0005.md").write_text("saved content", encoding="utf-8")
     runner.storage = mock_storage
 
     # Mock healer to succeed
@@ -175,7 +178,7 @@ async def test_batch_runner_assigns_healed_result(tmp_path):
     link = ChapterLink(index=5, title="鬼と棍棒", url="https://ncode.syosetu.com/n9517fc/5/")
     success = await runner._scrape_single_chapter(link, semaphore)
 
-    assert success is True
+    assert success["status"] == "saved"
     # Verify save_chapter was called with the healed result containing the full text
     assert mock_storage.save_chapter.call_count == 1
     call_kwargs = mock_storage.save_chapter.call_args[1]

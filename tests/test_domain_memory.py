@@ -272,7 +272,7 @@ async def test_toc_agent_fast_path_integration(tmp_path, monkeypatch):
     state = await agent.extract_toc("https://fasttoc.com/novel/grand-journey", html=toc_html)
 
     assert state["extraction_strategy"] == "remembered_recipe"
-    assert state["confidence_score"] == 1.0
+    assert state["confidence_score"] == 0.8
     assert len(state["extracted_chapters"]) == 3
     assert state["extracted_chapters"][0].title == "Chapter 1: Dawn"
 

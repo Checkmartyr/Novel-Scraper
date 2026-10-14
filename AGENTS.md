@@ -145,7 +145,7 @@ stateDiagram-v2
 ## 4. Agent 2: Chapter Extraction Agent (`src/agent/ch/`)
 
 ### Role & Purpose
-The **Chapter Agent** inspects chapter pages, performs semantic DOM structure analysis, synthesizes deterministic BeautifulSoup Python scrapers, and executes an Actor-Critic Observer review loop to guarantee clean story text without navigation clutter, watermarks, or ads.
+The **Chapter Agent** inspects chapter pages, performs semantic DOM structure analysis, synthesizes deterministic BeautifulSoup Python scrapers, and reviews extraction quality before publishing raw files. Report unresolved coverage and inaccessible content explicitly.
 
 ### Key Components
 - **[`ChapterAnalyzer`](file:///D:/Code/Novel_scraping_agent/src/agent/ch/analyzer.py)** *(Generator / Actor)*:
@@ -160,7 +160,7 @@ The **Chapter Agent** inspects chapter pages, performs semantic DOM structure an
   - Audits the sample output against quality thresholds.
   - Returns structured [`ExtractionReview`](file:///D:/Code/Novel_scraping_agent/src/agent/ch/observer.py) (`quality_score`, `is_accurate`, `title_accurate`, `has_clutter`, `issues`, `recommended_fixes`).
 - **[`ReviewLoopOrchestrator`](src/agent/ch/review_loop.py)**:
-  - Checks a saved chapter recipe before starting analysis; otherwise iteratively pairs `ChapterAnalyzer` with `ExtractionObserver` up to `MAX_REVIEW_ITERATIONS` (default: 32 in `src/config.py`).
+  - Checks a saved chapter recipe before starting analysis; otherwise iteratively pairs `ChapterAnalyzer` with `ExtractionObserver` up to `MAX_REVIEW_ITERATIONS` (default: 6 in `src/config.py`).
   - Feeds observer critique back to the analyzer and uses `previous_interaction_id` to preserve multi-turn reasoning context. Approval requires an accurate review meeting `MIN_QUALITY_SCORE` (default: 0.85).
 - **[`SelfHealer`](file:///D:/Code/Novel_scraping_agent/src/agent/ch/self_healer.py)**:
   - Activated during batch scraping if a site alters DOM structure mid-novel (e.g. volume separator shifts).
@@ -181,7 +181,7 @@ sequenceDiagram
     Observer->>Observer: Audit title accuracy, word count, residual ads
     alt Quality Score >= 0.85
         Observer-->>Memory: Save Recipe to src/recipes/<domain>.json & .py
-    else Quality Score < 0.85 (Iterate <= 3)
+    else Quality Score < 0.85 (Bounded review budget)
         Observer-->>Analyzer: Return Review feedback + recommended selectors
         Analyzer->>CodeGen: Refine DOMStructurePlan
     end
@@ -236,3 +236,13 @@ When websites employ non-DOM architectures (such as proprietary client-side encr
 3. **Verify with Tests**:
    - All changes must pass the full test suite (`uv run pytest`).
    - Mock network calls and LLM outputs in unit tests to ensure deterministic CI runs.
+
+## 9. Autonomous Worker Contracts
+
+For discovery, session handling, durable jobs, or throughput changes, read NouSetsu's [scraper guide](../../docs/novel_scraper.md) and the shared limits/checkpoint contracts in `src/scraper/runtime.py`.
+
+- Preserve audit outcomes through finalization. Completion requires resolved catalog coverage and verified selected chapters.
+- Execute model suggestions through typed, witnessed DOM actions and deterministic parsers. Retain actual chapter endings and mixed paragraph/inline text in validation evidence.
+- Promote approved recipes; preserve variants by structural fingerprint and route. Serialize repairs for each layout.
+- Publish chapter files atomically with source receipts. Persist each requested chapter's outcome outside raw Markdown files.
+- Use isolated offline fixtures by default. Run external website acceptance only with `NOVEL_SCRAPER_LIVE_TESTS=1`; provide unfamiliar and authorized-session URLs through the live matrix environment variable.

@@ -1,6 +1,14 @@
 """LangGraph StateGraph workflow for autonomous TOC extraction."""
 
 import logging
+import asyncio
+import json
+import time
+import re
+from bs4 import BeautifulSoup
+from urllib.parse import urlsplit
+from src.scraper.runtime import ScraperLimits, canonical_url, belongs_to_observed_novel
+from src.agent.toc.discovery import expand_catalog, network_chapters
 from typing import Dict, Any, List, Optional, Callable
 from langgraph.graph import StateGraph, END
 
@@ -27,9 +35,12 @@ class TocGraphWorkflow:
         self,
         obscura_client: Optional[ObscuraClient] = None,
         on_log: Optional[Callable[[str, str], None]] = None,
+        llm_client=None,
     ):
         self.obscura = obscura_client or ObscuraClient()
         self.on_log = on_log
+        self.llm = llm_client
+        self.limits = ScraperLimits.from_env()
 
     def _emit_log(self, msg: str, level: str = "info") -> None:
         """Log to standard logger and trigger optional UI callback."""
@@ -153,7 +164,9 @@ class TocGraphWorkflow:
         dom_chapters = DomLinkExtractor.extract(state["html"], state["url"])
         
         current_chapters = state.get("extracted_chapters", [])
-        # Keep whichever set is larger / more complete
+        merged = {canonical_url(c.url): c for c in current_chapters}
+        merged.update({canonical_url(c.url): c for c in dom_chapters})
+        dom_chapters = list(merged.values())
         if len(dom_chapters) > len(current_chapters):
             log_msg = f"[DomExtractor] Extracted {len(dom_chapters)} chapters from DOM (upgraded from {len(current_chapters)})."
             self._emit_log(log_msg)
@@ -171,8 +184,10 @@ class TocGraphWorkflow:
 
     async def _node_audit(self, state: TocState) -> Dict[str, Any]:
         """Auditor / Critic: evaluates whether extraction is complete or truncated."""
+        self.last_state = state.copy()
+        self.obscura.last_toc_state = state.copy()
         logs = list(state.get("logs", []))
-        chapters = state.get("extracted_chapters", [])
+        chapters = [chapter for chapter in state.get("extracted_chapters", []) if belongs_to_observed_novel(state["url"], chapter.url)]
         claimed = state.get("claimed_chapter_count")
         # Check if pagination URLs are present
         has_pag = state.get("has_pagination", False) and len(state.get("pagination_urls", [])) > 0
@@ -183,19 +198,34 @@ class TocGraphWorkflow:
             html=state["html"],
             check_pagination=has_pag,
         )
+        if state.get("expanded"):
+            if not claimed and chapters and not has_pag and not unexpanded:
+                is_complete = True
+                conf = 0.8
+        if state.get("crawl_issues"):
+            is_complete = False
+            issues.extend(state["crawl_issues"])
+        if state.get("expansion_incomplete"):
+            is_complete = False
+            issues.append("Browser expansion budget exhausted before catalog closure")
 
         log_msg = f"[Audit] Complete: {is_complete}, Confidence: {conf}, Chapters: {len(chapters)}/{claimed or '?'}, Issues: {issues}"
         self._emit_log(log_msg)
         logs.append(log_msg)
 
         iteration = state.get("iteration", 0) + 1
+        count = len(chapters)
+        stagnant = state.get("stagnant_attempts", 0) + 1 if count == state.get("last_count", -1) else 0
 
         return {
             "is_complete": is_complete,
+            "extracted_chapters": chapters,
             "confidence_score": conf,
             "has_unexpanded_sections": unexpanded,
             "issues": issues,
             "iteration": iteration,
+            "last_count": count,
+            "stagnant_attempts": stagnant,
             "logs": logs,
         }
 
@@ -207,13 +237,21 @@ class TocGraphWorkflow:
         logs.append(log_msg)
 
         try:
-            expanded_html = await InteractiveDomExpander.expand(state["url"], self.obscura)
+            expansion = await expand_catalog(state["url"], self.obscura, DomLinkExtractor.extract, self.llm)
+            expanded_html, observed, next_urls = expansion
+            merged = {canonical_url(c.url): c for c in state.get("extracted_chapters", [])}
+            merged.update({canonical_url(c.url): c for c in observed})
             exp_msg = f"[InteractiveExpand] Successfully expanded DOM (size: {len(expanded_html)} bytes)."
             self._emit_log(exp_msg)
             logs.append(exp_msg)
             return {
                 "html": expanded_html,
                 "has_unexpanded_sections": False,
+                "extracted_chapters": list(merged.values()),
+                "pagination_urls": next_urls,
+                "has_pagination": bool(next_urls),
+                "expanded": True,
+                "expansion_incomplete": not expansion.exhausted,
                 "logs": logs,
             }
         except Exception as e:
@@ -254,97 +292,76 @@ class TocGraphWorkflow:
             }
 
     async def _node_crawl_pagination(self, state: TocState) -> Dict[str, Any]:
-        """Action: Crawls subsequent TOC pages concurrently if multi-page TOC is detected."""
-        import asyncio
-        import httpx
-        logs = list(state.get("logs", []))
-        all_chapters = list(state.get("extracted_chapters", []))
-        seen_urls = {c.url for c in all_chapters}
-        pag_urls = state.get("pagination_urls", [])
-
-        crawl_start_msg = f"[PaginationCrawler] Crawling {len(pag_urls)} pagination pages concurrently (5 workers)..."
-        self._emit_log(crawl_start_msg)
-        logs.append(crawl_start_msg)
-        
-        sem = asyncio.Semaphore(5)
-        cookies = self.obscura.get_cookies() if hasattr(self.obscura, "get_cookies") else {}
-        cached_ua = self.obscura.get_user_agent() if hasattr(self.obscura, "get_user_agent") else None
-        headers = {
-            "User-Agent": cached_ua or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
-            "Accept-Language": "en-US,en;q=0.9,ja;q=0.8",
-            "Referer": state["url"],
-        }
-
-        async with httpx.AsyncClient(headers=headers, cookies=cookies, timeout=15.0, follow_redirects=True) as http_client:
-            async def fetch_page(p_url: str):
-                async with sem:
-                    # Fast path: direct async HTTP
-                    try:
-                        resp = await http_client.get(p_url)
-                        if resp.status_code == 200 and len(resp.text) > 500:
-                            return p_url, resp.text, None
-                    except Exception:
-                        pass
-                    
-                    # Fallback: full Obscura browser fetch
-                    try:
-                        p_html = await self.obscura.fetch_html(p_url, stealth=True, wait_until="domcontentloaded", timeout=15)
-                        return p_url, p_html, None
-                    except Exception as e:
-                        return p_url, None, str(e)
-
-            results = await asyncio.gather(*(fetch_page(u) for u in pag_urls))
-
-        # Process results in strict pagination order to maintain sequential integrity
-        for p_url, p_html, err in results:
-            if p_html:
-                page_chapters = DomLinkExtractor.extract(p_html, p_url)
-                added = 0
-                for ch in page_chapters:
-                    if ch.url not in seen_urls:
-                        seen_urls.add(ch.url)
-                        all_chapters.append(ch)
-                        added += 1
-                page_log = f"[PaginationCrawler] {p_url}: found {len(page_chapters)} chapters (+{added} new)."
-                logs.append(page_log)
-            else:
-                fail_log = f"[PaginationCrawler] Failed {p_url}: {err}"
-                self._emit_log(fail_log, "warning")
-                logs.append(fail_log)
-
-        # Check if chapters are in reverse chronological order
-        all_chapters, rev_detected = detect_and_fix_reverse_order(all_chapters)
-        if rev_detected:
-            inv_msg = "[PaginationCrawler] Detected reverse chronological order. Inverting to reading order..."
-            self._emit_log(inv_msg)
-            logs.append(inv_msg)
-
-        # Re-index chapters monotonically 1..N and clean titles
-        for idx, ch in enumerate(all_chapters, start=1):
-            ch.index = idx
-            ch.title = clean_chapter_title(ch.title)
-
-        # Update claimed chapter count if pagination discovery revealed full catalog
-        claimed = state.get("claimed_chapter_count")
-        if not claimed or len(all_chapters) > claimed:
-            claimed = len(all_chapters)
-
-        tot_msg = f"[PaginationCrawler] Total chapters after pagination: {len(all_chapters)}"
-        self._emit_log(tot_msg)
-        logs.append(tot_msg)
+        """Crawl the recursive frontier; unresolved pages remain explicit evidence gaps."""
+        all_chapters = {canonical_url(c.url): c for c in state.get("extracted_chapters", [])}
+        frontier = list(state.get("pagination_urls", []))
+        visited = {canonical_url(state["url"])}
+        issues = []
+        pages = 1
+        while frontier and pages < self.limits.toc_pages and time.monotonic() < state.get("deadline", float("inf")):
+            batch_size = min(3, self.limits.toc_pages - pages)
+            batch, frontier = frontier[:batch_size], frontier[batch_size:]
+            async def fetch(url):
+                try:
+                    html = await self.obscura.fetch_html(url, wait_until="domcontentloaded")
+                    return url, html, None
+                except Exception as error:
+                    return url, "", str(error)
+            batch = [u for u in batch if canonical_url(u) not in visited and urlsplit(u).netloc == urlsplit(state["url"]).netloc]
+            visited.update(canonical_url(u) for u in batch)
+            pages += len(batch)
+            if not batch:
+                continue
+            for page_url, html, error in await asyncio.gather(*(fetch(u) for u in batch)):
+                if error:
+                    issues.append(f"Unresolved catalog page {page_url}: {error}")
+                    continue
+                try:
+                    data = json.loads(html)
+                    chapters, next_urls = network_chapters([{"url": page_url, "data": data}], page_url)
+                except (ValueError, TypeError):
+                    chapters = EmbeddedStateExtractor.extract(html, page_url) + DomLinkExtractor.extract(html, page_url)
+                    next_urls = PaginatedTocCrawler.detect_pagination_urls(html, page_url)
+                    if not chapters:
+                        try:
+                            rendered = await self.obscura.fetch_html(page_url, force_browser=True)
+                            chapters = EmbeddedStateExtractor.extract(rendered, page_url) + DomLinkExtractor.extract(rendered, page_url)
+                            next_urls += PaginatedTocCrawler.detect_pagination_urls(rendered, page_url)
+                        except Exception as error:
+                            issues.append(f"Unable to render catalog page {page_url}: {error}")
+                if not chapters:
+                    issues.append(f"No chapter evidence on catalog page {page_url}")
+                for chapter in chapters:
+                    all_chapters.setdefault(canonical_url(chapter.url), chapter)
+                frontier.extend(u for u in next_urls if canonical_url(u) not in visited and u not in frontier)
+        if frontier:
+            issues.append("Catalog frontier exceeds discovery budget")
+        ordered, _ = detect_and_fix_reverse_order(list(all_chapters.values()))
+        for index, chapter in enumerate(ordered, 1):
+            chapter.index = index
+            chapter.title = clean_chapter_title(chapter.title)
         return {
-            "extracted_chapters": all_chapters,
-            "claimed_chapter_count": claimed,
+            "extracted_chapters": ordered,
             "has_pagination": False,
             "pagination_urls": [],
             "extraction_strategy": "paginated_dom",
-            "logs": logs,
+            "crawl_issues": issues,
+            "completeness_evidence": [f"Visited {pages} catalog pages"] if not issues else [],
+            "logs": state.get("logs", []) + issues,
         }
 
     async def _node_finalize(self, state: TocState) -> Dict[str, Any]:
         """Finalize chapter list with deduplication, reverse order fix, sequence re-indexing, and clean titles."""
         logs = list(state.get("logs", []))
         raw_chapters = state.get("extracted_chapters", [])
+        soup = BeautifulSoup(state.get("html", ""), "lxml")
+        from urllib.parse import urljoin
+        volumes = {}
+        for link in soup.select("a[href]"):
+            heading = link.find_previous(["h2", "h3"])
+            label = heading.get_text(" ", strip=True) if heading else ""
+            if re.search(r"volume|vol\.|巻|部|卷|เล่ม", label, re.I):
+                volumes[canonical_url(urljoin(state["url"], link["href"]))] = label
         
         seen = set()
         clean_list = []
@@ -352,6 +369,7 @@ class TocGraphWorkflow:
             if ch.url not in seen:
                 seen.add(ch.url)
                 clean_list.append(ch)
+                ch.volume = ch.volume or volumes.get(canonical_url(ch.url))
 
         # Detect and fix reverse order (e.g. latest chapter first)
         clean_list, rev_detected = detect_and_fix_reverse_order(clean_list)
@@ -371,7 +389,8 @@ class TocGraphWorkflow:
 
         return {
             "extracted_chapters": clean_list,
-            "is_complete": True,
+            "is_complete": bool(clean_list) and state.get("is_complete", False),
+            "completeness_evidence": state.get("completeness_evidence", []) + (["Advertised count covered" if state.get("claimed_chapter_count") else "Observed catalog navigation exhausted"] if state.get("is_complete") and clean_list else []),
             "logs": logs,
         }
 
@@ -388,6 +407,10 @@ class TocGraphWorkflow:
         return "extract_dom"
 
     def _route_after_audit(self, state: TocState) -> str:
+        if state.get("iteration", 0) >= state.get("max_iterations", 8):
+            return "finalize"
+        if time.monotonic() >= state.get("deadline", float("inf")) or state.get("stagnant_attempts", 0) >= self.limits.no_progress_attempts:
+            return "finalize"
         # If multi-page pagination URLs are pending, crawl them first!
         if state.get("has_pagination") and state.get("pagination_urls"):
             return "crawl_pagination"
@@ -396,7 +419,7 @@ class TocGraphWorkflow:
             return "finalize"
 
         # Try interactive expand if unexpanded sections are explicitly flagged
-        if state.get("has_unexpanded_sections"):
+        if state.get("has_unexpanded_sections") and not state.get("expanded"):
             return "interactive_expand"
 
         # Self-heal TOC via synthesizer if incomplete and not attempted yet

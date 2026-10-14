@@ -11,7 +11,7 @@ from src.config import MIN_QUALITY_SCORE
 class ExtractionReview(BaseModel):
     """Structured evaluation returned by the Quality Control Observer Agent."""
     is_accurate: bool = Field(description="True if the extracted text is clean story prose without clutter, and title is correct")
-    quality_score: float = Field(description="Quality rating from 0.0 (completely broken) to 1.0 (perfect)")
+    quality_score: float = Field(ge=0, le=1, description="Quality rating from 0.0 (completely broken) to 1.0 (perfect)")
     title_accurate: bool = Field(default=True, description="Whether extracted chapter title is clean and accurate")
     has_clutter: bool = Field(default=False, description="Whether ads, nav, footer, or social widgets leaked into body")
     issues: List[str] = Field(default_factory=list, description="Specific defects found (e.g. 'contains nav buttons', 'wrong title')")
@@ -62,6 +62,14 @@ Selectors Evaluated:
 - Content Selector: {plan.content_selector}
 - Remove Selectors: {plan.remove_selectors}
 Word Count: {verification.word_count}
+Character Count: {verification.char_count}
+Paragraph Count: {verification.paragraph_count}
+Source page excerpt: {verification.source_excerpt}
+Source container paragraph count: {verification.source_paragraph_count}
+Source container character count: {verification.source_char_count}
+Source container beginning: {verification.source_head}
+Source container middle: {verification.source_middle}
+Source container ending: {verification.source_tail}
 
 Extracted Text Preview (Beginning):
 \"\"\"
@@ -107,6 +115,12 @@ Audit Criteria:
 
         title = verification.chapter_title.strip()
         preview = verification.preview_markdown
+        soup = BeautifulSoup(html, "lxml")
+        alternative_titles = [tag.get_text(" ", strip=True) for tag in soup.select("h1, h2, [class*=chapter-title], [class*=episode-title]")]
+        if not re.search(r"chapter|episode|第.+[話章]|ตอน", title, re.I) and any(re.search(r"chapter|episode|第.+[話章]|ตอน", heading, re.I) for heading in alternative_titles if heading != title):
+            title_accurate = False
+            score -= 0.3
+            issues.append("Selected title is a site heading instead of the observed chapter heading")
 
         # 1. Title checks
         if not title or title.lower() in ("chapter", "untitled", "title", "index", "home"):
@@ -131,7 +145,11 @@ Audit Criteria:
                 score -= 0.2
 
         # 3. Word count check
-        if verification.word_count < 50:
+        if verification.source_paragraph_count > verification.paragraph_count + 2 and verification.source_char_count > verification.char_count * 2.5:
+            issues.append("Content selector misses adjacent source paragraphs")
+            fixes.append("Select the complete story container rather than its first paragraphs")
+            score -= 0.5
+        if verification.char_count == 0 and verification.word_count == 0:
             issues.append(f"Word count ({verification.word_count}) is unusually low for a novel chapter.")
             fixes.append("Check if content_selector is too narrow or missing paragraphs.")
             score -= 0.3

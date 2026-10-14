@@ -17,6 +17,7 @@ class ChapterLink(BaseModel):
     index: int
     title: str
     url: str
+    volume: Optional[str] = None
 
 class ClassificationResult(BaseModel):
     page_type: str = Field(description="'TOC' for Table of Contents or 'CHAPTER' for single chapter page")
@@ -175,7 +176,7 @@ class PageClassifier:
                 ok, chapters = domain_memory.test_toc_recipe(recipe, html, url)
                 if page_kind != "CHAPTER" and ok and len(chapters) >= 1:
                     is_complete, conf, unexp, pag, _ = TocAuditor.audit(chapters, claimed, html)
-                    if not pag and not unexp and (conf >= 0.8 or claimed is None):
+                    if is_complete and not pag and not unexp:
                         logger.info(f"[DomainMemory] Bypass: Detected domain '{recipe.domain}' TOC with {len(chapters)} chapters.")
                         toc_state = {
                             "url": url,
@@ -186,8 +187,9 @@ class PageClassifier:
                             "claimed_chapter_count": claimed,
                             "extracted_chapters": chapters,
                             "extraction_strategy": "remembered_recipe",
-                            "confidence_score": 1.0,
+                            "confidence_score": conf,
                             "is_complete": True,
+                            "completeness_evidence": ["Advertised count covered" if claimed else "Observed catalog navigation exhausted"],
                             "iteration": 0,
                             "issues": [],
                             "logs": [f"Bypassed LLM classification via remembered recipe for '{recipe.domain}'."],
@@ -224,7 +226,13 @@ class PageClassifier:
         summary = self._extract_page_summary(html, url)
         apollo_chapters = self._extract_apollo_chapters(url, html)
 
-        if self.llm.is_available:
+        deterministic = self._heuristic_classify(url, html, summary)
+        if apollo_chapters or (deterministic.page_type == "TOC" and len(deterministic.chapter_links) >= 2):
+            result = deterministic
+            if apollo_chapters:
+                result.page_type = "TOC"
+                result.chapter_links = apollo_chapters
+        elif self.llm.is_available:
             try:
                 prompt = f"""
 Current Page URL: {url}

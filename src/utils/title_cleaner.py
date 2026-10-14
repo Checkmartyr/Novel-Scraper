@@ -213,6 +213,13 @@ def clean_chapter_content(paragraphs: List[str]) -> Tuple[List[str], bool]:
         "login first please",
         "vip chapter",
         "purchase coins to unlock",
+        "本章为付费章节",
+        "购买本章后阅读",
+        "請購買本章",
+        "ログインして続きを読む",
+        "購入して続きを読む",
+        "กรุณาซื้อตอนนี้",
+        "ปลดล็อกตอนด้วยเหรียญ",
     ]
 
     for p in paragraphs:
