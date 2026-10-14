@@ -104,7 +104,7 @@ def belongs_to_observed_novel(source: str, candidate: str) -> bool:
         prefix.pop()
         if source_query.get("id") and target_query.get("id") != source_query["id"]:
             return False
-    if prefix[-1].lower() in {"toc", "catalog", "contents", "index"} or (len(prefix) > 2 and (prefix[-1].isdigit() or re.search(r"^(chapter|episode|ch)[-_]?\d+", prefix[-1], re.I))):
+    if prefix and (prefix[-1].lower() in {"toc", "catalog", "contents", "index"} or (len(prefix) > 2 and (prefix[-1].isdigit() or re.search(r"^(chapter|episode|ch)[-_]?\d+", prefix[-1], re.I)))):
         prefix.pop()
     if len(prefix) >= 2 and target_parts[0] == prefix[0]:
         return target_parts[:len(prefix)] == prefix

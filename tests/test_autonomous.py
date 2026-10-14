@@ -201,6 +201,16 @@ async def test_partial_subpage_is_not_saved(tmp_path):
     assert not list(tmp_path.glob("*.md"))
 
 
+@pytest.mark.parametrize("candidate,expected", [
+    ("https://fixture.test/chapter.php?id=123&chapter=1", True),
+    ("https://fixture.test/chapter.php?id=456&chapter=1", False),
+    ("https://fixture.test/chapter.php?chapter=1", False),
+    ("https://other.test/chapter.php?id=123&chapter=1", False),
+])
+def test_root_php_catalog_identity(candidate, expected):
+    assert belongs_to_observed_novel("https://fixture.test/index.php?id=123", candidate) is expected
+
+
 def test_unfamiliar_novel_identity_and_mixed_prose():
     source = "https://writer.dek-d.com/Kumari/writer/view.php?id=2655851"
     assert belongs_to_observed_novel(source, source.replace("view.php", "viewlongc.php") + "&chapter=1")
