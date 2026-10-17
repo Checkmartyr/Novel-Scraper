@@ -1,0 +1,4459 @@
+{
+  "version": 2,
+  "sites": [
+    {
+      "id": "royalroad",
+      "url": "https://www.royalroad.com/fiction/21220/mother-of-learning",
+      "split": "development",
+      "annotation_status": "reviewed",
+      "annotation_method": "Independently reviewed publisher story boundaries and paragraph order from frozen HTTP markup; no application extractor used. Browser retrieval failures are retained in local capture-index.json.",
+      "catalog_selector": "#chapters tr td:first-child a[href]",
+      "catalog_source_sha256": "8d0e014377614f37c1551c7d1e444d60f59cfc9c3879b7155d53435d2a28a79e",
+      "catalog": [
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301778/1-good-morning-brother",
+          "title": "1. Good Morning Brother",
+          "text_file": {
+            "path": "00383954473e8fb381aa-source-gold.txt",
+            "sha256": "612c20d23f763a9a78626e8ff7d0bb447ace622e7dd28efc1c4d40d3dac5f8eb"
+          }
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301781/2-lifes-little-problems",
+          "title": "2. Life’s Little Problems"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301784/3-the-bitter-truth",
+          "title": "3. The Bitter Truth"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301788/4-stars-fell",
+          "title": "4. Stars Fell"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301795/5-start-over",
+          "title": "5. Start Over"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301799/6-concentrate-and-try-again",
+          "title": "6. Concentrate and Try Again"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301801/7-of-gaps-and-pretending",
+          "title": "7. Of Gaps And Pretending"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301802/8-perspective",
+          "title": "8. Perspective"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301984/9-cheaters",
+          "title": "9. Cheaters"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/302241/10-overlooked-details",
+          "title": "10. Overlooked Details"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/302540/11-limiters",
+          "title": "11. Limiters"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/302854/12-soul-web",
+          "title": "12. Soul Web"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/303116/13-any-second-now",
+          "title": "13. Any Second Now"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/303485/14-the-sister-effect",
+          "title": "14. The Sister Effect"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/303785/15-busy-friday",
+          "title": "15. Busy Friday"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/304097/16-we-need-to-talk",
+          "title": "16. We Need To Talk"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/304398/17-sympathy-for-the-spider",
+          "title": "17. Sympathy for the Spider"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/304716/18-the-pact-is-sealed",
+          "title": "18. The Pact is Sealed"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/305052/19-tangled-webs",
+          "title": "19. Tangled Webs"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/305359/20-a-matter-of-faith",
+          "title": "20. A Matter of Faith"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/305662/21-wheel-of-fortune",
+          "title": "21. Wheel of Fortune"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/305877/22-complications",
+          "title": "22. Complications"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/306244/23-lighting-the-fuse",
+          "title": "23. Lighting the Fuse"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/306575/24-smoke-and-mirrors",
+          "title": "24. Smoke and Mirrors"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/306758/25-the-unexpected",
+          "title": "25. The Unexpected"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/307245/26-soulkill",
+          "title": "26. Soulkill"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/307248/27-cast-adrift",
+          "title": "27. Cast Adrift"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/307587/28-cauldron",
+          "title": "28. Cauldron"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/307852/29-the-hunters-and-the-hunted",
+          "title": "29. The Hunters and the Hunted"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/308104/30-a-game-of-shops",
+          "title": "30. A Game of Shops"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/308373/31-marked",
+          "title": "31. Marked"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/308643/32-alternatives",
+          "title": "32. Alternatives"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/308876/33-gateways",
+          "title": "33. Gateways"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/309130/34-unreasonable-things",
+          "title": "34. Unreasonable Things"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/309417/35-mistakes-have-been-made",
+          "title": "35. Mistakes Have Been Made"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/309946/36-a-battle-of-minds",
+          "title": "36. A Battle of Minds"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/310296/37-slow-burn",
+          "title": "37. Slow Burn"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/310557/38-return-to-cyoria",
+          "title": "38. Return to Cyoria"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/311034/39-suspicious-coincidences",
+          "title": "39. Suspicious Coincidences"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/311406/40-shifting-tracks",
+          "title": "40. Shifting Tracks"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/311668/41-myriad-clashing-motives",
+          "title": "41. Myriad Clashing Motives"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/311973/42-sum-of-its-parts",
+          "title": "42. Sum of its Parts"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/312321/43-overwhelmed",
+          "title": "43. Overwhelmed"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/312539/44-a-show-of-trust",
+          "title": "44. A Show of Trust"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/312749/45-fine-structures",
+          "title": "45. Fine Structures"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/313133/46-the-other-side",
+          "title": "46. The Other Side"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/313489/47-politics",
+          "title": "47. Politics"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/313816/48-well-of-souls",
+          "title": "48. Well of Souls"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314133/49-substitution",
+          "title": "49. Substitution"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314391/50-containment",
+          "title": "50. Containment"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314625/51-out-of-control",
+          "title": "51. Out of Control"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart",
+          "title": "52. Things Fall Apart"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/315172/53-phantoms",
+          "title": "53. Phantoms"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/315504/54-the-gate-is-barred",
+          "title": "54. The Gate Is Barred"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/315711/55-threshold",
+          "title": "55. Threshold",
+          "text_file": {
+            "path": "a2bcfb262ba2290c67f6-source-gold.txt",
+            "sha256": "f13c576da0897e663cfcbe3b7e8915a504fbc2f193d75757386b59201d3e40d0"
+          }
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/315980/56-obscure",
+          "title": "56. Obscure"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/316328/57-unwanted",
+          "title": "57. Unwanted"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/316549/58-questions-and-answers",
+          "title": "58. Questions and Answers"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/316947/59-one-step-forward",
+          "title": "59. One Step Forward"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/317193/60-into-the-abyss",
+          "title": "60. Into the Abyss"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/317506/61-anthills",
+          "title": "61. Anthills"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/317781/62-improperly-used",
+          "title": "62. Improperly Used"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/318066/63-the-march-of-days",
+          "title": "63. The March of Days"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/318332/64-distance",
+          "title": "64. Distance"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/318639/65-dangerous-ground",
+          "title": "65. Dangerous Ground"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/318950/66-marred-perfection",
+          "title": "66. Marred Perfection"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/319347/67-convergence",
+          "title": "67. Convergence"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/319545/68-green-hell",
+          "title": "68. Green Hell"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/319853/69-ruin",
+          "title": "69. Ruin"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/320107/70-carried-away",
+          "title": "70. Carried Away"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/320370/71-shadows-of-the-past",
+          "title": "71. Shadows of the Past"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/320672/72-crossroads",
+          "title": "72. Crossroads"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/320954/73-plodding-ahead",
+          "title": "73. Plodding Ahead"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/321285/74-the-return",
+          "title": "74. The Return"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/321479/75-soul-stealer",
+          "title": "75. Soul Stealer"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/321816/76-critical-blunder",
+          "title": "76. Critical Blunder"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/322204/77-testing",
+          "title": "77. Testing"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/322443/78-grinding-stone",
+          "title": "78. Grinding Stone"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/322733/79-crime-and-evading-punishment",
+          "title": "79. Crime and Evading Punishment"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/323014/80-enemies",
+          "title": "80. Enemies"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/323436/81-a-civil-conversation",
+          "title": "81. A Civil Conversation"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/323769/82-ancient-circles",
+          "title": "82. Ancient Circles"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/324024/83-scorpion",
+          "title": "83. Scorpion"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/324123/84-powerless",
+          "title": "84. Powerless"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/324397/85-critical-mass",
+          "title": "85. Critical Mass"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/324653/86-a-new-world",
+          "title": "86. A New World"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/325051/87-agents-of-the-crown",
+          "title": "87. Agents of the Crown"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/325392/88-mysterious-ways",
+          "title": "88. Mysterious Ways"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/325706/89-victory",
+          "title": "89. Victory"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/326028/90-change-of-plans",
+          "title": "90. Change of Plans"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/326370/91-a-path-paid-in-blood",
+          "title": "91. A Path Paid in Blood"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/326727/92-the-scramble",
+          "title": "92. The Scramble"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/327015/93-shelter-in-the-storm",
+          "title": "93. Shelter in the Storm"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/327316/94-ghosts",
+          "title": "94. Ghosts"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/328843/95-betrayer",
+          "title": "95. Betrayer"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/335040/96-contract",
+          "title": "96. Contract"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/344062/97-illusory",
+          "title": "97. Illusory"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/353454/98-beneath-the-surface",
+          "title": "98. Beneath the Surface"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/361412/99-powderkeg",
+          "title": "99. Powderkeg"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/371224/100-sacrifice",
+          "title": "100. Sacrifice"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/386938/101-the-switch",
+          "title": "101. The Switch"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/400666/102-giants",
+          "title": "102. Giants"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452729/103-window-of-opportunity",
+          "title": "103. Window of Opportunity"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452730/104-i-win-i",
+          "title": "104. I Win (I)"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452733/105-i-win-ii",
+          "title": "105. I Win (II)"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii",
+          "title": "106. I Win (III)"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/455876/epilogue",
+          "title": "Epilogue"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/455877/afterword",
+          "title": "Afterword"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/1269041/new-story-is-out-zenith-of-sorcery",
+          "title": "New story is out - Zenith of Sorcery",
+          "text_file": {
+            "path": "f64a565a7db0d3d2c9a9-source-gold.txt",
+            "sha256": "481c93d62be9a909150e60401ec027aff7d4a1dcaa05df2cb92f6531c8b1dc22"
+          }
+        }
+      ],
+      "captures": {
+        "https://www.royalroad.com/fiction/21220/mother-of-learning": {
+          "http": {
+            "path": "e40bbdf126387f375f19-http.html",
+            "sha256": "8d0e014377614f37c1551c7d1e444d60f59cfc9c3879b7155d53435d2a28a79e"
+          },
+          "browser": {
+            "path": "e40bbdf126387f375f19-browser.html",
+            "sha256": "64c8cb749568bbcdf1a53f9a9bbdf603c1c1508a580041dd62608a2e217da06d"
+          }
+        },
+        "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301778/1-good-morning-brother": {
+          "http": {
+            "path": "00383954473e8fb381aa-http-faeef30495.html",
+            "sha256": "fcfc2fb329e7f43ad5b152a6a967ccfe8d2f58d94de05181ef24f625a9fb3995"
+          }
+        },
+        "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/315711/55-threshold": {
+          "http": {
+            "path": "a2bcfb262ba2290c67f6-http-838b3af59e.html",
+            "sha256": "e37955c1eaabe798671456bce56adc506e62947baacf0c39a8c56d9789f9a120"
+          }
+        },
+        "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/1269041/new-story-is-out-zenith-of-sorcery": {
+          "http": {
+            "path": "f64a565a7db0d3d2c9a9-http-3bba4059ad.html",
+            "sha256": "87fa105c60093ffd5a801b8d718ad66c8765fff3446c66486471a48463acf358"
+          },
+          "browser": {
+            "path": "f64a565a7db0d3d2c9a9-gold-browser.html",
+            "sha256": "00cf9598286029c29585719d7a6a5e3f903fda25d2eb1f1c1bfa464b07c6361f"
+          }
+        }
+      },
+      "fetch_records": {},
+      "sample_annotations": [
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301778/1-good-morning-brother",
+          "index": 1,
+          "status": "reviewed",
+          "source_selector": ".chapter-content > p",
+          "method": "Independent fixed publisher paragraph boundaries from frozen HTTP source; explicit hidden watermark excluded",
+          "source_sha256": "fcfc2fb329e7f43ad5b152a6a967ccfe8d2f58d94de05181ef24f625a9fb3995",
+          "text_sha256": "612c20d23f763a9a78626e8ff7d0bb447ace622e7dd28efc1c4d40d3dac5f8eb",
+          "characters": 43168,
+          "beginning_sha256": "246ba887a354f90ef8c300ef8145bf41c8785402cb59083f44d3ee847cbfa442",
+          "ending_sha256": "26d3a9d9cb7af097229d919157aa87601a0d198c56acb9caa2d1e8bf82ae8363"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/315711/55-threshold",
+          "index": 55,
+          "status": "reviewed",
+          "source_selector": ".chapter-content > p",
+          "method": "Independent fixed publisher paragraph boundaries from frozen HTTP source; explicit hidden watermark excluded",
+          "source_sha256": "e37955c1eaabe798671456bce56adc506e62947baacf0c39a8c56d9789f9a120",
+          "text_sha256": "f13c576da0897e663cfcbe3b7e8915a504fbc2f193d75757386b59201d3e40d0",
+          "characters": 40208,
+          "beginning_sha256": "ec3e40c16a31bdc2bfa363c5d588451d8bdd99cdf3f3d90078b085b90645d2ce",
+          "ending_sha256": "d844031fe7f93a768cdf81c27bbfd1fba56fda68521cdc21fcd03f3236deb1a8"
+        },
+        {
+          "url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/1269041/new-story-is-out-zenith-of-sorcery",
+          "index": 109,
+          "status": "reviewed",
+          "source_selector": ".chapter-content > p",
+          "method": "Independent fixed publisher paragraph boundaries from frozen HTTP source; explicit hidden watermark excluded",
+          "source_sha256": "87fa105c60093ffd5a801b8d718ad66c8765fff3446c66486471a48463acf358",
+          "text_sha256": "481c93d62be9a909150e60401ec027aff7d4a1dcaa05df2cb92f6531c8b1dc22",
+          "characters": 909,
+          "beginning_sha256": "3eeff48466cd24ca8e1fd948e0f9a085857ec6eb5f903d128b38b40267f89c21",
+          "ending_sha256": "70fee81eaeebe90d1b99577a72f5ecff693786e4b70f8590456a5630c07e3602"
+        }
+      ],
+      "split_reason": "Initial evaluation runtime informed the shared ranking cache; no longer held out"
+    },
+    {
+      "id": "wanderinginn",
+      "url": "https://wanderinginn.com/table-of-contents/",
+      "split": "held_out",
+      "annotation_status": "blocked_sample",
+      "annotation_method": "Independently reviewed publisher story boundaries and paragraph order from frozen HTTP markup; no application extractor used. Browser retrieval failures are retained in local capture-index.json.",
+      "catalog_selector": ".chapter-entry .body-web a[href]",
+      "catalog_source_sha256": "35f93919d85a181288d320308aff108a7998f10efd4f212d7b389378a5065b73",
+      "catalog": [
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-00/",
+          "title": "1.00",
+          "text_file": {
+            "path": "001c026b27c028905c47-source-gold.txt",
+            "sha256": "e4f06e4ede72342ad31763404ee9342311677e9612456c31d2a82282e1795d1a"
+          }
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-01/",
+          "title": "1.01"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-02/",
+          "title": "1.02"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-03/",
+          "title": "1.03"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-04/",
+          "title": "1.04"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-05/",
+          "title": "1.05"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-06/",
+          "title": "1.06"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-07/",
+          "title": "1.07"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-08/",
+          "title": "1.08"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-09/",
+          "title": "1.09"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-10/",
+          "title": "1.10"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rwinterlude-the-great-ritual/",
+          "title": "Interlude – The Great Ritual"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-11/",
+          "title": "1.11"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-12/",
+          "title": "1.12"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-13/",
+          "title": "1.13"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-14/",
+          "title": "1.14"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-15/",
+          "title": "1.15"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-16/",
+          "title": "1.16"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-17/",
+          "title": "1.17"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-18/",
+          "title": "1.18"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-19-r/",
+          "title": "1.19 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-20-r/",
+          "title": "1.20 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-21/",
+          "title": "1.21"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-22/",
+          "title": "1.22"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-23-a/",
+          "title": "1.23 A"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-24/",
+          "title": "1.24"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rwinterlude-king-edition/",
+          "title": "Interlude – King Edition"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-25/",
+          "title": "1.25"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-26-r/",
+          "title": "1.26 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-27-r/",
+          "title": "1.27 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-28-a/",
+          "title": "1.28 A"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-29/",
+          "title": "1.29"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-30/",
+          "title": "1.30"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-31/",
+          "title": "1.31"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-32-r/",
+          "title": "1.32 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-33-r/",
+          "title": "1.33 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-34/",
+          "title": "1.34"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-35-r/",
+          "title": "1.35 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-36/",
+          "title": "1.36"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-37/",
+          "title": "1.37"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-38/",
+          "title": "1.38"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-39-r/",
+          "title": "1.39 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-40-r/",
+          "title": "1.40 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-41/",
+          "title": "1.41"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-42/",
+          "title": "1.42"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-43-r/",
+          "title": "1.43 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-44-r/",
+          "title": "1.44 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-45/",
+          "title": "1.45"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-46/",
+          "title": "1.46"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-47-r/",
+          "title": "1.47 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-48-r/",
+          "title": "1.48 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-49/",
+          "title": "1.49"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-50/",
+          "title": "1.50"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-51/",
+          "title": "1.51"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-52-r/",
+          "title": "1.52 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-53/",
+          "title": "1.53"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-54/",
+          "title": "1.54"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-55-r/",
+          "title": "1.55 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-56/",
+          "title": "1.56"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-57-h/",
+          "title": "1.57 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-58-h/",
+          "title": "1.58 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-59-h/",
+          "title": "1.59 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-60/",
+          "title": "1.60"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-61/",
+          "title": "1.61"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-62/",
+          "title": "1.62"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/04/rw1-63/",
+          "title": "1.63"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/07/interlude-2/",
+          "title": "Interlude – The Call"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/12/2-01/",
+          "title": "2.00"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/15/2-02/",
+          "title": "2.01"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/18/2-03/",
+          "title": "2.02"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/22/2-04/",
+          "title": "2.03"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/25/2-05/",
+          "title": "2.04"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/28/2-06/",
+          "title": "2.05"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/02/2-06-2/",
+          "title": "2.06"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/02/2-07/",
+          "title": "2.06 (Apr 1 version)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/04/2-08/",
+          "title": "2.07"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/09/2-09/",
+          "title": "2.08"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/12/2-10/",
+          "title": "2.09"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/12/2-00-t/",
+          "title": "2.10 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/13/2-11/",
+          "title": "2.11"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/14/2-12/",
+          "title": "2.12"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/15/2-13/",
+          "title": "2.13"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/16/2-00-g/",
+          "title": "2.14 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/17/side-story-mating-rituals/",
+          "title": "Interlude – Mating Rituals (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/18/2-14/",
+          "title": "2.15"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/22/2-15/",
+          "title": "2.16"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/22/2-16/",
+          "title": "2.17"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/25/2-17/",
+          "title": "2.18"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/27/2-01-g/",
+          "title": "2.19 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/04/29/2-18/",
+          "title": "2.20"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/03/2-19/",
+          "title": "2.21"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/05/2-00-k/",
+          "title": "2.22 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/07/2-20/",
+          "title": "2.23"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/10/2-01-t/",
+          "title": "2.24 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/14/2-21/",
+          "title": "2.25"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/17/2-22/",
+          "title": "2.26"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/18/1-00-c/",
+          "title": "1.00 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/19/1-01-c/",
+          "title": "1.01 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/21/2-02-g/",
+          "title": "2.27 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/24/2-23/",
+          "title": "2.28"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/26/2-24/",
+          "title": "2.29"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/28/2-25/",
+          "title": "2.30"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/05/31/2-26/",
+          "title": "2.31"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/04/2-00-h/",
+          "title": "2.32 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/07/2-27/",
+          "title": "2.33"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/09/2-28/",
+          "title": "2.34"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/11/2-29/",
+          "title": "2.35"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/14/2-03-g/",
+          "title": "2.36 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/18/2-30/",
+          "title": "2.37"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/21/2-31/",
+          "title": "2.38"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/24/interlude-3/",
+          "title": "Interlude – Quiet Discussions"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/25/s02-the-antinium-wars-pt-1/",
+          "title": "Interlude – The Antinium Wars (Pt.1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/26/s02-the-antinium-wars-pt-2/",
+          "title": "Interlude – The Antinium Wars (Pt.2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/06/27/2-32/",
+          "title": "2.39"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/01/2-33/",
+          "title": "2.40"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/04/2-34/",
+          "title": "2.41"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/08/2-35/",
+          "title": "2.42"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/11/2-36/",
+          "title": "2.43"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/15/2-37/",
+          "title": "2.44"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/18/2-38/",
+          "title": "2.45"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/22/2-39/",
+          "title": "2.46"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/25/2-40/",
+          "title": "2.47"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/07/29/2-41/",
+          "title": "2.48"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/01/3-00-e/",
+          "title": "3.00 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/05/3-01-e/",
+          "title": "3.01 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/08/3-02-h/",
+          "title": "3.02 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/12/3-03/",
+          "title": "3.03"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/15/3-04/",
+          "title": "3.04"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/19/3-05-l/",
+          "title": "3.05 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/20/1-00-d/",
+          "title": "1.00 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/21/1-01-d/",
+          "title": "1.01 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/22/3-06-l/",
+          "title": "3.06 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/26/3-07-h/",
+          "title": "3.07 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/08/29/3-08-h/",
+          "title": "3.08 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/02/3-09/",
+          "title": "3.09"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/05/3-10/",
+          "title": "3.10"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/09/3-11-e/",
+          "title": "3.11 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/12/3-12-e/",
+          "title": "3.12 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/16/3-13/",
+          "title": "3.13"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/19/3-14/",
+          "title": "3.14"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/23/3-15/",
+          "title": "3.15"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/26/3-16/",
+          "title": "3.16"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/27/3-17-t/",
+          "title": "3.17 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/28/3-18-t/",
+          "title": "3.18 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/09/30/3-19-t/",
+          "title": "3.19 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/03/3-20-t/",
+          "title": "3.20 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/07/3-21-l/",
+          "title": "3.21 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/10/3-22-l/",
+          "title": "3.22 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/14/3-23-l/",
+          "title": "3.23 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/17/3-24/",
+          "title": "3.24"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/21/3-25/",
+          "title": "3.25"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/24/3-26-g/",
+          "title": "3.26 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/26/3-27-m/",
+          "title": "3.27 M"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/28/3-28-g/",
+          "title": "3.28 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/10/31/3-29-g/",
+          "title": "3.29 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/04/3-30/",
+          "title": "3.30"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/07/3-31-g/",
+          "title": "3.31 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/09/s03-wistram-days-pt-1/",
+          "title": "Interlude – Wistram Days (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/10/s03-wistram-days-pt-2/",
+          "title": "Interlude – Wistram Days (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/11/wistram-days-pt-3/",
+          "title": "Interlude – Wistram Days (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/12/wistram-days-pt-4/",
+          "title": "Interlude – Wistram Days (Pt. 4)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/14/wistram-days-pt-5/",
+          "title": "Interlude – Wistram Days (Pt. 5)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/18/wistram-days-pt-6/",
+          "title": "Interlude – Wistram Days (Pt. 6)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/21/wistram-days-pt-7/",
+          "title": "Interlude – Wistram Days (Pt. 7)"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/25/3-32/",
+          "title": "3.32"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/11/28/3-33/",
+          "title": "3.33"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/02/3-34/",
+          "title": "3.34"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/05/3-35/",
+          "title": "3.35"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/09/3-36/",
+          "title": "3.36"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/12/3-37/",
+          "title": "3.37"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/16/3-38/",
+          "title": "3.38"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/19/3-39/",
+          "title": "3.39"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/23/3-40/",
+          "title": "3.40"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/25/3-41/",
+          "title": "3.41"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/26/3-42/",
+          "title": "3.42"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/12/30/interlude-4/",
+          "title": "Interlude – Winter Solstice"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/01/06/4-00-k/",
+          "title": "4.00 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/01/09/4-01-k/",
+          "title": "4.01 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/01/13/4-02-k/",
+          "title": "4.02 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/01/16/4-03-k/",
+          "title": "4.03 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/01/20/4-04-k/",
+          "title": "4.04 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/01/23/4-05-k/",
+          "title": "4.05 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/01/27/4-06-km/",
+          "title": "4.06 KM"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/01/30/4-07/",
+          "title": "4.07"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/01/4-08-t/",
+          "title": "4.08 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/03/4-09/",
+          "title": "4.09"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/06/4-10/",
+          "title": "4.10"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/10/4-11/",
+          "title": "4.11"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/13/4-12/",
+          "title": "4.12"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/17/4-13-l/",
+          "title": "4.13 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/20/4-14-l/",
+          "title": "4.14 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/20/4-15-l/",
+          "title": "4.15 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/24/4-16/",
+          "title": "4.16"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/02/27/4-17/",
+          "title": "4.17"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/01/1-02-d/",
+          "title": "1.02 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/03/1-03-d/",
+          "title": "1.03 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/06/1-04-d/",
+          "title": "1.04 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/06/1-05-d/",
+          "title": "1.05 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/10/1-06-d/",
+          "title": "1.06 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/13/4-18/",
+          "title": "4.18"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/17/4-19/",
+          "title": "4.19"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/20/4-20-e/",
+          "title": "4.20 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/24/4-21-e/",
+          "title": "4.21 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/27/4-22-e/",
+          "title": "4.22 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/27/4-23-e/",
+          "title": "4.23 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/03/31/4-24/",
+          "title": "4.24"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/04/03/4-25-n/",
+          "title": "4.25 N"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/04/07/4-26-m/",
+          "title": "4.26 M"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/04/10/4-27-h/",
+          "title": "4.27 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/04/14/4-28/",
+          "title": "4.28"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/04/17/4-29/",
+          "title": "4.29"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/04/21/4-30/",
+          "title": "4.30"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/04/24/4-31/",
+          "title": "4.31"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/04/28/4-32-g/",
+          "title": "4.32 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/01/1-02-d-2/",
+          "title": "1.02 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/01/1-03-d-2/",
+          "title": "1.03 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/05/1-04-c/",
+          "title": "1.04 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/05/1-05-c/",
+          "title": "1.05 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/08/4-33/",
+          "title": "4.33"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/12/4-34/",
+          "title": "4.34"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/15/4-35-e/",
+          "title": "4.35 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/17/4-36-o/",
+          "title": "4.36 O"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/19/4-37-o/",
+          "title": "4.37 O"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/22/4-38-n/",
+          "title": "4.38 B"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/26/4-39-g/",
+          "title": "4.39 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/05/29/4-40-l/",
+          "title": "4.40 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/02/4-41-l/",
+          "title": "4.41 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/02/4-42-l/",
+          "title": "4.42 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/05/4-43/",
+          "title": "4.43"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/09/4-44-m/",
+          "title": "4.44 M"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/12/4-45/",
+          "title": "4.45"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/16/4-46/",
+          "title": "4.46"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/19/4-47/",
+          "title": "4.47"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/23/s02-the-antinium-wars-pt-3/",
+          "title": "Interlude – The Antinium Wars (Pt.3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/26/s02-the-antinium-wars-pt-4/",
+          "title": "Interlude – The Antinium Wars (Pt.4)"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/26/s02-the-antinium-wars-pt-5/",
+          "title": "Interlude – The Antinium Wars (Pt.5)"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/06/29/4-48/",
+          "title": "4.48"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/07/4-49/",
+          "title": "4.49"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/09/the-depthless-doctor/",
+          "title": "The Depthless Doctor"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/10/5-00/",
+          "title": "5.00"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/14/5-01/",
+          "title": "5.01"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/17/5-02/",
+          "title": "5.02"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/21/5-03/",
+          "title": "5.03"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/21/5-04/",
+          "title": "5.04"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/24/5-05/",
+          "title": "5.05"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/27/5-06-m/",
+          "title": "5.06 M"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/28/5-07/",
+          "title": "5.07"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/07/31/5-08/",
+          "title": "5.08"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/08/04/interlude-flos/",
+          "title": "Interlude – Flos"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/08/07/5-09-e/",
+          "title": "5.09 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/08/11/5-10-e/",
+          "title": "5.10 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/08/14/5-11-e/",
+          "title": "5.11 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/08/18/5-12/",
+          "title": "5.12"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/08/21/5-13/",
+          "title": "5.13"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/08/25/5-14/",
+          "title": "5.14"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/08/28/5-15/",
+          "title": "5.15"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/01/5-16-s/",
+          "title": "5.16 S"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/01/5-17-s/",
+          "title": "5.17 S"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/04/5-18-s/",
+          "title": "5.18 S"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/08/5-19-g/",
+          "title": "5.19 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/11/5-20-g/",
+          "title": "5.20 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/15/5-21-e/",
+          "title": "5.21 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/18/5-22-g/",
+          "title": "5.22 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/22/5-23-g/",
+          "title": "5.23 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/09/29/5-24-l/",
+          "title": "5.24 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/02/5-25-l/",
+          "title": "5.25 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/06/5-26-l/",
+          "title": "5.26 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/09/5-27/",
+          "title": "5.27"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/13/5-28/",
+          "title": "5.28"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/16/5-29/",
+          "title": "5.29"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/20/5-30-g/",
+          "title": "5.30 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/23/5-31-g/",
+          "title": "5.31 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/27/5-32-g/",
+          "title": "5.32 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/10/30/5-33-b/",
+          "title": "5.33 B"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/01/interlude-blackmage/",
+          "title": "Interlude – Blackmage"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/03/5-34/",
+          "title": "5.34"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/06/5-35-h/",
+          "title": "5.35 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/10/5-36/",
+          "title": "5.36"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/13/5-37-g/",
+          "title": "5.37 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/17/5-38/",
+          "title": "5.38"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/20/5-39/",
+          "title": "5.39"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/24/5-40/",
+          "title": "5.40"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/11/27/5-41/",
+          "title": "5.41"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/01/5-42/",
+          "title": "5.42"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/04/5-43/",
+          "title": "5.43"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/06/interlude-niers/",
+          "title": "Interlude – Niers"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/08/5-44/",
+          "title": "5.44"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/11/5-45/",
+          "title": "5.45"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/15/5-46/",
+          "title": "5.46"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/18/5-47-g/",
+          "title": "5.47 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/22/5-48-g/",
+          "title": "5.48 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/25/5-49/",
+          "title": "5.49"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/29/5-50-g/",
+          "title": "5.50 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2018/12/30/interlude-bird/",
+          "title": "Interlude – Bird"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/01/08/5-51-g/",
+          "title": "5.51 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/01/12/5-52/",
+          "title": "5.52"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/01/15/5-53/",
+          "title": "5.53"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/01/19/5-54/",
+          "title": "5.54 (Non-Canon)"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/01/22/5-54-2/",
+          "title": "5.54"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/01/26/interlude-krshia/",
+          "title": "Interlude – Krshia"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/01/29/5-55-g/",
+          "title": "5.55 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/02/02/5-56-g/",
+          "title": "5.56 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/02/05/5-57/",
+          "title": "5.57"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/02/09/5-58/",
+          "title": "5.58"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/02/12/5-59/",
+          "title": "5.59"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/02/16/interlude-pebblesnatch-and-garry/",
+          "title": "Interlude – Pebblesnatch and Garry"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/02/16/5-60/",
+          "title": "5.60"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/02/19/5-61/",
+          "title": "5.61"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/02/26/5-62/",
+          "title": "5.62"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/03/02/interlude-5/",
+          "title": "Interlude – Thereafter"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/03/19/6-00/",
+          "title": "6.00"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/03/23/6-01/",
+          "title": "6.01"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/03/26/6-02/",
+          "title": "6.02"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/03/30/6-03/",
+          "title": "6.03"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/02/6-04-d/",
+          "title": "6.04 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/06/6-05-d/",
+          "title": "6.05 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/09/6-06-d/",
+          "title": "6.06 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/13/6-07-d/",
+          "title": "6.07 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/16/6-08/",
+          "title": "6.08"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/20/6-09/",
+          "title": "6.09"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/23/6-10/",
+          "title": "6.10"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/27/6-11/",
+          "title": "6.11"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/04/30/6-12-k/",
+          "title": "6.12 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/05/04/6-13-k/",
+          "title": "6.13 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/05/07/6-14-k/",
+          "title": "6.14 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/05/11/6-15-k/",
+          "title": "6.15 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/05/14/6-16/",
+          "title": "6.16"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/05/18/6-17-s/",
+          "title": "6.17 S"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/05/21/6-18-h/",
+          "title": "6.18 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/05/25/6-19-h/",
+          "title": "6.19 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/05/28/6-20-d/",
+          "title": "6.20 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/01/5-21-d/",
+          "title": "6.21 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/04/6-22-d/",
+          "title": "6.22 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/08/6-23-d/",
+          "title": "6.23 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/11/6-24-d/",
+          "title": "6.24 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/15/6-25/",
+          "title": "6.25"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/18/6-26/",
+          "title": "6.26"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/22/6-27-m/",
+          "title": "6.27 M"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/25/6-28/",
+          "title": "6.28"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/06/29/6-29/",
+          "title": "6.29"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/07/02/interlude-embria/",
+          "title": "Interlude – Embria"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/07/13/6-30/",
+          "title": "6.30"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/07/16/6-31/",
+          "title": "6.31"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/07/20/6-32/",
+          "title": "6.32"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/07/23/6-33-e/",
+          "title": "6.33 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/07/27/6-34-e/",
+          "title": "6.34 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/07/30/interlude-numbtongue-pt-1/",
+          "title": "Interlude – Numbtongue (Pt.1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/03/interlude-numbtongue-pt-2/",
+          "title": "Interlude – Numbtongue (Pt.2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/06/6-35/",
+          "title": "6.35"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/10/6-36-e/",
+          "title": "6.36 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/13/6-37-e/",
+          "title": "6.37 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/17/6-38/",
+          "title": "6.38"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/20/6-39/",
+          "title": "6.39"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/24/6-40-e/",
+          "title": "6.40 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/27/6-41-e/",
+          "title": "6.41 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/08/31/interlude-two-rats/",
+          "title": "Interlude – Two Rats"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/09/03/interlude-rufelt/",
+          "title": "Interlude – Rufelt"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/09/07/6-42-e/",
+          "title": "6.42 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/09/10/6-43-e/",
+          "title": "6.43 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/09/14/6-44-e/",
+          "title": "6.44 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/09/17/6-45-e/",
+          "title": "6.45 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/09/21/6-46-e/",
+          "title": "6.46 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/09/24/6-47-e/",
+          "title": "6.47 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/10/12/6-48-t/",
+          "title": "6.48 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/10/15/6-49/",
+          "title": "6.49"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/10/19/6-50-i/",
+          "title": "6.50 I"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/10/22/6-51-a/",
+          "title": "6.51 A"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/10/26/6-52-k/",
+          "title": "6.52 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/10/29/6-53-k/",
+          "title": "6.53 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/02/6-54-k/",
+          "title": "6.54 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/05/6-55-k/",
+          "title": "6.55 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/09/interlude-the-titans-question/",
+          "title": "Interlude – The Titan’s Question"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/12/6-56/",
+          "title": "6.56"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/16/6-57/",
+          "title": "6.57"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/19/6-58/",
+          "title": "6.58"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/23/6-59/",
+          "title": "6.59"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/26/6-60/",
+          "title": "6.60"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/11/30/interlude-talia/",
+          "title": "Interlude – Talia"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/12/03/6-61-l/",
+          "title": "6.61 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/12/07/6-62-l/",
+          "title": "6.62 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/12/11/interlude-foliana/",
+          "title": "Interlude – Foliana"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/12/14/6-63-p/",
+          "title": "6.63 P"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/12/18/6-64/",
+          "title": "6.64"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/12/22/6-65/",
+          "title": "6.65"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/12/25/6-66-h/",
+          "title": "6.66 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2019/12/29/6-67/",
+          "title": "6.67"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/01/01/6-68/",
+          "title": "6.68"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/01/19/7-00/",
+          "title": "7.00"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/01/22/7-01/",
+          "title": "7.01"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/01/26/7-02/",
+          "title": "7.02"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/01/29/7-03/",
+          "title": "7.03"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/01/30/mini-stories-crabs-and-drinks/",
+          "title": "Mini Stories – Crabs and Drinks"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/02/01/7-04/",
+          "title": "7.04"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/02/04/interlude-queens-and-dragons/",
+          "title": "Interlude – Queens and Dragons"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/02/09/7-05-p/",
+          "title": "7.05 P"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/02/12/7-06/",
+          "title": "7.06"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/02/16/7-07/",
+          "title": "7.07"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/02/19/7-08-k/",
+          "title": "7.08 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/02/23/7-09-k/",
+          "title": "7.09 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/02/26/7-10-k/",
+          "title": "7.10 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/01/7-11/",
+          "title": "7.11"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/03/interlude-dancing-and-brawling/",
+          "title": "Interlude – Dancing and Brawling"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/04/interlude-chocolate-gold/",
+          "title": "Interlude – Chocolate Gold"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/05/interlude-chess-and-ships/",
+          "title": "Interlude – Chess and Ships"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/06/interlude-chocolate-alchemy/",
+          "title": "Interlude – Chocolate Alchemy"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/07/interlude-lifting-ants/",
+          "title": "Interlude – Lifting Ants"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/08/interlude-burning-alcohol/",
+          "title": "Interlude – Burning Alcohol"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/09/interlude-the-hangover-after/",
+          "title": "Interlude – The Hangover After"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/15/7-12-g/",
+          "title": "7.12 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/18/7-13-k/",
+          "title": "7.13 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/21/mating-rituals-pt-2/",
+          "title": "Mating Rituals Pt.2"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/24/7-14-t/",
+          "title": "7.14 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/29/7-15-r/",
+          "title": "7.15 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/03/31/7-16-l/",
+          "title": "7.16 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/04/12/7-17-s/",
+          "title": "7.17 S"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/04/15/7-18-m/",
+          "title": "7.18 M"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/04/19/interlude-strategists-at-sea-pt-1/",
+          "title": "Interlude – Strategists at Sea (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/04/22/interlude-strategists-at-sea-pt-2/",
+          "title": "Interlude – Strategists at Sea (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/04/26/7-19/",
+          "title": "7.19"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/04/29/7-20/",
+          "title": "7.20",
+          "text_file": {
+            "path": "760f0869340fd0badfb9-source-gold.txt",
+            "sha256": "09ff8e0b34be548ca513a4c9f5256d0d97101c350769364191e6a82f3f97033e"
+          }
+        },
+        {
+          "url": "https://wanderinginn.com/2020/05/03/interlude-a-night-in-the-inn/",
+          "title": "Interlude – A Night in the Inn"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/05/06/7-21-kq/",
+          "title": "7.21 KQ"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/05/10/7-22-d/",
+          "title": "7.22 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/05/13/7-23-lm/",
+          "title": "7.23 LM"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/05/24/7-24/",
+          "title": "7.24"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/05/27/7-25/",
+          "title": "7.25"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/05/31/7-26/",
+          "title": "7.26"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/06/03/7-27/",
+          "title": "7.27"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/06/07/interlude-the-gecko-of-illusions/",
+          "title": "Interlude – The Gecko of Illusions"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/06/10/7-28/",
+          "title": "7.28"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/06/14/7-29-b/",
+          "title": "7.29 B"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/06/24/7-30/",
+          "title": "7.30"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/06/28/7-31/",
+          "title": "7.31"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/07/01/interlude-a-meeting-of-druids/",
+          "title": "Interlude – A Meeting of [Druids]"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/07/05/7-32-d/",
+          "title": "7.32 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/07/08/7-33-i/",
+          "title": "7.33 I"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/07/12/7-34-c/",
+          "title": "7.34 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/07/15/7-35-c/",
+          "title": "7.35 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/07/19/7-36-c/",
+          "title": "7.36 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/07/29/7-37/",
+          "title": "7.37"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/02/7-38/",
+          "title": "7.38"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/05/7-39-a/",
+          "title": "7.39 A"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/08/interlude-carriages-and-conversations/",
+          "title": "Interlude – Carriages and Conversations"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/09/interlude-meetings-and-friendships/",
+          "title": "Interlude – Meetings and Friendships"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/10/interlude-sand-and-notes/",
+          "title": "Interlude – Sand and Notes"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/11/7-40-er/",
+          "title": "7.40 ER"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/12/interlude-food-and-growth/",
+          "title": "Interlude – Food and Growth"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/13/7-41/",
+          "title": "7.41"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/08/14/7-42-m/",
+          "title": "7.42 M"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/09/02/7-43-g/",
+          "title": "7.43 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/09/06/7-44/",
+          "title": "7.44"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/09/09/7-45/",
+          "title": "7.45"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/09/13/7-46-k/",
+          "title": "7.46 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/09/16/7-47-k/",
+          "title": "7.47 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/09/20/7-48-k/",
+          "title": "7.48 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/09/23/7-49/",
+          "title": "7.49"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/10/04/interlude-experiments-in-golems/",
+          "title": "Interlude – Experiments in Golems"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/10/07/7-50/",
+          "title": "7.50"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/10/11/7-51/",
+          "title": "7.51"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/10/14/7-52/",
+          "title": "7.52"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/10/18/7-53/",
+          "title": "7.53"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/10/20/7-54/",
+          "title": "7.54"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/10/25/7-55-e/",
+          "title": "7.55 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/11/04/interlude-saliss-the-adventurer/",
+          "title": "Interlude – Saliss the Adventurer"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/11/08/7-56/",
+          "title": "7.56"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/11/11/7-57/",
+          "title": "7.57"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/11/15/7-58/",
+          "title": "7.58"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/11/18/7-59/",
+          "title": "7.59"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/11/22/7-60/",
+          "title": "7.60"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/11/25/interlude-the-tribes-of-izril/",
+          "title": "Interlude – The Tribes of Izril"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/06/interlude-the-innkeepers-knight/",
+          "title": "Interlude – The Innkeeper’s [Knight]"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/09/7-61/",
+          "title": "7.61"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/13/7-62/",
+          "title": "7.62"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/16/solstice-pt-1/",
+          "title": "Solstice (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/20/solstice-pt-2/",
+          "title": "Solstice (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/23/solstice-pt-3/",
+          "title": "Solstice (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/23/solstice-pt-4/",
+          "title": "Solstice (Pt. 4)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/23/solstice-pt-5/",
+          "title": "Solstice (Pt. 5)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/23/solstice-pt-6/",
+          "title": "Solstice (Pt. 6)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/23/solstice-pt-7/",
+          "title": "Solstice (Pt. 7)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/23/solstice-pt-8/",
+          "title": "Solstice (Pt. 8)"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/12/23/solstice-pt-9/",
+          "title": "Solstice (Pt. 9)"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/01/10/8-00/",
+          "title": "8.00"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/01/13/8-01/",
+          "title": "8.01"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/01/17/8-02/",
+          "title": "8.02"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/01/20/8-03/",
+          "title": "8.03"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/01/24/interlude-the-revenant-and-the-naga/",
+          "title": "Interlude – The Revenant and the Naga"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/01/27/8-04-t/",
+          "title": "8.04 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/02/07/8-05-i/",
+          "title": "8.05 I"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/02/10/8-06-rt/",
+          "title": "8.06 RT"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/02/14/8-07-l/",
+          "title": "8.07 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/02/17/8-08-j/",
+          "title": "8.08 J"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/02/21/8-09/",
+          "title": "8.09"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/02/24/8-10/",
+          "title": "8.10"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/03/07/8-11-e-revised/",
+          "title": "8.11 E (Revised)"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/03/10/8-12-t/",
+          "title": "8.12 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/03/14/interlude-the-rower-and-the-bartender/",
+          "title": "Interlude – The [Rower] and the [Bartender]"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/03/17/8-13-f/",
+          "title": "8.13 F"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/03/21/8-14-n/",
+          "title": "8.14 N"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/03/30/8-15/",
+          "title": "8.15"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/04/04/interlude-paradigm-shift-pt-1/",
+          "title": "Interlude – Paradigm Shift (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/04/04/interlude-paradigm-shift-pt-2/",
+          "title": "Interlude – Paradigm Shift (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/04/10/8-16/",
+          "title": "8.16"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/04/13/8-17-h/",
+          "title": "8.17 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/04/25/8-18-h/",
+          "title": "8.18 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/04/28/8-19-h/",
+          "title": "8.19 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/05/02/8-20/",
+          "title": "8.20"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/05/04/8-21-l/",
+          "title": "8.21 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/05/11/8-22-he/",
+          "title": "8.22 HE"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/05/16/interlude-senior-guardsman-relc/",
+          "title": "Interlude – Senior Guardsman Relc"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/05/19/8-23/",
+          "title": "8.23"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/05/30/8-24/",
+          "title": "8.24"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/06/02/8-25-kh/",
+          "title": "8.25 KH"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/06/06/8-26-fk/",
+          "title": "8.26 FK"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/06/08/interlude-luan-the-giant/",
+          "title": "Interlude – Luan the Giant"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/06/12/8-27/",
+          "title": "8.27"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/06/19/8-28/",
+          "title": "8.28"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/06/22/8-29/",
+          "title": "8.29"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/06/26/interlude-the-pets-of-innworld/",
+          "title": "Interlude – The Pets of Innworld"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/07/13/8-30/",
+          "title": "8.30"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/07/18/8-31/",
+          "title": "8.31"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/07/20/interlude-pisces-revised/",
+          "title": "Interlude – Pisces (Revised)"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/07/25/8-32/",
+          "title": "8.32"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/07/28/8-33-r/",
+          "title": "8.33 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/08/01/8-34-r/",
+          "title": "8.34 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/08/04/8-35/",
+          "title": "8.35"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/08/15/8-36-h/",
+          "title": "8.36 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/08/17/8-37-h/",
+          "title": "8.37 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/08/22/8-38-h/",
+          "title": "8.38 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/08/24/8-39/",
+          "title": "8.39"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/08/29/8-40-ctv/",
+          "title": "8.40 CTV"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/08/31/interlude-of-vampires-and-fraerlings/",
+          "title": "Interlude – Of Vampires and Fraerlings"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/09/04/8-41/",
+          "title": "8.41"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/09/15/interlude-songs-and-stories/",
+          "title": "Interlude – Songs and Stories"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/09/19/8-42/",
+          "title": "8.42"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/09/22/8-43/",
+          "title": "8.43"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/09/26/8-44-o/",
+          "title": "8.44 O"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/09/26/8-45-o/",
+          "title": "8.45 O"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/10/03/8-46-g/",
+          "title": "8.46 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/10/06/interlude-perspective-and-past/",
+          "title": "Interlude – Perspective and Past"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/10/19/8-47-h/",
+          "title": "8.47 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/10/24/8-48-h/",
+          "title": "8.48 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/10/27/8-49-m-revised/",
+          "title": "8.49 M – Revised"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/10/31/8-50/",
+          "title": "8.50"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/11/03/interlude-conversations/",
+          "title": "Interlude – Conversations"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/11/14/8-51-d/",
+          "title": "8.51 D"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/11/17/8-52-mn/",
+          "title": "8.52 MN"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/11/21/8-53-fh/",
+          "title": "8.53 FH"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/12/01/8-54-h/",
+          "title": "8.54 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/12/05/8-55-l/",
+          "title": "8.55 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/12/08/8-56/",
+          "title": "8.56"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/12/12/8-57-h/",
+          "title": "8.57 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/12/15/8-58-pfh/",
+          "title": "8.58 PFH"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/12/22/8-59-h/",
+          "title": "8.59 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/12/26/8-60/",
+          "title": "8.60"
+        },
+        {
+          "url": "https://wanderinginn.com/2021/12/29/8-61/",
+          "title": "8.61"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/01/16/8-62-k/",
+          "title": "8.62 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/01/19/8-63-k/",
+          "title": "8.63 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/01/23/8-64-k/",
+          "title": "8.64 K"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/01/30/8-65/",
+          "title": "8.65"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/02/09/interlude-hectval-pt-1/",
+          "title": "Interlude – Hectval (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/02/13/interlude-hectval-pt-2/",
+          "title": "Interlude – Hectval (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/02/16/interlude-hectval-pt-3/",
+          "title": "Interlude – Hectval (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/02/20/interlude-satar/",
+          "title": "Interlude – Satar"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/02/23/8-66/",
+          "title": "8.66"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/02/27/8-67/",
+          "title": "8.67"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/09/8-68/",
+          "title": "8.68"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/12/8-69-te/",
+          "title": "8.69 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/13/8-70-e/",
+          "title": "8.70 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/14/8-71/",
+          "title": "8.71"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/15/8-72/",
+          "title": "8.72"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/16/8-73-r/",
+          "title": "8.73 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/17/8-74-dr/",
+          "title": "8.74 DR"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/18/8-75/",
+          "title": "8.75"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/27/8-76-b/",
+          "title": "8.76 B"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/03/30/8-77-b/",
+          "title": "8.77 B"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/04/10/8-78-f/",
+          "title": "8.78 F"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/04/13/8-79/",
+          "title": "8.79"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/04/17/8-80/",
+          "title": "8.80"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/04/20/8-81/",
+          "title": "8.81"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/04/26/8-82-pt-1/",
+          "title": "8.82 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/04/26/8-82-pt-2/",
+          "title": "8.82 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/04/26/8-82-pt-3/",
+          "title": "8.82 (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/05/03/8-83/",
+          "title": "8.83"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/05/03/8-84/",
+          "title": "8.84"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/05/03/8-85/",
+          "title": "8.85"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/05/03/epilogue/",
+          "title": "Epilogue"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/06/03/9-00/",
+          "title": "9.00"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/06/07/9-01/",
+          "title": "9.01"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/06/11/9-02/",
+          "title": "9.02"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/06/18/interlude-singing-ships/",
+          "title": "Interlude – Singing Ships"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/06/28/9-03/",
+          "title": "9.03"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/07/02/9-04/",
+          "title": "9.04"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/07/05/interlude-the-isles-of-goblin-and-minos/",
+          "title": "Interlude – The Isles of Goblin and Minos"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/07/10/9-05-npr/",
+          "title": "9.05 NPR"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/07/12/9-06/",
+          "title": "9.06"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/07/17/9-07/",
+          "title": "9.07"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/07/19/9-08/",
+          "title": "9.08"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/07/30/interlude-mundanity-and-memorials/",
+          "title": "Interlude – Mundanity and Memorials"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/08/06/interlude-the-competition/",
+          "title": "Interlude – The Competition"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/08/20/9-09-p/",
+          "title": "9.09 P"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/08/23/9-10-w/",
+          "title": "9.10 W"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/08/27/9-11-w/",
+          "title": "9.11 W"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/08/30/9-12/",
+          "title": "9.12"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/09/04/9-13/",
+          "title": "9.13"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/09/06/9-14-vm/",
+          "title": "9.14 VM"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/09/10/9-15-vm/",
+          "title": "9.15 VM"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/09/21/9-16-r/",
+          "title": "9.16 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/09/25/9-17-r/",
+          "title": "9.17 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/09/28/interlude-the-great-race/",
+          "title": "Interlude – The Great Race"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/10/02/9-19-e/",
+          "title": "9.18 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/10/05/interlude-relationships/",
+          "title": "Interlude – Relationships"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/10/09/9-19/",
+          "title": "9.19"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/10/12/9-20/",
+          "title": "9.20"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/10/16/interlude-death-and-stitches/",
+          "title": "Interlude – Death and Stitches"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/10/26/9-21/",
+          "title": "9.21"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/10/30/9-22-gn/",
+          "title": "9.22 GN"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/11/02/9-23-ggggggggg/",
+          "title": "9.23 GGGGGGGGG"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/11/05/9-24/",
+          "title": "9.24"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/11/09/interlude-adventurers-pt-1/",
+          "title": "Interlude – Adventurers (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/11/13/interlude-adventurers-pt-2/",
+          "title": "Interlude – Adventurers (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/11/16/interlude-adventurers-pt-3/",
+          "title": "Interlude – Adventurers (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/11/27/9-25/",
+          "title": "9.25"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/11/29/9-26-f/",
+          "title": "9.26 F"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/12/04/9-27-rc/",
+          "title": "9.27 RC"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/12/07/interlude-age-and-tales/",
+          "title": "Interlude – Age and Tales"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/12/11/interlude-the-first-and-last-of-us/",
+          "title": "Interlude – The First and Last of Us"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/12/14/9-28/",
+          "title": "9.28"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/12/18/9-29/",
+          "title": "9.29"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/12/21/9-30/",
+          "title": "9.30"
+        },
+        {
+          "url": "https://wanderinginn.com/2022/12/25/9-31/",
+          "title": "9.31"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/01/18/9-32/",
+          "title": "9.32"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/01/22/9-33/",
+          "title": "9.33"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/01/24/interlude-foody-discussions/",
+          "title": "Interlude – Foody Discussions"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/01/29/9-34/",
+          "title": "9.34"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/01/31/9-35-o/",
+          "title": "9.35 O"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/02/04/9-36-ho/",
+          "title": "9.36 HO"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/02/15/9-37-ho/",
+          "title": "9.37 HO"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/03/01/9-38-tv-pt-1/",
+          "title": "9.38 TV (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/03/01/9-38-tv-pt-2/",
+          "title": "9.38 TV (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/03/05/interlude-beginnings/",
+          "title": "Interlude – Beginnings"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/03/08/9-39/",
+          "title": "9.39"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/03/12/9-40-gg/",
+          "title": "9.40 GG"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/03/15/interlude-innovation-and-invention/",
+          "title": "Interlude – Innovation and Invention"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/03/19/interlude-brewing-sariants/",
+          "title": "Interlude – Brewing Sariants"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/03/29/interlude-the-spitoon/",
+          "title": "Interlude – The Spitoon"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/04/01/interlude-stories/",
+          "title": "Interlude – Stories"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/04/09/9-41-pt-1/",
+          "title": "9.41 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/04/12/9-41-pt-2/",
+          "title": "9.41 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/04/16/interlude-levels/",
+          "title": "Interlude – Levels"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/04/30/9-41-pt-3/",
+          "title": "9.41 (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/04/interlude-trade-and-travel/",
+          "title": "Interlude – Trade and Travel"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/05/9-42-e/",
+          "title": "9.42 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/07/9-43-l/",
+          "title": "9.43 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/08/9-44-p/",
+          "title": "9.44 P"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/10/9-45-gt/",
+          "title": "9.45 GT"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/10/9-46-s/",
+          "title": "9.46 S"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/13/9-47-u/",
+          "title": "9.47 U"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/16/9-48-btiprljmwvrv/",
+          "title": "9.48 BTIPRLJMWVRV"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/06/27/9-49/",
+          "title": "9.49"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/07/01/9-50/",
+          "title": "9.50"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/07/04/9-51-z/",
+          "title": "9.51 Z"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/07/09/9-52/",
+          "title": "9.52"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/07/12/9-53/",
+          "title": "9.53"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/07/16/9-54-c/",
+          "title": "9.54 C"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/08/30/9-55-pt-1/",
+          "title": "9.55 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/08/30/9-55-pt-2/",
+          "title": "9.55 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/09/05/9-56/",
+          "title": "9.56"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/09/09/9-57-b/",
+          "title": "9.57 B"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/09/12/9-58-o/",
+          "title": "9.58 O"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/09/17/9-59-o/",
+          "title": "9.59 O"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/10/03/interlude-the-library/",
+          "title": "Interlude – The Library"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/10/15/9-60/",
+          "title": "9.60"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/10/17/9-61-g/",
+          "title": "9.61 G"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/10/21/9-62/",
+          "title": "9.62"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/10/24/9-63/",
+          "title": "9.63"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/10/28/9-64-bh/",
+          "title": "9.64 BH"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/11/19/9-65/",
+          "title": "9.65"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/11/22/9-66/",
+          "title": "9.66"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/11/26/9-67-pt-1/",
+          "title": "9.67 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/11/26/9-67-pt-2/",
+          "title": "9.67 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/11/28/9-68/",
+          "title": "9.68"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/12/06/9-69-pt-1/",
+          "title": "9.69 H (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/12/06/9-69-pt-2/",
+          "title": "9.69 H (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/12/23/9-70-pt-1/",
+          "title": "9.70 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/12/23/9-70-pt-2/",
+          "title": "9.70 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/12/23/9-70-pt-3/",
+          "title": "9.70 (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2023/12/23/volume-9-epilogue/",
+          "title": "Volume 9 – Epilogue"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/02/04/10-00-l/",
+          "title": "10.00 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/02/07/10-01-l/",
+          "title": "10.01 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/02/11/10-02-y/",
+          "title": "10.02 Y"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/02/14/10-03-y/",
+          "title": "10.03 Y"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/02/18/10-04-v/",
+          "title": "10.04 V"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/02/21/10-05/",
+          "title": "10.05"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/03/06/10-06/",
+          "title": "10.06"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/03/10/10-07/",
+          "title": "10.07"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/03/13/interlude-saliss-the-architect/",
+          "title": "Interlude – Saliss the Architect"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/03/20/10-08-pt-1/",
+          "title": "10.08 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/03/20/10-08-pt-2/",
+          "title": "10.08 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/03/24/10-09-e/",
+          "title": "10.09 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/04/06/10-10-e-pt-1/",
+          "title": "10.10 E (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/04/06/10-10-e-pt-2/",
+          "title": "10.10 E (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/04/13/10-11-h/",
+          "title": "10.11 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/04/27/10-12-h-pt-1/",
+          "title": "10.12 H (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/04/27/10-12-h-pt-2/",
+          "title": "10.12 H (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/05/04/10-13/",
+          "title": "10.13"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/05/11/10-14/",
+          "title": "10.14"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/05/18/10-15/",
+          "title": "10.15"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/06/02/10-16-n/",
+          "title": "10.16 N"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/06/07/interlude-another-time/",
+          "title": "Interlude – Another Time"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/06/08/10-17/",
+          "title": "10.17"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/06/16/10-18-e/",
+          "title": "10.18 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/06/30/10-19-e/",
+          "title": "10.19 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/07/08/10-20-e/",
+          "title": "10.20 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/07/21/10-21-e/",
+          "title": "10.21 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/07/28/goblin-days-pt-1-the-wedding/",
+          "title": "Goblin Days (Pt.1) — The Wedding"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/07/28/goblin-days-pt-2-the-pilot-and-the-knight/",
+          "title": "Goblin Days (Pt. 2) — The Pilot and the Knight"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/07/30/goblin-days-pt-3-vengeance-and-talking/",
+          "title": "Goblin Days (Pt. 3) – Vengeance and Talking"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/07/31/goblin-days-pt-4-order-oddity/",
+          "title": "Goblin Days (Pt. 4) – Order, Oddity"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/01/goblin-days-pt-5-redblade-and-lilbrasi/",
+          "title": "Goblin Days (Pt. 5) – Redblade and Lilbrasi"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/02/goblin-days-pt-6-of-dragons/",
+          "title": "Goblin Days (Pt. 6) – Of Dragons"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/02/goblin-days-pt-7-no-answers-and-answers/",
+          "title": "Goblin Days (Pt. 7) – No Answers and Answers"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/04/goblin-days-pt-8-downwards/",
+          "title": "Goblin Days (Pt. 8) – Downwards"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/10/the-roots-pt-1/",
+          "title": "The Roots (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/11/the-roots-pt-2/",
+          "title": "The Roots (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/11/the-roots-pt-2-2/",
+          "title": "The Roots (Pt. 2b)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/11/the-roots-pt-2-3/",
+          "title": "The Roots (Pt. 2c)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/14/the-roots-pt-3/",
+          "title": "The Roots (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/16/the-roots-pt-4/",
+          "title": "The Roots (Pt. 4)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/08/18/the-roots-pt-5/",
+          "title": "The Roots (Pt. 5)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/09/01/10-22-r/",
+          "title": "10.22 R"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/09/08/10-23-lmgy/",
+          "title": "10.23 LMGY"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/09/29/heroes-of-hraace-pt-1/",
+          "title": "Heroes of Hraace (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/10/06/heroes-of-hraace-pt-2/",
+          "title": "Heroes of Hraace (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/10/06/heroes-of-hraace-pt-3/",
+          "title": "Heroes of Hraace (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/10/13/10-24-e/",
+          "title": "10.24 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/10/20/interlude-arcsingers-memories/",
+          "title": "Interlude – Arcsinger’s Memories"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/10/26/tales-of-innworld-1/",
+          "title": "Tales of Innworld #1"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/11/03/10-25-mg/",
+          "title": "10.25 MG"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/11/10/10-26-mm/",
+          "title": "10.26 MM"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/11/13/10-27-gmg/",
+          "title": "10.27 GMG"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/11/16/interlude-songs-and-wands/",
+          "title": "Interlude — Songs and Wands"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/11/23/tales-of-innworld-2/",
+          "title": "Tales of Innworld #2"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/12/01/interlude-the-grove/",
+          "title": "Interlude – The Grove"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/12/08/10-28-n/",
+          "title": "10.28 N"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/12/15/10-29-m/",
+          "title": "10.29 M"
+        },
+        {
+          "url": "https://wanderinginn.com/2024/12/22/10-30-ggmg/",
+          "title": "10.30 GGMG"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/01/11/10-31-pt-1/",
+          "title": "10.31 – Pt. 1"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/01/11/10-31-pt-2/",
+          "title": "10.31 – Pt. 2"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/01/25/10-32-pt-1/",
+          "title": "10.32 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/01/25/10-32-pt-2/",
+          "title": "10.32 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/02/01/interlude-redscar/",
+          "title": "Interlude – Redscar"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/02/08/10-33-mnk/",
+          "title": "10.33 MNK"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/02/16/10-34-mgf/",
+          "title": "10.34 MGF"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/02/23/tales-of-innworld-3/",
+          "title": "Tales of Innworld #3"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/03/02/10-35-pt-1/",
+          "title": "10.35 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/03/02/10-35-pt-2/",
+          "title": "10.35 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/03/08/10-35-pt-3/",
+          "title": "10.35 (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/03/16/10-36-pt-1/",
+          "title": "10.36 – Pt.1"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/03/22/10-36-pt-2/",
+          "title": "10.36 – Pt. 2"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/03/29/tales-of-innworld-4/",
+          "title": "Tales of Innworld #4"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/04/06/10-37-gdi-pt-1/",
+          "title": "10.37 GDI (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/04/06/10-37-gdi-pt-2/",
+          "title": "10.37 GDI (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/04/06/10-37-gdi-pt-3/",
+          "title": "10.37 GDI (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/04/12/tales-of-innworld-5/",
+          "title": "Tales of Innworld #5"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/04/20/tales-of-innworld-6/",
+          "title": "Tales of Innworld #6"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/05/10/10-38-e/",
+          "title": "10.38 E"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/05/17/10-39-yn/",
+          "title": "10.39 YN"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/05/24/10-40-t/",
+          "title": "10.40 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/05/31/10-41-t/",
+          "title": "10.41 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/06/07/mini-chapter-eldavin/",
+          "title": "Mini-Chapter: Eldavin"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/06/14/10-42-t/",
+          "title": "10.42 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/06/21/interlude-vernoue-pt-1/",
+          "title": "Interlude – Vernoue (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/06/28/interlude-vernoue-pt-2/",
+          "title": "Interlude – Vernoue (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/07/05/mini-chapters-patreon-poll/",
+          "title": "Mini-Chapters – Patreon Poll"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/07/19/10-43-rng-pt-1/",
+          "title": "10.43 – RNG (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/07/20/10-43-rng-pt-2/",
+          "title": "10.43 – RNG (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/07/27/10-44-z-pt-1/",
+          "title": "10.44 Z (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/08/01/10-44-z-pt-2/",
+          "title": "10.44 Z (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/08/23/10-45-l/",
+          "title": "10.45 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/08/30/10-46-l/",
+          "title": "10.46 L"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/09/06/interlude-erin/",
+          "title": "Interlude – Erin"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/09/08/interlude-halfseekers-pt-1/",
+          "title": "Interlude – Halfseekers (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/09/11/interlude-halfseekers-pt-2/",
+          "title": "Interlude – Halfseekers (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/09/12/interlude-halfseekers-pt-3/",
+          "title": "Interlude – Halfseekers (Pt. 3)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/09/15/interlude-halfseekers-pt-4/",
+          "title": "Interlude – Halfseekers (Pt. 4)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/09/16/interlude-halfseekers-pt-5/",
+          "title": "Interlude – Halfseekers (Pt. 5)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/09/19/halfseekers-pt-6/",
+          "title": "Interlude – Halfseekers (Pt. 6)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/09/21/interlude-halfseekers-pt-7/",
+          "title": "Interlude – Halfseekers (Pt. 7)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/10/04/interlude-halfseekers-pt-8/",
+          "title": "Interlude – Halfseekers (Pt. 8)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/10/07/interlude-halfseekers-pt-9/",
+          "title": "Interlude – Halfseekers (Pt. 9)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/10/12/interlude-acceptable-romance/",
+          "title": "Interlude – Acceptable Romance"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/10/18/10-47-s-pt-1/",
+          "title": "10.47 S (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/10/22/10-47-s-pt-2/",
+          "title": "10.47 S (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/11/02/10-48-vs/",
+          "title": "10.48 VS"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/11/09/interlude-barelle-the-bard/",
+          "title": "Interlude – Barelle the [Bard]"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/11/12/10-49-y/",
+          "title": "10.49 Y"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/11/16/10-50-y/",
+          "title": "10.50 Y"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/11/23/10-51-t/",
+          "title": "10.51 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/12/03/beware-of-chicken-x-the-wandering-inn-crossover-comic/",
+          "title": "Beware of Chicken x The Wandering Inn Crossover Comic!"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/12/07/tales-of-innworld-7/",
+          "title": "Tales of Innworld #7"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/12/13/10-52-n/",
+          "title": "10.52 N"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/12/21/10-53-ueg/",
+          "title": "10.53 UEG"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/12/31/10-54-ueg-pt-1/",
+          "title": "10.54 UEG (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2025/12/31/10-54-ueg-pt-2/",
+          "title": "10.54 UEG (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/02/08/10-55-f/",
+          "title": "10.55 F"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/02/15/10-56-f/",
+          "title": "10.56 F"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/02/21/10-57-f/",
+          "title": "10.57 F"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/03/07/19850/",
+          "title": "10.58 FP"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/03/14/interlude-spears-and-stuff/",
+          "title": "Interlude – Spears and Stuff"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/03/14/interlude-the-7th-hive/",
+          "title": "Interlude – The 7th Hive"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/03/21/10-59-t/",
+          "title": "10.59 T"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/03/28/10-60-yn/",
+          "title": "10.60 YN"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/04/11/10-61-y/",
+          "title": "10.61 Y"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/04/18/10-62-ny/",
+          "title": "10.62 NY"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/04/25/10-63-ry/",
+          "title": "10.63 RY"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/05/09/interlude-liska/",
+          "title": "Interlude – Liska"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/05/16/10-64-fn/",
+          "title": "10.64 FN"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/05/23/10-65/",
+          "title": "10.65"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/06/07/10-66-pt-1/",
+          "title": "10.66 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/06/07/10-66-pt-2/",
+          "title": "10.66 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/06/14/10-67-o/",
+          "title": "10.67 O"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/06/21/10-68-s/",
+          "title": "10.68 S"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/07/05/10-69-in/",
+          "title": "10.69 IN"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/07/12/10-70-dig/",
+          "title": "10.70 DIG"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/07/19/10-71-pt-1/",
+          "title": "10.71 (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/07/22/10-71-pt-2/",
+          "title": "10.71 (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/08/08/10-72-h/",
+          "title": "10.72 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/08/15/10-73-h/",
+          "title": "10.73 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/08/23/10-74-h/",
+          "title": "10.74 H"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/08/29/announcement-a-months-break/",
+          "title": "Announcement — A Month’s Break"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/08/30/10-75-h-pt-1/",
+          "title": "10.75 H (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/09/02/10-75-pt-2/",
+          "title": "10.75 H (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/09/19/tales-of-innworld-8/",
+          "title": "Tales of Innworld #8"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/09/26/tales-of-innworld-9/",
+          "title": "Tales of Innworld #9"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/10/02/2-1-1-until-my-dreams-are-done/",
+          "title": "2-1-1 Until My Dreams are Done"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/10/03/interlude-cormeng-pt-1/",
+          "title": "Interlude — Cormeng (Pt. 1)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/10/06/interlude-cormeng-pt-2/",
+          "title": "Interlude — Cormeng (Pt. 2)"
+        },
+        {
+          "url": "https://wanderinginn.com/2026/10/11/10-76-uem/",
+          "title": "10.76 UEM"
+        }
+      ],
+      "captures": {
+        "https://wanderinginn.com/table-of-contents/": {
+          "http": {
+            "path": "7c6a8ead4880c90f3317-http.html",
+            "sha256": "35f93919d85a181288d320308aff108a7998f10efd4f212d7b389378a5065b73"
+          },
+          "browser": {
+            "path": "7c6a8ead4880c90f3317-browser.html",
+            "sha256": "23f4bbf9de5e8f97f6666c49709cbc146cc1e7d18d29428324bc437e73c00adb"
+          }
+        },
+        "https://wanderinginn.com/2017/03/03/rw1-00/": {
+          "http": {
+            "path": "001c026b27c028905c47-http-287eff811a.html",
+            "sha256": "6e1482d922c68f7f6d2a87e15efc065f39b23ecc6a2c7af94e662d64b1fa32d5"
+          },
+          "browser": {
+            "path": "001c026b27c028905c47-browser-846627b628.html",
+            "sha256": "a860e1583f297db010fa7ed042c3a867201a524d1c59adb6be912b66bd5ecc29"
+          }
+        },
+        "https://wanderinginn.com/2020/04/29/7-20/": {
+          "http": {
+            "path": "760f0869340fd0badfb9-http-3b6f2ddb8f.html",
+            "sha256": "376a6295ca9471dd37f7aad4210dc02c045724e1bea4f7e13069208d7fc18355"
+          },
+          "browser": {
+            "path": "760f0869340fd0badfb9-browser-1dd989d774.html",
+            "sha256": "ef553a870e44947999e25ee6338b7dbda063711619bf034e92379cf6146fac67"
+          }
+        },
+        "https://wanderinginn.com/2026/10/11/10-76-uem/": {
+          "http": {
+            "path": "1eb0ceb23578cf1b578d-http-64d0a18e6f.html",
+            "sha256": "d3f03d7f2b5566e2c20219386c9a10106fff112a9578c2c32aa90cae9862e979"
+          }
+        }
+      },
+      "fetch_records": {},
+      "sample_annotations": [
+        {
+          "url": "https://wanderinginn.com/2026/10/11/10-76-uem/",
+          "index": 839,
+          "status": "blocked",
+          "reason": "Published entry is Patreon Exclusive; complete chapter text is inaccessible"
+        },
+        {
+          "url": "https://wanderinginn.com/2017/03/03/rw1-00/",
+          "index": 1,
+          "status": "reviewed",
+          "source_selector": "article.twi-article p",
+          "method": "Independent fixed publisher paragraph boundaries from frozen HTTP source; explicit hidden watermark excluded",
+          "source_sha256": "6e1482d922c68f7f6d2a87e15efc065f39b23ecc6a2c7af94e662d64b1fa32d5",
+          "text_sha256": "e4f06e4ede72342ad31763404ee9342311677e9612456c31d2a82282e1795d1a",
+          "characters": 24471,
+          "beginning_sha256": "eb8c27598c62afd9262e853f69588dfc0ba5fc33b9c335e02d6288f9fd4af833",
+          "ending_sha256": "424afb9faf003ad6d9ecd18b53a9d9328c2795236fb0798ecfe12caff6237034"
+        },
+        {
+          "url": "https://wanderinginn.com/2020/04/29/7-20/",
+          "index": 420,
+          "status": "reviewed",
+          "source_selector": "article.twi-article p",
+          "method": "Independent fixed publisher paragraph boundaries from frozen HTTP source; explicit hidden watermark excluded",
+          "source_sha256": "376a6295ca9471dd37f7aad4210dc02c045724e1bea4f7e13069208d7fc18355",
+          "text_sha256": "09ff8e0b34be548ca513a4c9f5256d0d97101c350769364191e6a82f3f97033e",
+          "characters": 187616,
+          "beginning_sha256": "c38b3f84864415cfebc291662ea64f665a52ab86023e1da0596c51f766bc2b46",
+          "ending_sha256": "850bced722de929a215d9b9251add39311bd85d3d810545ffdf499c4de234432"
+        }
+      ]
+    },
+    {
+      "id": "bcnovels",
+      "url": "https://bcnovels.com/table-contents-every-day-protagonist-wants-capture/",
+      "split": "development",
+      "annotation_status": "reviewed",
+      "annotation_method": "Source catalog column independently selected; native browser innerText for manually selected story boundaries. No application extractor used.",
+      "catalog_selector": ".entry-content a[href]",
+      "catalog_source_sha256": "b7070b57892cf6bd4639733edf6c58837e96b7aca71feb89bb96547f4bf6408c",
+      "catalog": [
+        {
+          "url": "https://bcnovels.com/chapter-1-every-day-protagonist-wants-capture/",
+          "title": "Chapter 1 – Girly System",
+          "text_file": {
+            "path": "1ed0f2ba288b096ffb47-gold.txt",
+            "sha256": "b29f9383c315bd59c9bf934103e367380375acc50a804abda229283ffd380878"
+          }
+        },
+        {
+          "url": "https://bcnovels.com/chapter-2-every-day-protagonist-wants-capture/",
+          "title": "Chapter 2 – A Stepmother Like Me"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-3-every-day-protagonist-wants-capture/",
+          "title": "Chapter 3 – Cheap Master"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-4-every-day-protagonist-wants-capture/",
+          "title": "Chapter 4 – Nightly Warmth"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-5-every-day-protagonist-wants-capture/",
+          "title": "Chapter 5 – Hello, Homo"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-6-every-day-protagonist-wants-capture/",
+          "title": "Chapter 6 – The Gay Man Says Goodbye"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-7-every-day-protagonist-wants-capture/",
+          "title": "Chapter 7 – Brotherly Harmony"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-8-every-day-protagonist-wants-capture/",
+          "title": "Chapter 8 – Don’t Die"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-8-every-day-protagonist-wants-capture-2/",
+          "title": "Chapter 9 – The Curse of the Water Demon"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-10-every-day-protagonist-wants-capture/",
+          "title": "Chapter 10 – Auction Venue"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-11-every-day-protagonist-wants-capture/",
+          "title": "Chapter 11 – Starlight Overflowing"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-12-every-day-protagonist-wants-capture/",
+          "title": "Chapter 12 – Token of Affection"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-13-every-day-protagonist-wants-capture-me/",
+          "title": "Chapter 13 – Demonic Cultivator"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-14-every-day-protagonist-wants-capture/",
+          "title": "Chapter 14 – Growing Up"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-15-every-day-protagonist-wants-capture/",
+          "title": "Chapter 15 – Die for Wealth"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-16-every-day-protagonist-wants-capture-me/",
+          "title": "Chapter 16 – Indulge in Secret Relations with Women"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-17-every-day-protagonist-wants-capture/",
+          "title": "Chapter 17 – I want to eat fish."
+        },
+        {
+          "url": "https://bcnovels.com/chapter-18-every-day-the-protagonist-wants-to-capture-me-2/",
+          "title": "Chapter 18 – Beauty Bathing"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-19-every-day-protagonist-wants-capture/",
+          "title": "Chapter 19 -Demonic Insect Rampage"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-20-every-day-protagonist-wants-capture/",
+          "title": "Chapter 20: Direct Confrontation"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-21-every-day-the-protagonist-wants-to-capture-me-8/",
+          "title": "Chapter 21 – Whispers of Love"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-22-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 22 – I’m your father"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-23-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 23- Lovers’ Sword Tassels"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-24-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 24 – Immortal Sword Congress"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-25-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 25 – Into the bridal chamber"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-26-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 26.1 – Wedding festivities"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-26-2-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 26.2 – Wedding festivities"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-26-3-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 26.3 – Wedding festivities"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-27-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 27 – Getting Started"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-28-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 28 – You Can’t Escape"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-29-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 29 -Getting it on"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-30-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 30 – I want to see you"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-31-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 31 – Counterattack Counterattack"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-32-every-day-protagonist-wants-capture-me/",
+          "title": "Chapter 32 – Chu Shuanghe"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-33-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 33 – Can’t Wait"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-34-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 34 – Blush"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-35-every-day-protagonist-wants-to-capture-me/",
+          "title": "Chapter 35 – A strange decorating style"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-36-every-day-protagonist-wants-capture-me/",
+          "title": "Chapter 36 – Who’s knocking on the door?"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-37-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 37 – The name of Chu"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-38-every-day-the-protagonist-wants-capture-me/",
+          "title": "Chapter 38 – Resurrection"
+        },
+        {
+          "url": "https://bcnovels.com/every-day-the-protagonist-wants-capture-me-chapter-39/",
+          "title": "Chapter 39 – Caught in flagrante delicto"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-40-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 40 – He is My Son"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-41-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 41 – Cannon Fodder Log In"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-42-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 42 – Question of Affiliation"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-43-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 43 – Kill After Fattening"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-44-every-day-the-protagonist-wants-capture-me/",
+          "title": "Chapter 44 – Hello, Five Young Ladies",
+          "text_file": {
+            "path": "795355d421aa27aec240-gold.txt",
+            "sha256": "430fcd0287cb05583ec62d304462726df396076874fa8911eeee1a2017e8ab8a"
+          }
+        },
+        {
+          "url": "https://bcnovels.com/chapter-45-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 45 – Searching for a Free Reed Pipe While Fearing Filth"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-46-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 46 – Insatiable Greed"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-47-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 47 – A Life Worse than Death"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-48-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 48 – Eating Fish Together"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-49-every-day-protagonist-wants-capture-me/",
+          "title": "Chapter 49 – Use your mouth"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-50-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 50 – Slipping and sliding in the waters of the hot spring"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-51-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 51 – Earnestly and Sincerely"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-52-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 52 – Little Yu-Er"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-53-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 53 – Solemn and Magnificent"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-54-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 54 – I’ll give you a kiss"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-55-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 55 – Don’t Play with Fire"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-56-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 56 – Qi Deviation"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-57-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 57 – The Direction of the Plot"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-58-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 58 – Thinking Carefully"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-59-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 59 – Shidi, beat him up!"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-60-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 60 – Not the biological offspring"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-61-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 61 – Cruel and Unscrupulous"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-62-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 62 – Like a dream but not a dream"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-63-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 63 – Plot Armor"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-64-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 64 – Living Underneath a Man’s Trousers"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-65-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 65 – Screwed over by the Ancestor"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-66-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 66 – Demon Lord Yan Heng"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-67-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 67 – Fallen Into the Abyss"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-68-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 68 – Hello, Comrade"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-69-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 69 – Returning A Favor"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-70-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 70 – I refuse to reminisce about the old days with you"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-71-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 71 – Don’t Push Me Over The Edge"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-72-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 72 – Making A Pact"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-73-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 73 – Rewarding You"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-74-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 74 – Beating Around The Bush"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-75-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 75 – Never to Meet Again"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-76-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 76 – Devoid of Conscience"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-77-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 77 – Please have mercy"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-78-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 78 – Loathe to Part"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-79-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 79 – Save them"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-80-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 80 – He’s Mine"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-81-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 81 – Extra: Bronze Mirror (1)"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-82-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 82: Extra: Bronze Mirror (2)"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-83-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 83 – Extra: Enemy (This story is of the original Chu Yu)"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-84-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 84 – Extra: ‘Sword’ Training"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-85-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 85 – Extra: The Story of Third Shidi and Young Master That Must Be Told (1)"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-86-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 86 – Extra: The Story of Third Shidi and Young Master That Must Be Told (2)"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-87-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 87 – Extra: That trivial matter between Shizun and Shen Nian"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-88-every-day-the-protagonist-wants-to-capture-me/",
+          "title": "Chapter 88 – Extra: The Story of Chu Sheng And Fu Chongyi That Must Be Told",
+          "text_file": {
+            "path": "aaf11b5f593623c415dd-gold.txt",
+            "sha256": "1d1f2355d07947a98278aee785ff5aef3af62575b7ee4d46b1603dea5f485e78"
+          }
+        }
+      ],
+      "captures": {
+        "https://bcnovels.com/table-contents-every-day-protagonist-wants-capture/": {
+          "http": {
+            "path": "a584b1df04dac53c34bb-http.html",
+            "sha256": "b7070b57892cf6bd4639733edf6c58837e96b7aca71feb89bb96547f4bf6408c"
+          },
+          "browser": {
+            "path": "a584b1df04dac53c34bb-browser.html",
+            "sha256": "e9e055819ec6440c1ef2b2b9c2838a9a88bd3c877e5c9c404d418c2268184e30"
+          }
+        },
+        "https://bcnovels.com/chapter-1-every-day-protagonist-wants-capture/": {
+          "http": {
+            "path": "1ed0f2ba288b096ffb47-http-2743f53b30.html",
+            "sha256": "9b8c900bcf380140ecb63db5b587c8934caa733ff603b351036cfa9367b6aca6"
+          },
+          "browser": {
+            "path": "1ed0f2ba288b096ffb47-gold-browser.html",
+            "sha256": "bf3be37a8898ffc26f428a135694f4ccdb1c079b2be9c4b661a40525952513b0"
+          }
+        },
+        "https://bcnovels.com/chapter-44-every-day-the-protagonist-wants-capture-me/": {
+          "http": {
+            "path": "795355d421aa27aec240-http-1a59fcc6d1.html",
+            "sha256": "913e2991ddce7858f431895dc7deebd6a861af90260cd9b4f1b87d845e04c85d"
+          },
+          "browser": {
+            "path": "795355d421aa27aec240-gold-browser.html",
+            "sha256": "dc078359fc91dc94c0c96c6935e9481695a788599a64feb99425921e3f4c925c"
+          }
+        },
+        "https://bcnovels.com/chapter-88-every-day-the-protagonist-wants-to-capture-me/": {
+          "http": {
+            "path": "aaf11b5f593623c415dd-http-6c9a1e539f.html",
+            "sha256": "67493cd4f8c2574f3cd149d4345d82706a5c5085c103310163d9d1de0f606a21"
+          },
+          "browser": {
+            "path": "aaf11b5f593623c415dd-gold-browser.html",
+            "sha256": "cb8bd679154e006bf49fd51c11f8853e2052bf9de71152b22311fc8f2c3dc3fb"
+          }
+        }
+      },
+      "fetch_records": {},
+      "sample_annotations": [
+        {
+          "url": "https://bcnovels.com/chapter-1-every-day-protagonist-wants-capture/",
+          "index": 1,
+          "source_children": [
+            1,
+            84
+          ],
+          "status": "reviewed",
+          "source_selector": ".entry-content",
+          "text_sha256": "b29f9383c315bd59c9bf934103e367380375acc50a804abda229283ffd380878",
+          "source_sha256": "bf3be37a8898ffc26f428a135694f4ccdb1c079b2be9c4b661a40525952513b0",
+          "characters": 11175,
+          "beginning_sha256": "73e883b3c5be4037a671a234fcf396663d2d9a8ea09d68b8355e8fb0a8056ed3",
+          "ending_sha256": "370f03f426d513b253a7219087446bb8953ac836caa4390fb06bf648f9245c31"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-44-every-day-the-protagonist-wants-capture-me/",
+          "index": 46,
+          "source_children": [
+            3,
+            114
+          ],
+          "status": "reviewed",
+          "source_selector": ".entry-content",
+          "text_sha256": "430fcd0287cb05583ec62d304462726df396076874fa8911eeee1a2017e8ab8a",
+          "source_sha256": "dc078359fc91dc94c0c96c6935e9481695a788599a64feb99425921e3f4c925c",
+          "characters": 19544,
+          "beginning_sha256": "c783f20179f9bedf49e9e60c02e127a75babcf70c1486bbc0944bd153ec19495",
+          "ending_sha256": "59e86d615877900bafba1e926ca5d70e889facfb34dbf280a8087279d159b85e"
+        },
+        {
+          "url": "https://bcnovels.com/chapter-88-every-day-the-protagonist-wants-to-capture-me/",
+          "index": 90,
+          "source_children": [
+            2,
+            147
+          ],
+          "status": "reviewed",
+          "source_selector": ".entry-content",
+          "text_sha256": "1d1f2355d07947a98278aee785ff5aef3af62575b7ee4d46b1603dea5f485e78",
+          "source_sha256": "cb8bd679154e006bf49fd51c11f8853e2052bf9de71152b22311fc8f2c3dc3fb",
+          "characters": 27450,
+          "beginning_sha256": "b64d08ce2ab950987acc7b698427273169abf8ac6bbd453360d04a4e668a56d2",
+          "ending_sha256": "292bd05501c3926500962b839117cead010628a4a2dd15c6757b44378df9d333"
+        }
+      ],
+      "split_reason": "Initial evaluation runtime informed the shared ranking cache; no longer held out"
+    }
+  ],
+  "annotation_hash_note": "Hashes refer to stored file bytes, including Windows newline encoding; initial in-memory text hashes corrected before replay."
+}

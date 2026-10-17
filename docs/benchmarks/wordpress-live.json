@@ -1,0 +1,24 @@
+{
+  "url": "https://isekailunatic.wordpress.com/clearing-an-isekai-with-the-zero-believers-goddess-the-weakest-mage-among-the-classmates/",
+  "novel_title": "Clearing an Isekai with the Zero-Believers Goddess – The Weakest Mage among the Classmates",
+  "author": null,
+  "linked_entry_count": 40,
+  "observed_linked_entry_count": 286,
+  "highest_chapter_number": 45.0,
+  "highest_observed_chapter_number": 293.0,
+  "is_complete": false,
+  "issues": [
+    "Unverified migrated catalog links: 246",
+    "Unresolved cross-domain catalog coverage: 246 observed links.",
+    "Unverified chapter source: Source domain serves a parking redirect instead of chapter content"
+  ],
+  "metrics": {
+    "requests": 2,
+    "rendered": 0,
+    "browser_launches": 0,
+    "recipe_hits": 0,
+    "repair_calls": 0,
+    "discovery_seconds": 2.633125399996061,
+    "model_calls": 0
+  }
+}

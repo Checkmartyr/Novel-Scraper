@@ -148,7 +148,8 @@ def test_client_does_not_fall_back_to_unconfigured_mock_provider(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_routed_client_parses_json_and_tracks_provider_usage(monkeypatch):
+@pytest.mark.parametrize("with_image", [False, True])
+async def test_routed_client_parses_json_and_tracks_provider_usage(monkeypatch, with_image):
     class ResultSchema(BaseModel):
         answer: str
 
@@ -158,6 +159,9 @@ async def test_routed_client_parses_json_and_tracks_provider_usage(monkeypatch):
             return "fixed-provider-test"
 
         def _generate(self, messages: list[BaseMessage], stop=None, run_manager=None, **kwargs):
+            if with_image:
+                assert messages[-1].content[-1] == {
+                    "type": "image_url", "image_url": {"url": "data:image/png;base64,Zml4dHVyZQ=="}}
             message = AIMessage(
                 content='{"answer":"ok"}',
                 usage_metadata={"input_tokens": 11, "output_tokens": 3, "total_tokens": 14},
@@ -166,6 +170,7 @@ async def test_routed_client_parses_json_and_tracks_provider_usage(monkeypatch):
 
     _install_nousetsu_llm_factory(monkeypatch, lambda **kwargs: FixedProviderModel())
     monkeypatch.setenv("NOVEL_SCRAPER_MODEL", "openai:gpt-4.1")
+    monkeypatch.setenv("NOVEL_SCRAPER_VISUAL_RECOVERY", "1" if with_image else "0")
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
 
@@ -173,7 +178,8 @@ async def test_routed_client_parses_json_and_tracks_provider_usage(monkeypatch):
 
     token_tracker.reset()
     try:
-        result = await LLMClient().generate_json("Return JSON", ResultSchema)
+        result = await LLMClient().generate_json("Return JSON", ResultSchema,
+                                               images=[b"fixture"] if with_image else None)
         summary = token_tracker.get_summary()
     finally:
         token_tracker.reset()

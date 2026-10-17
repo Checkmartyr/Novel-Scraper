@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 
 from src.agent.llm import LLMClient
+from src.agent.instructions import agent_system_instruction
 from src.agent.ch.analyzer import DOMStructurePlan
 from src.agent.ch.code_generator import ParserVerificationResult
 from src.config import MIN_QUALITY_SCORE
@@ -44,17 +45,22 @@ class ExtractionObserver:
                 summary="Extraction failed completely."
             )
 
+        if verification.coverage_issues:
+            return ExtractionReview(is_accurate=False, quality_score=0.4,
+                title_accurate=True, has_clutter=False, issues=verification.coverage_issues,
+                recommended_fixes=[f"Preserve all prose and the ending from observed source region {verification.source_selector}"],
+                summary="Independent source coverage failed")
+
         if self.llm.is_available:
             try:
                 # Prepare text snippets
                 preview = verification.preview_markdown
                 head_snippet = preview[:1000]
                 tail_snippet = preview[-1000:] if len(preview) > 1000 else ""
+                middle_start = preview.find("[Middle]")
+                middle_snippet = preview[middle_start:middle_start + 1000] if middle_start >= 0 else ""
 
                 prompt = f"""
-You are the Quality Control Observer Agent for web novel extraction.
-Critically review the extracted sample chapter below against the source page context.
-
 Source URL: {url}
 Extracted Title: "{verification.chapter_title}"
 Selectors Evaluated:
@@ -76,22 +82,21 @@ Extracted Text Preview (Beginning):
 {head_snippet}
 \"\"\"
 
+Extracted Text Preview (Middle):
+\"\"\"
+{middle_snippet}
+\"\"\"
+
 Extracted Text Preview (Ending):
 \"\"\"
 {tail_snippet}
 \"\"\"
 
-Audit Criteria:
-1. Title Check: Is the Extracted Title the true chapter title, or is it a site header, novel title, or generic label (e.g., 'Chapter')?
-2. Clutter Check: Did residual navigation buttons ('next chapter', 'previous', '次へ'), cheer/heart widgets, comment forms, ads, or copyright footers leak into the text?
-3. Completeness Check: Does the story start and end coherently without being truncated?
-4. Scoring: Rate quality_score (0.0 to 1.0). Set is_accurate = True ONLY if quality_score >= {MIN_QUALITY_SCORE} and no major clutter or title errors exist.
-5. Provide actionable recommended_fixes for selectors if defects are found.
 """
                 review = await self.llm.generate_json(
                     prompt_text=prompt,
                     schema=ExtractionReview,
-                    system_instruction="You are a strict, meticulous Quality Control Reviewer for web novel scraping.",
+                    system_instruction=agent_system_instruction("observer"),
                     previous_interaction_id=previous_interaction_id,
                 )
                 return review
@@ -112,6 +117,10 @@ Audit Criteria:
         title_accurate = True
         has_clutter = False
         score = 1.0
+        if verification.coverage_issues:
+            issues.extend(verification.coverage_issues)
+            fixes.append(f"Recover complete source region {verification.source_selector} without removing story prose")
+            score -= 0.6
 
         title = verification.chapter_title.strip()
         preview = verification.preview_markdown

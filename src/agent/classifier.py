@@ -5,8 +5,11 @@ from urllib.parse import urljoin, urlparse
 from typing import List, Optional, Any
 from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
+from src.scraper.runtime import belongs_to_observed_novel, canonical_url, safe_error
+from src.scraper.telemetry import stage_enabled
 
 from src.agent.llm import LLMClient
+from src.agent.instructions import agent_system_instruction
 from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
 from src.utils.novel_url import belongs_to_recipe_novel, recipe_page_kind, toc_url_from_recipe
 
@@ -101,7 +104,7 @@ class PageClassifier:
                 return 0
             if base_path and len(base_path) > 1 and base_path in link["url"]:
                 return 1
-            if parsed_base.netloc and parsed_base.netloc in link["url"]:
+            if parsed_base.netloc and belongs_to_observed_novel(base_url, link["url"]):
                 return 2
             return 3
 
@@ -156,6 +159,35 @@ class PageClassifier:
         except Exception as e:
             logger.debug(f"Failed extracting Apollo TOC: {e}")
         return []
+
+    @staticmethod
+    def _matching_book_metadata(html: str, url: str) -> Optional[dict]:
+        """Find structured Book metadata that identifies this exact catalog page."""
+        def visit(value):
+            if isinstance(value, list):
+                for item in value:
+                    found = visit(item)
+                    if found:
+                        return found
+            elif isinstance(value, dict):
+                types = value.get("@type", [])
+                if isinstance(types, str):
+                    types = [types]
+                if "Book" in types and value.get("url") and canonical_url(value["url"]) == canonical_url(url):
+                    return value
+                if "@graph" in value:
+                    return visit(value["@graph"])
+            return None
+
+        soup = BeautifulSoup(html, "lxml")
+        for script in soup.select('script[type="application/ld+json"]'):
+            try:
+                found = visit(json.loads(script.string or script.get_text()))
+            except (TypeError, ValueError):
+                continue
+            if found:
+                return found
+        return None
 
     async def classify(self, url: str, html: str) -> ClassificationResult:
         """Classify page using Gemini with fallback to deterministic heuristic parser."""
@@ -223,6 +255,26 @@ class PageClassifier:
         except Exception as e:
             logger.debug(f"Domain memory classifier bypass check failed: {e}")
 
+        book_metadata = self._matching_book_metadata(html, url)
+        catalog_render_error = None
+        catalog_claimed_count = None
+        if book_metadata:
+            from src.agent.toc.tools import ClaimInspector, DomLinkExtractor
+
+            catalog_claimed_count, _, _, _ = ClaimInspector.inspect(html, url)
+            observed_count = len(DomLinkExtractor.extract(html, url))
+            if observed_count < 4 or (catalog_claimed_count and observed_count < catalog_claimed_count):
+                browser = self.obscura or self.toc_agent.obscura
+                try:
+                    html = await browser.fetch_html(
+                        url, force_browser=True, wait_until="domcontentloaded", readiness="catalog"
+                    )
+                except Exception as error:
+                    catalog_render_error = error
+                    logger.warning("Could not render sparse Book catalog %s: %s", url, error)
+                else:
+                    book_metadata = self._matching_book_metadata(html, url) or book_metadata
+
         summary = self._extract_page_summary(html, url)
         apollo_chapters = self._extract_apollo_chapters(url, html)
 
@@ -232,7 +284,7 @@ class PageClassifier:
             if apollo_chapters:
                 result.page_type = "TOC"
                 result.chapter_links = apollo_chapters
-        elif self.llm.is_available:
+        elif self.llm.is_available and stage_enabled("model"):
             try:
                 prompt = f"""
 Current Page URL: {url}
@@ -242,33 +294,38 @@ H1 Headings: {summary['h1s']}
 Sample links found ({min(len(summary['sample_links']), 150)} of {summary['total_links']}):
 {summary['sample_links']}
 
-Analyze the page:
-1. Determine if this page is a 'TOC' (Table of Contents / Novel Landing Page) or 'CHAPTER' (Single novel chapter).
-2. Extract the clean novel title (strip promotional bracket prefixes like 【...】 if present) and author.
-3. If TOC: Extract the chapter list with chapter number/index, clean chapter title, and full URL.
-4. If CHAPTER: Look for TOC/Index link and Next Chapter link. Also identify current chapter title and number.
 """
                 result = await self.llm.generate_json(
                     prompt_text=prompt,
                     schema=ClassificationResult,
-                    system_instruction="You are an expert web scraping classifier specialized in novel platforms worldwide.",
+                    system_instruction=agent_system_instruction("classifier"),
                 )
                 if result.novel_title:
                     result.novel_title = self._clean_novel_title(result.novel_title)
 
                 # Sanitize chapter links
+                witnessed = {canonical_url(urljoin(url, anchor["href"]))
+                             for anchor in BeautifulSoup(html, "lxml").select("a[href]")}
                 if result.chapter_links:
                     seen_urls = set()
                     cleaned_links = []
                     for c in result.chapter_links:
-                        if c.url not in seen_urls:
-                            seen_urls.add(c.url)
+                        c.url = urljoin(url, c.url)
+                        key = canonical_url(c.url)
+                        if key in witnessed and key not in seen_urls and belongs_to_observed_novel(url, c.url):
+                            seen_urls.add(key)
                             c.title = clean_chapter_title(c.title)
                             cleaned_links.append(c)
                     cleaned_links, _ = detect_and_fix_reverse_order(cleaned_links)
                     for idx, c in enumerate(cleaned_links, 1):
                         c.index = idx
                     result.chapter_links = cleaned_links
+                for field in ("toc_url", "next_chapter_url"):
+                    target = getattr(result, field)
+                    if target:
+                        target = urljoin(url, target)
+                        setattr(result, field, target if canonical_url(target) in witnessed else None)
+                result.toc_state = None
 
                 # If Apollo state contains a more complete TOC, merge/augment it
                 if apollo_chapters and len(apollo_chapters) > len(result.chapter_links):
@@ -281,6 +338,17 @@ Analyze the page:
         else:
             # Heuristic fallback
             result = self._heuristic_classify(url, html, summary)
+
+        if book_metadata:
+            result.page_type = "TOC"
+            result.toc_url = None
+            result.novel_title = self._clean_novel_title(book_metadata.get("name") or result.novel_title)
+            author = book_metadata.get("author")
+            if isinstance(author, dict):
+                result.author = author.get("name") or result.author
+            elif isinstance(author, str):
+                result.author = author
+            result.description = book_metadata.get("description") or result.description
 
         if page_kind == "TOC":
             result.page_type = "TOC"
@@ -306,6 +374,33 @@ Analyze the page:
                         result.description = toc_state["description"]
             except Exception as e:
                 logger.warning(f"TocAgent extraction warning: {e}. Keeping classified result.")
+                if catalog_render_error:
+                    result.toc_state = {
+                        "url": url,
+                        "html": html,
+                        "novel_title": result.novel_title,
+                        "extracted_chapters": [],
+                        "is_complete": False,
+                        "issues": [],
+                        "logs": [],
+                    }
+
+        if catalog_render_error:
+            if result.toc_state is None:
+                result.toc_state = {
+                    "url": url,
+                    "html": html,
+                    "novel_title": result.novel_title,
+                    "claimed_chapter_count": catalog_claimed_count,
+                    "extracted_chapters": result.chapter_links,
+                    "is_complete": False,
+                    "issues": [],
+                    "logs": [],
+                }
+            result.toc_state["is_complete"] = False
+            issue = f"Sparse catalog could not be rendered: {safe_error(catalog_render_error)}"
+            if issue not in result.toc_state.setdefault("issues", []):
+                result.toc_state["issues"].append(issue)
 
         if result.page_type == "TOC" and recipe:
             result.chapter_links = [
@@ -355,7 +450,7 @@ Analyze the page:
                 next_candidates.append(full_url)
 
             # Check for TOC / Index
-            if lower_text in ["index", "toc", "table of contents", "chapters", "directory", "目录", "home", "目次"]:
+            if lower_text in ["index", "toc", "table of contents", "chapters", "directory", "目录", "目次"]:
                 toc_candidates.append(full_url)
 
             # Chapter link detection
@@ -369,7 +464,7 @@ Analyze the page:
             elif re.search(r"webnovel\.com/book/[^/]+/[^/]+", lower_url) and not lower_url.endswith("/catalog"):
                 is_chapter = True
 
-            if is_chapter and full_url not in seen_urls:
+            if is_chapter and full_url not in seen_urls and belongs_to_observed_novel(url, full_url):
                 seen_urls.add(full_url)
                 clean_title = clean_chapter_title(text)
                 chapter_links.append(ChapterLink(
@@ -441,17 +536,24 @@ Analyze the page:
                 logger.debug(f"Failed extracting WebNovel TOC in heuristic classifier: {e}")
 
         # If more than 4 chapter links found, it's very likely a TOC page
-        is_toc = len(chapter_links) >= 4
+        from src.scraper.recovery import catalog_links
+        observed_links = catalog_links(html, url)
+        catalog_container = soup.select_one(".chapter-list, #chapter-list, .toc, #toc, [role=doc-toc]")
+        is_toc = len(chapter_links) >= 4 or (len(observed_links) >= 2 and
+                 (catalog_container is not None or len(observed_links) >= 4))
 
         # Deduce author
+        from src.scraper.recovery import catalog_soup
         author = None
-        author_el = soup.select_one(".author, [class*='author'], [itemprop='author'], a[href*='/users/']")
+        author_el = catalog_soup(html).select_one(".author, [class*='author'], [itemprop='author'], a[href*='/users/']")
         if author_el:
             author = author_el.get_text(strip=True)
             author = re.sub(r"^(?:author|作者|作者：|Author:)\s*", "", author, flags=re.I).strip()
 
         # Deduce novel title
         raw_title = summary["h1s"][0] if summary["h1s"] else page_title.split("-")[0].split("|")[0].strip()
+        if soup.select_one(".entry-title, .novel-title"):
+            raw_title = soup.select_one(".entry-title, .novel-title").get_text(" ", strip=True)
         novel_title = self._clean_novel_title(raw_title)
 
         if is_toc:

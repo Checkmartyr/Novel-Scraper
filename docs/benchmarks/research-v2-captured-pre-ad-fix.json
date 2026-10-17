@@ -1,0 +1,5100 @@
+{
+  "source_sha256": "1bece0a8e47ea7ee4943e3678bc3b715e094e14152cb64192913abd2820342bf",
+  "manifest_sha256": "d4132f154ff8e8782f83068e869f68ec36064ebe867c197841b82b9c89a7f009",
+  "runs": [
+    {
+      "family": "royalroad",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 3.1716,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.274239,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.054562,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.272857,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.292298,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.259471,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.118431,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6.5e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/forums/1124'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5.1e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "'https://www.royalroad.com/forums/1124'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+      ],
+      "ceiling": "deterministic"
+    },
+    {
+      "family": "royalroad",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 3.0286,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.268442,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.061495,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.2666,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.259727,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.488359,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 2.976643,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6.8e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/forums/1124'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.4e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.1e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "'https://www.royalroad.com/forums/1124'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+      ],
+      "ceiling": "deterministic"
+    },
+    {
+      "family": "royalroad",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 4.9139,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.27665,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.056642,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.29456,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.25712,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.282832,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.053405,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.280841,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.281708,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.279256,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 4.860718,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5.9e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/forums/1124'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.1e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.1e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "'https://www.royalroad.com/forums/1124'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+      ],
+      "ceiling": "browser"
+    },
+    {
+      "family": "royalroad",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 5.5386,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 1.1e-05,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.289071,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.065445,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.308577,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.296122,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.2991,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 1e-05,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.077825,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.293841,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.314015,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.28434,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 5.479489,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6.2e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/forums/1124'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.6e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.5e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "'https://www.royalroad.com/forums/1124'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+      ],
+      "ceiling": "browser"
+    },
+    {
+      "family": "royalroad",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 5.4791,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.284089,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.066801,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.282141,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.334283,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.291588,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.064146,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.536344,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.307884,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.280639,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 5.424613,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7.2e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/forums/1124'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.7e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "'https://www.royalroad.com/forums/1124'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+      ],
+      "ceiling": "model"
+    },
+    {
+      "family": "royalroad",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 5.5986,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.305487,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.289919,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.310594,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.307816,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.279917,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.054472,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.314761,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.291104,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.528252,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 5.538247,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7.1e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/forums/1124'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.7e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.5e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "'https://www.royalroad.com/forums/1124'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+      ],
+      "ceiling": "model"
+    },
+    {
+      "family": "royalroad",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 5.3449,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.304462,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.053384,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.296416,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.5172,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.289617,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.071107,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.295376,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.325434,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.303458,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 5.28757,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 9e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/forums/1124'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6.2e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6.3e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "'https://www.royalroad.com/forums/1124'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+      ],
+      "ceiling": "repair"
+    },
+    {
+      "family": "royalroad",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 5.4192,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.306043,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.064587,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.30269,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.285405,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.303018,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.054993,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.272808,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.279995,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.29105,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 5.366553,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 8.4e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/forums/1124'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.7e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4.7e-05,
+          "newly_validated": 0,
+          "outcome": "failed",
+          "reason": "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "'https://www.royalroad.com/forums/1124'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/314869/52-things-fall-apart'",
+        "'https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/452736/106-i-win-iii'"
+      ],
+      "ceiling": "repair"
+    },
+    {
+      "family": "bcnovels",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 20.8113,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 0.9306839186691312,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.248105,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.107439,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.121344,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.115686,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 1.505329,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 2.156254,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.608756,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 1e-05,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.796378,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.327446,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.318591,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.330773,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.352602,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.584632,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.368338,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.35255,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.363468,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.398971,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.780552,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.348295,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.336392,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.552441,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.369357,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.368137,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.37361,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.339012,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.561114,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.378898,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets.",
+        "Extracted content contains residual navigation links."
+      ],
+      "ceiling": "deterministic"
+    },
+    {
+      "family": "bcnovels",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 0.9473684210526315,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 12.4922,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 0.9306839186691312,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.105943,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.107325,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.032683,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.117644,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111783,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.110826,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 1.95913,
+          "newly_validated": 95,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 1.1e-05,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.655676,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.326829,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.348209,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.3201,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.319504,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.58497,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.380027,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.342144,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.345693,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.329786,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.742743,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.377757,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.349415,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.35385,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.381039,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.601876,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.368487,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.391345,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.411152,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.342012,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets.",
+        "Extracted content contains residual navigation links."
+      ],
+      "ceiling": "deterministic"
+    },
+    {
+      "family": "bcnovels",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 27.878,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.9306839186691312,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.03807,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.133305,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.117623,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.112736,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.033782,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.120798,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.113043,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.119002,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 2.288662,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.686277,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.46052,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.51407,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.556878,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.34796,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.324827,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.327666,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.361798,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.528768,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.326742,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.334272,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.323958,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.721907,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.334413,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.34242,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.525108,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.322567,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.365792,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.344061,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.333006,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.344549,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.515651,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.567306,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.372536,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.362833,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.580922,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.390582,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.383693,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.349739,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.358602,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.340255,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.545251,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.942603,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.366145,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.364781,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.370038,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.37897,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.57121,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.381098,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.390779,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.38502,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.35263,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets.",
+        "Extracted content contains residual navigation links."
+      ],
+      "ceiling": "browser"
+    },
+    {
+      "family": "bcnovels",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 22.7963,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.9306839186691312,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.115127,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.122186,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.038497,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111768,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.11629,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.12086,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.13225,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.032195,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.118706,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.115496,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.112211,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.232545,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.698125,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.341882,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.370093,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.320317,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.319608,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.318361,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.568203,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.338719,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.346521,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.305937,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.700209,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.343133,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.334389,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.340139,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.345419,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.348349,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.565905,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.341271,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.347382,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.343637,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.500085,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.597101,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.427274,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.372708,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.361551,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.352555,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.550877,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.38865,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.373479,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.436629,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.525315,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.59973,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.377605,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.361749,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.354393,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.356561,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.549572,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.364599,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.363273,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.339448,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets.",
+        "Extracted content contains residual navigation links."
+      ],
+      "ceiling": "browser"
+    },
+    {
+      "family": "bcnovels",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 23.164,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.9306839186691312,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.03962,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.167055,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.13729,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.130378,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.09406,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.124804,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.117521,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.120229,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 2.46437,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.862908,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.455401,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.575658,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.322397,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.558706,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.33511,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.334825,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.371796,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.348196,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.384769,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.349161,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.332049,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.528471,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.355218,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.353214,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.334947,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.329298,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.552388,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.366713,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.344562,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.354615,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.363681,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.711311,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.339995,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.362386,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.364143,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.356633,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.552595,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.353711,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.353346,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.348386,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.337594,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.77594,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.363954,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.367193,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.392011,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.35542,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.639452,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.388635,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.364243,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.353778,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.351687,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets.",
+        "Extracted content contains residual navigation links."
+      ],
+      "ceiling": "model"
+    },
+    {
+      "family": "bcnovels",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 22.6164,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.9306839186691312,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.10985,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.110377,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.033205,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.107326,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111151,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.333965,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.125948,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.034427,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.127664,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111779,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.116464,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.210963,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.68241,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.341697,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.361849,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.337819,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.315632,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.310971,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.547727,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.341626,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.337621,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.320789,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.482745,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.573745,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.343003,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.347726,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.360972,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.346074,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.342916,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.558746,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.360058,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.353486,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.511489,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.35595,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.588811,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.430838,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.380282,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.392198,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.388443,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.371892,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.63083,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.392696,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 1e-05,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.54682,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.357925,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.607746,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.394474,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.347349,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.334475,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.331333,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.536507,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.354536,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.346699,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets.",
+        "Extracted content contains residual navigation links."
+      ],
+      "ceiling": "model"
+    },
+    {
+      "family": "bcnovels",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 25.6495,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.9306839186691312,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.034109,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.119305,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.116803,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.122337,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.034803,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.115691,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.11845,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.112302,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 2.40606,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.660008,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.629784,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.505371,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.326953,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.328471,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.559161,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.335895,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.333455,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.32211,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.326665,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.345889,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.514307,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.549295,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.380275,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.420746,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.366015,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.616964,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.399963,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.387104,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.358715,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.376066,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.514088,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.530282,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.360262,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.557049,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.342698,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.342926,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.354409,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.347929,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.335217,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.575898,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.340531,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 1e-05,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.551735,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.374462,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.577041,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.345847,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.371865,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.409845,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.359014,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.575621,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.359477,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.353165,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets.",
+        "Extracted content contains residual navigation links."
+      ],
+      "ceiling": "repair"
+    },
+    {
+      "family": "bcnovels",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 22.9184,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.9306839186691312,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.109442,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.106863,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.043932,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.119129,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.115272,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111825,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.33516,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.035808,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111425,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.127397,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.114838,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.268809,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 1.1e-05,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.698776,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.370134,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.340632,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.33115,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.36107,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.324114,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.540795,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.38836,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.377513,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.382072,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.49384,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.624994,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.440846,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.369782,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.361112,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.32886,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.335762,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.531335,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.356626,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.343636,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 117 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.4951,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.326663,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.549781,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.349014,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.346458,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.364976,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.348608,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.358528,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.600671,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.328899,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.514061,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.355515,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.565968,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.395514,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.363641,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.381725,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.371739,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.601248,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.400588,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extraction includes prose outside the confirmed story boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.373668,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source coverage omits 152 observed prose blocks; The actual source ending is missing; Extraction includes prose outside the confirmed story boundaries"
+        }
+      ],
+      "pipeline_status": "partial",
+      "failure_reasons": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets.",
+        "Extracted content contains residual navigation links."
+      ],
+      "ceiling": "repair"
+    }
+  ],
+  "model_mode": "disabled",
+  "recovery_mode": "maximum",
+  "unmeasured": [
+    {
+      "site": "wanderinginn",
+      "reason": "Independent source annotations have not been reviewed",
+      "success": false
+    }
+  ],
+  "model_budget": {
+    "model_calls": 0,
+    "visual_calls": 0,
+    "max_model_calls": 30,
+    "max_visual_calls": 6
+  },
+  "requested_runs": 24,
+  "measured_runs": 16,
+  "success_rate": 0.0,
+  "false_completions": 0
+}

@@ -1,0 +1,51 @@
+{
+  "source_sha256": "b4e69adfc3f5b6244fc1c3aeb23d245e9f2cc53f82c5e18ba87640ba9f2a0f95",
+  "url": "https://novelbin.xyz/novel/i-became-the-academys-pink-airhead",
+  "is_complete": true,
+  "linked_entry_count": 133,
+  "claimed_chapter_count": 133,
+  "success": true,
+  "saved": 3,
+  "samples": [
+    {
+      "index": 1,
+      "title": "Chapter 0: Character Summaries",
+      "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-1",
+      "status": "saved",
+      "success": true,
+      "downloaded": true,
+      "file": "0001 - Chapter 0 Character Summaries.md",
+      "sha256": "6a504c8829c8c80905887114243d2643f1513e0d3aaeac6f5aa01ec49213faf5",
+      "content_sha256": "877be7c5e14573bdf11763f54ab98a5cadc2873656993484bcaefaee2c765647",
+      "recipe_version": "6bcf6cf67a64cc6a",
+      "attempts": 1
+    },
+    {
+      "index": 67,
+      "title": "Chapter 66: The Witch’s Story☆ (7)",
+      "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-67",
+      "status": "saved",
+      "success": true,
+      "downloaded": true,
+      "file": "0067 - Chapter 66 The Witch’s Story☆ (7).md",
+      "sha256": "252b8b559a061f45e81394cd2f843400e253f47d347ad7359b610b5d0f758111",
+      "content_sha256": "1ff7299d26a38d22247f775eb8775effd268802862737a2ee55a353041929e3d",
+      "recipe_version": "6bcf6cf67a64cc6a",
+      "attempts": 1
+    },
+    {
+      "index": 133,
+      "title": "Chapter 131",
+      "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-133",
+      "status": "saved",
+      "success": true,
+      "downloaded": true,
+      "file": "0133 - Chapter 131.md",
+      "sha256": "53308efcfcf5c83b52e1fb4cc36765a13f2dfad7ccb2e365acd7d68a53244d1b",
+      "content_sha256": "cba002f9132083c3954600aa9aa6fa8e1deaf88d1155bf3a5746fa2393b098b0",
+      "recipe_version": "6bcf6cf67a64cc6a",
+      "attempts": 1
+    }
+  ],
+  "model_calls": 0
+}

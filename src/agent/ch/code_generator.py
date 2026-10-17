@@ -5,13 +5,14 @@ from pydantic import BaseModel, Field
 
 from src.agent.ch.analyzer import DOMStructurePlan
 from src.utils.title_cleaner import clean_chapter_title, clean_chapter_content
+from src.agent.ch.candidates import AD_CONTAINER_SELECTORS
 
 DEFAULT_NOISE_SELECTORS = [
     "script", "style", "noscript", "rt", "rp",
     ".disclaimer", ".notice", ".alert", ".premium-notice", ".vip-notice",
     ".membership", ".chapter-warning", ".post-views", ".entry-meta",
     ".sharedaddy", ".jp-relatedposts"
-]
+] + AD_CONTAINER_SELECTORS.split(", ")
 
 class ExtractedChapter(BaseModel):
     title: str
@@ -38,6 +39,8 @@ class ParserVerificationResult(BaseModel):
     source_char_count: int = 0
     source_paragraph_count: int = 0
     is_paywalled: bool = False
+    source_selector: str = ""
+    coverage_issues: List[str] = Field(default_factory=list)
 
 
 def extract_paragraphs(container):
@@ -190,16 +193,6 @@ def extract_chapter(html: str) -> dict:
             pass
 
         if not content_elements:
-            for fb in ["div.p-novel__body", ".cha-words", ".chapter-content", "#chapter-content", "#novel_honbun", "#content", "article", "main"]:
-                try:
-                    el = soup.select_one(fb)
-                    if el and len(el.get_text(strip=True)) > 200:
-                        content_elements = [el]
-                        break
-                except Exception:
-                    pass
-
-        if not content_elements:
             return ExtractedChapter(
                 title=title,
                 content_markdown="",
@@ -220,32 +213,6 @@ def extract_chapter(html: str) -> dict:
         word_count = len(re.findall(r"\w+", content_md))
         char_count = len(content_md)
 
-        # Fallback check: if extracted text is suspiciously short (< 150 chars), check if a known richer container exists on the page
-        if char_count < 150 and not is_paywalled:
-            for fb in ["div.p-novel__body", "#novel_honbun", ".entry-content", "article"]:
-                try:
-                    fb_el = soup.select_one(fb)
-                    if fb_el:
-                        fb_p_tags = fb_el.find_all("p")
-                        fb_paras = []
-                        if fb_p_tags:
-                            for p in fb_p_tags:
-                                t = p.get_text(strip=True)
-                                if t:
-                                    fb_paras.append(t)
-                        else:
-                            fb_paras = [l.strip() for l in fb_el.get_text("\n", strip=True).split("\n") if l.strip()]
-                        fb_cleaned, fb_paywall = clean_chapter_content(fb_paras)
-                        fb_md = "\n\n".join(fb_cleaned)
-                        if len(fb_md) > char_count + 200:
-                            content_md = fb_md
-                            word_count = len(re.findall(r"\w+", content_md))
-                            char_count = len(content_md)
-                            is_paywalled = fb_paywall
-                            break
-                except Exception:
-                    pass
-        
         success = char_count > 0
         if is_paywalled and char_count <= 100:
             success = False
@@ -269,25 +236,8 @@ def extract_chapter(html: str) -> dict:
         """Test extraction against sample chapter and produce preview."""
         result = result or self.extract(sample_html)
         code_str = self.generate_code_string()
-        source = BeautifulSoup(sample_html, "lxml")
-        for selector in set(self.plan.remove_selectors) | set(DEFAULT_NOISE_SELECTORS):
-            try:
-                for element in source.select(selector):
-                    element.decompose()
-            except Exception:
-                continue
-        try:
-            containers = source.select(self.plan.content_selector)
-        except Exception:
-            containers = []
-        context = []
-        for container in containers:
-            parent = container.parent
-            if parent and parent.name in {"div", "article", "section", "main"} and len(parent.find_all("p")) > len(container.find_all("p")) + 2:
-                container = parent
-            if container not in context:
-                context.append(container)
-        source_paragraphs = [paragraph for container in context for paragraph in extract_paragraphs(container)]
+        from src.agent.ch.candidates import independent_evidence
+        source_selector, source_paragraphs, coverage_issues = independent_evidence(sample_html, result.content_markdown)
         source_text = "\n\n".join(source_paragraphs)
         midpoint = max(0, len(source_text)//2 - 500)
         
@@ -320,4 +270,6 @@ def extract_chapter(html: str) -> dict:
             source_char_count=len(source_text),
             source_paragraph_count=len(source_paragraphs),
             is_paywalled=result.is_paywalled,
+            source_selector=source_selector,
+            coverage_issues=coverage_issues,
         )

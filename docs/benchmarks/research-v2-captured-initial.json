@@ -1,0 +1,3362 @@
+{
+  "source_sha256": "0ad9a949df22cecfd080b336381417a0b30fde0e61001eeb68b1ca7ba252bb25",
+  "manifest_sha256": "ff6b2368216698a51088d7ff1f1c1ba8e071b9495c2997a020d2e0d0e209b359",
+  "runs": [
+    {
+      "family": "royalroad",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 3.0947,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.281311,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.06042,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.269532,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.269824,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.266038,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.041988,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        }
+      ],
+      "ceiling": "deterministic"
+    },
+    {
+      "family": "royalroad",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 3.1182,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.261974,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.063208,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.270492,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.282766,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.497614,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.06577,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        }
+      ],
+      "ceiling": "deterministic"
+    },
+    {
+      "family": "royalroad",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 4.9528,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.27417,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.055278,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.263063,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.282115,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.277752,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.058268,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.287026,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.297639,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.285045,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 4.898939,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        }
+      ],
+      "ceiling": "browser"
+    },
+    {
+      "family": "royalroad",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 5.1747,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.281297,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.053589,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.276711,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.292767,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.276845,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.058471,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.278533,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.27026,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.275015,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 5.120936,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        }
+      ],
+      "ceiling": "browser"
+    },
+    {
+      "family": "royalroad",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 4.9912,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.267656,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.060552,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.263164,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.268246,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.257393,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.053841,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.486338,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.265819,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.260723,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 4.938473,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        }
+      ],
+      "ceiling": "model"
+    },
+    {
+      "family": "royalroad",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 4.9792,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.251671,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.272425,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.262759,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.280718,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.271124,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.055164,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.267487,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.282924,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.466956,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 4.92463,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        }
+      ],
+      "ceiling": "model"
+    },
+    {
+      "family": "royalroad",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 5.0429,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.29322,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.054914,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.271669,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.495575,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.277168,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.082366,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.285007,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.287606,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.269531,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 4.988308,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        }
+      ],
+      "ceiling": "repair"
+    },
+    {
+      "family": "royalroad",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 0.8257575757575758,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 5.3243,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 1,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.275925,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.064284,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.264868,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.268906,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.261366,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.055195,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.361022,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.310922,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.2788,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 132
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 5.270175,
+          "newly_validated": 132,
+          "outcome": "incomplete",
+          "reason": "Catalog navigation remains unresolved despite advertised count coverage."
+        }
+      ],
+      "ceiling": "repair"
+    },
+    {
+      "family": "bcnovels",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 31.192,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 0.3356107315447425,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.259484,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.107857,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.119024,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111935,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 1.50342,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 2.11366,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.785756,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.490744,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.596821,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.85116,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.551349,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.720376,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.893026,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.496462,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.465056,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.65273,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.497655,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.679028,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        }
+      ],
+      "ceiling": "deterministic"
+    },
+    {
+      "family": "bcnovels",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 0.9473684210526315,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 28.9962,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 0.3356107315447425,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.121574,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.112884,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.031123,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.118892,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.107262,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.110034,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 1.845068,
+          "newly_validated": 95,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 1.2e-05,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.758554,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.442153,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.642196,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.507106,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.644981,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.496023,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.763269,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.488299,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.651855,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.53105,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.664634,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.47966,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        }
+      ],
+      "ceiling": "deterministic"
+    },
+    {
+      "family": "bcnovels",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 55.3136,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.3356107315447425,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.033678,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.10237,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.10806,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111803,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.035437,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.10994,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.108337,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.111005,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 2.060994,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 2.169524,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.796619,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.472652,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.438165,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.612061,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.424709,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.551253,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.972016,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.61078,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.881377,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.537239,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.576904,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.818544,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.935517,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.572368,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.685942,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.513994,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.503121,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.794329,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 2.041089,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.586575,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.729299,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.545723,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.544772,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.697695,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        }
+      ],
+      "ceiling": "browser"
+    },
+    {
+      "family": "bcnovels",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 54.3904,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.3356107315447425,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.106303,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.11075,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.030443,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.106653,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.108276,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.113697,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.110277,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.032682,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.10665,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.113793,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.11106,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.088061,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 1.2e-05,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.619474,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.646097,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.424043,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.406991,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.663251,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.436702,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.693785,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.628578,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.843247,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.610699,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.75741,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.54828,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.669466,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.659951,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.561702,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.671997,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.511522,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.74562,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.716957,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.749679,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.575866,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.720917,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.591089,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.856975,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        }
+      ],
+      "ceiling": "browser"
+    },
+    {
+      "family": "bcnovels",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 57.0017,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.3356107315447425,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.031855,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.118275,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.107729,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.105042,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.041569,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.165189,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.119817,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.112331,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 2.182546,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 2.452746,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.689742,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.48517,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.631475,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.450253,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.697398,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.470363,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.823542,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.950715,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.562437,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.589748,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.694164,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.565554,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.731289,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.713194,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.520535,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.773765,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.704104,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.796173,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.769734,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.74696,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.663258,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.824274,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.861096,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.881593,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        }
+      ],
+      "ceiling": "model"
+    },
+    {
+      "family": "bcnovels",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 56.3777,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.3356107315447425,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.119826,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.157815,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.049497,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.16473,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.154969,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.130293,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.128519,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.038081,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.115075,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.112337,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.121629,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.652958,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 1e-05,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.889799,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.503054,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.722648,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.556049,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.753462,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.514378,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.874137,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.583942,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.777592,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.562591,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.714242,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.574262,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.837116,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.545028,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.814364,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.691967,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.830484,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.654053,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.847137,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.877455,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.560237,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.82132,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.531115,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.52024,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        }
+      ],
+      "ceiling": "model"
+    },
+    {
+      "family": "bcnovels",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 56.9511,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.3356107315447425,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.031246,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.318314,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.117655,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.121095,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.037635,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.114893,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.130337,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.116716,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 2.437895,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 2.237729,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.760025,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.461484,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.60908,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.475202,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.406273,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.752761,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.881442,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.491464,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.698664,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.45552,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.474433,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.720035,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.656704,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.522567,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.782736,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.553788,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.699058,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.485983,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.708171,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.524851,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.71818,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.584147,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.718713,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.610762,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        }
+      ],
+      "ceiling": "repair"
+    },
+    {
+      "family": "bcnovels",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": false,
+      "seconds": 56.7594,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 0.3356107315447425,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": false,
+          "published": true
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.105255,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.108408,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.031978,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.124682,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.119928,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.114343,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.115707,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.038567,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.120904,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.153819,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.113382,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 90
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 3.232072,
+          "newly_validated": 90,
+          "outcome": "incomplete",
+          "reason": "Page contains unexpanded accordion sections or 'load more' buttons."
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.572797,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.432439,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.835263,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.488464,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.746346,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.486511,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.625221,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.502275,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.651647,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links.; Extracted content contains residual social sharing widgets."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.491085,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.64482,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.509807,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.67759,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.894809,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.600664,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.788518,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.547488,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.717419,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 2.032777,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.545132,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.508207,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.73358,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.587506,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 1.818126,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Extracted content contains residual navigation links."
+        }
+      ],
+      "ceiling": "repair"
+    }
+  ],
+  "unmeasured": [
+    {
+      "site": "wanderinginn",
+      "reason": "Independent source annotations have not been reviewed",
+      "success": false
+    }
+  ],
+  "model_budget": {
+    "model_calls": 0,
+    "visual_calls": 0,
+    "max_model_calls": 30,
+    "max_visual_calls": 6
+  },
+  "requested_runs": 24,
+  "measured_runs": 16,
+  "success_rate": 0.0,
+  "false_completions": 0
+}

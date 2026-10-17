@@ -5,6 +5,7 @@ __pycache__/
 novels/
 logs/
 .pytest_cache/
+.evaluation/
 src/bin/*
 src/recipes/*
 !src/bin/.gitkeep

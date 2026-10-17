@@ -2,6 +2,8 @@ import json
 import logging
 import asyncio
 import os
+import base64
+import re
 from typing import Type, TypeVar, Optional, Any, Dict, List, Mapping
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -28,6 +30,7 @@ except ImportError as e:
 from google import genai
 from src.config import GEMINI_API_KEY, GEMINI_MODEL
 from src.agent.llm.tracker import token_tracker
+from src.scraper.telemetry import measured_model
 
 logger = logging.getLogger("agent.llm")
 
@@ -90,10 +93,23 @@ class ChatGeminiInteractions(BaseChatModel):
             if isinstance(msg, SystemMessage):
                 system_instruction = msg.content if isinstance(msg.content, str) else str(msg.content)
             elif isinstance(msg, HumanMessage):
-                text_content = msg.content if isinstance(msg.content, str) else str(msg.content)
+                content = []
+                for part in ([{"type": "text", "text": msg.content}] if isinstance(msg.content, str) else msg.content):
+                    if isinstance(part, str):
+                        content.append({"type": "text", "text": part})
+                    elif part.get("type") == "text":
+                        content.append({"type": "text", "text": part["text"]})
+                    elif part.get("type") == "image_url":
+                        uri = part["image_url"]["url"]
+                        match = re.fullmatch(r"data:(image/(?:png|jpeg));base64,(.+)", uri)
+                        if not match:
+                            raise ValueError("Visual recovery accepts inline PNG or JPEG evidence only")
+                        content.append({"type": "image", "mime_type": match[1], "data": match[2]})
+                    else:
+                        raise ValueError("Unsupported model evidence block")
                 input_steps.append({
                     "type": "user_input",
-                    "content": [{"type": "text", "text": text_content}]
+                    "content": content
                 })
             elif isinstance(msg, AIMessage):
                 text_content = msg.content if isinstance(msg.content, str) else str(msg.content)
@@ -108,7 +124,8 @@ class ChatGeminiInteractions(BaseChatModel):
                 })
 
         if len(input_steps) == 1 and input_steps[0]["type"] == "user_input":
-            inputs = input_steps[0]["content"][0]["text"]
+            content = input_steps[0]["content"]
+            inputs = content[0]["text"] if len(content) == 1 and content[0]["type"] == "text" else content
         elif input_steps:
             inputs = input_steps
         else:
@@ -271,6 +288,10 @@ class LLMClient:
     def is_available(self) -> bool:
         return self._chat_model is not None
 
+    @property
+    def supports_vision(self) -> bool:
+        return self.is_available and os.getenv("NOVEL_SCRAPER_VISUAL_RECOVERY", "0").lower() in {"1", "true", "yes"}
+
     def get_chat_model(self, previous_interaction_id: Optional[str] = None) -> Any:
         """Get a configured provider model, preserving Gemini interaction chaining when available."""
         if self._provider_factory:
@@ -287,22 +308,27 @@ class LLMClient:
             previous_interaction_id=previous_interaction_id,
         )
 
+    @measured_model
     async def generate_json(
         self,
         prompt_text: str,
         schema: Type[T],
         system_instruction: str = "You are an expert AI assistant that outputs strictly valid JSON.",
-        previous_interaction_id: Optional[str] = None
+        previous_interaction_id: Optional[str] = None,
+        images: Optional[List[bytes]] = None,
     ) -> T:
         """Run the configured LangChain provider and parse its response into the requested schema."""
         if not self.is_available:
             raise RuntimeError("Scraper LLM provider is unavailable or not configured.")
+        if images and (not self.supports_vision or any(len(image) > 5_000_000 for image in images)):
+            raise ValueError("Enable a vision-capable provider; each visual evidence image must be at most 5 MB")
+        self.call_count = getattr(self, "call_count", 0) + 1
 
         parser = PydanticOutputParser(pydantic_object=schema)
 
         prompt = ChatPromptTemplate.from_messages([
             ("system", "{system_instruction}\n\nStrict Output Requirement:\nReturn ONLY a valid JSON object matching this schema:\n{format_instructions}"),
-            ("human", "{prompt_text}")
+            ("placeholder", "{user_messages}")
         ])
 
         chat = self.get_chat_model(previous_interaction_id=previous_interaction_id)
@@ -312,7 +338,9 @@ class LLMClient:
         prompt_input = {
             "system_instruction": system_instruction,
             "format_instructions": parser.get_format_instructions(),
-            "prompt_text": prompt_text,
+            "user_messages": [HumanMessage(content=([{"type": "text", "text": prompt_text}] + [
+                {"type": "image_url", "image_url": {"url": "data:image/png;base64," + base64.b64encode(image).decode("ascii")}}
+                for image in images]) if images else prompt_text)],
         }
         if self._provider_factory:
             from src.agent.llm.tracker import TokenCallbackHandler

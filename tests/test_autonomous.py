@@ -323,7 +323,7 @@ async def test_cold_and_warm_extraction_benchmark(tmp_path, monkeypatch):
         measurements.append({"run": run, "chapters": len(catalog), "seconds": round(elapsed, 3),
                              "chapters_per_second": round(len(catalog)/elapsed, 2), "model_calls": model.calls-before,
                              "peak_workers": result["metrics"]["peak_active_workers"]})
-    assert measurements[0]["model_calls"] > 0
+    assert measurements[0]["model_calls"] == 0
     assert measurements[1]["model_calls"] == 0
     print("OFFLINE_BENCHMARK=" + json.dumps(measurements))
 

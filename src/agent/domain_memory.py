@@ -22,6 +22,7 @@ from src.config import RECIPES_DIR
 from src.agent.ch import DOMStructurePlan, ChapterCodeGenerator, ExtractedChapter, ParserVerificationResult
 from src.agent.classifier import ChapterLink
 from src.utils.novel_url import belongs_to_recipe_novel
+from src.agent.ch.candidates import structural_signature
 
 logger = logging.getLogger("agent.domain_memory")
 
@@ -44,6 +45,7 @@ class ChapterRecipeConfig(BaseModel):
     clean_paragraphs: bool = True
     quality_score: float = 1.0
     code_script: Optional[str] = None
+    structural_signature: Dict[str, Any] = Field(default_factory=dict)
 
     def to_plan(self) -> DOMStructurePlan:
         return DOMStructurePlan(
@@ -381,6 +383,7 @@ if __name__ == "__main__":
             clean_paragraphs=chapter_plan.clean_paragraphs,
             quality_score=quality_score,
             code_script=chapter_script,
+            structural_signature=structural_signature(sample_html, chapter_plan.content_selector) if sample_html else {},
         )
 
         recipe = DomainRecipe(

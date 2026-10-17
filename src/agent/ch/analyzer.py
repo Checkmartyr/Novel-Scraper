@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 
 from src.agent.llm import LLMClient
+from src.agent.instructions import agent_system_instruction
 
 class DOMStructurePlan(BaseModel):
     title_selector: str = Field(description="CSS selector for chapter title heading")
@@ -32,6 +33,38 @@ class ChapterAnalyzer:
     
     def __init__(self, llm_client: Optional[LLMClient] = None):
         self.llm = llm_client or LLMClient()
+
+    def candidate_plans(self, html, previous_signature=None):
+        from src.agent.ch.candidates import rank_candidates
+        from src.scraper.runtime import ScraperLimits
+        return [DOMStructurePlan(title_selector=candidate.title_selector, content_selector=candidate.selector,
+                                 remove_selectors=["nav", "footer", "aside", ".comments", "#comments", ".ad-banner", ".nav-bottom", ".cheer-widget"])
+                for candidate in rank_candidates(html, ScraperLimits.from_env().candidate_limit, previous_signature)]
+
+    @staticmethod
+    def _validate_plan(plan: DOMStructurePlan, html: str) -> DOMStructurePlan:
+        """Require observed selectors and reject removals that erase story or title."""
+        soup = BeautifulSoup(html, "lxml")
+        checked = plan.model_copy(deep=True)
+        checked.title_selector = sanitize_css_selector(plan.title_selector)
+        checked.content_selector = sanitize_css_selector(plan.content_selector)
+        titles = soup.select(checked.title_selector) if checked.title_selector else []
+        containers = soup.select(checked.content_selector) if checked.content_selector else []
+        if not titles or not containers:
+            raise ValueError("Proposed title or content selector is absent from the source DOM")
+        protected = titles + containers
+        checked.remove_selectors = []
+        for selector in plan.remove_selectors:
+            selector = sanitize_css_selector(selector)
+            if not selector:
+                continue
+            removed = soup.select(selector)
+            if any(element is target or any(element is parent for parent in target.parents)
+                   for element in removed for target in protected):
+                raise ValueError("Proposed removal would erase the title or story container")
+            if removed and selector not in checked.remove_selectors:
+                checked.remove_selectors.append(selector)
+        return checked
 
     def _prepare_dom_skeleton(self, html: str) -> str:
         """Create a simplified DOM skeleton showing tag names, IDs, classes, and text lengths."""
@@ -91,6 +124,11 @@ class ChapterAnalyzer:
                 sample_snippet = text[:120].replace("\n", " ")
                 candidate_blocks.append(f"[{selector_hint}]{count_info} Text Length: {text_len} | Sample: \"{sample_snippet}...\"")
                 
+        from src.agent.ch.candidates import rank_candidates
+        candidates = rank_candidates(html)
+        if candidates:
+            candidate_blocks = [f"[{candidate.selector}] Score: {candidate.score:.2f} | Text Length: {len(candidate.text)} | Beginning: {candidate.text[:180]!r} | Ending: {candidate.text[-180:]!r}"
+                                for candidate in candidates]
         skeleton = (
             f"Page <title>: {page_title}\n\n"
             f"Title & Heading Candidates:\n" + "\n".join(title_candidates[:20]) + "\n\n"
@@ -110,23 +148,14 @@ URL: {url}
 
 DOM Structure & Candidates:
 {skeleton}
-
-Task:
-1. Identify the most specific CSS selector for the Chapter Title (check Title & Heading Candidates above).
-2. Identify the most specific CSS selector for the Main Story Content container.
-   IMPORTANT: Prefer the outermost enclosing container (e.g. 'div.p-novel__body', '#chapter-content', or 'article') that encloses the entire chapter text including any author prefaces, chapter body, and afterwords, rather than an inner sub-block that only matches the preface or a single subsection.
-3. Identify CSS selectors for clutter elements to REMOVE (ads, nav buttons, share widgets, watermarks).
 """
                 plan = await self.llm.generate_json(
                     prompt_text=prompt,
                     schema=DOMStructurePlan,
-                    system_instruction="You are an expert web scraping engineer analyzing novel chapter HTML.",
+                    system_instruction=agent_system_instruction("chapter_analyzer"),
                     previous_interaction_id=previous_interaction_id,
                 )
-                plan.title_selector = sanitize_css_selector(plan.title_selector, default="h1")
-                plan.content_selector = sanitize_css_selector(plan.content_selector, default="body")
-                plan.remove_selectors = [sanitize_css_selector(s) for s in plan.remove_selectors if sanitize_css_selector(s)]
-                return plan
+                return self._validate_plan(plan, html)
             except Exception:
                 pass  # Fallback to heuristic
                 
@@ -148,6 +177,10 @@ Task:
                 
                 prompt = f"""
 The previous DOM extraction plan produced defects according to the Quality Control Observer:
+Source URL: {url}
+Current DOM Structure & Candidates:
+{self._prepare_dom_skeleton(html)}
+
 Current Plan:
 - Title Selector: {current_plan.title_selector}
 - Content Selector: {current_plan.content_selector}
@@ -162,18 +195,14 @@ Observer Evaluation:
 - Recommended Fixes:
 {fixes_list}
 
-Task:
-Synthesize an improved, refined DOMStructurePlan that completely fixes all reported issues:
-1. If Title was inaccurate or generic: update title_selector to pinpoint the exact chapter heading.
-2. If Clutter (ads, nav, comments, cheer buttons) was present: identify and add their CSS selectors to remove_selectors.
-3. Ensure content_selector cleanly captures only the story paragraphs.
 """
-                return await self.llm.generate_json(
+                plan = await self.llm.generate_json(
                     prompt_text=prompt,
                     schema=DOMStructurePlan,
-                    system_instruction="You are an expert web scraping engineer repairing and optimizing extraction selectors based on quality audit feedback.",
+                    system_instruction=agent_system_instruction("chapter_refiner"),
                     previous_interaction_id=previous_interaction_id,
                 )
+                return self._validate_plan(plan, html)
             except Exception:
                 pass
 
@@ -184,7 +213,10 @@ Synthesize an improved, refined DOMStructurePlan that completely fixes all repor
             for s in extracted_sel:
                 if s not in new_plan.remove_selectors:
                     new_plan.remove_selectors.append(s)
-        return new_plan
+        try:
+            return self._validate_plan(new_plan, html)
+        except ValueError:
+            return current_plan.model_copy(deep=True)
 
     def _heuristic_analyze(self, html: str) -> DOMStructurePlan:
         """Deterministic heuristic analysis when LLM is unavailable."""
@@ -192,13 +224,14 @@ Synthesize an improved, refined DOMStructurePlan that completely fixes all repor
         
         # 1. Title selector heuristic
         title_selector = "h1"
-        for sel in ["h1.p-novel__title.p-novel__title--rensai", "h1.p-novel__title", ".p-novel__title", ".widget-episodeTitle", ".chapter-title", "h2.widget-episode-title", "h1", "h2", "title"]:
+        for sel in [".reader-header-chapter", "h1.p-novel__title.p-novel__title--rensai", "h1.p-novel__title", ".p-novel__title", ".widget-episodeTitle", ".chapter-title", "h2.widget-episode-title", "h1", "h2", "title"]:
             if soup.select_one(sel):
                 title_selector = sel
                 break
                 
         # 2. Content container heuristic (look for common novel content IDs and classes)
         common_content_selectors = [
+            ".reader-content",
             "div.p-novel__body",
             ".p-novel__body",
             ".widget-episodeBody",
@@ -221,24 +254,17 @@ Synthesize an improved, refined DOMStructurePlan that completely fixes all repor
         content_selector = None
         for sel in common_content_selectors:
             el = soup.select_one(sel)
-            if el and len(el.get_text(strip=True)) > 100:
+            text = el.get_text(strip=True) if el else ""
+            if el and text and not el.select_one(".skeleton, [aria-busy=true]"):
                 content_selector = sel
                 break
                 
         if not content_selector:
-            # Pick the element with highest text length
-            candidates = soup.find_all(["div", "article", "section", "main"])
-            candidates.sort(key=lambda e: len(e.get_text(strip=True)), reverse=True)
+            from src.agent.ch.candidates import rank_candidates
+            candidates = rank_candidates(html)
+            content_selector = candidates[0].selector if candidates else "body"
             if candidates:
-                best = candidates[0]
-                if best.get("id"):
-                    content_selector = f"#{best['id']}"
-                elif best.get("class"):
-                    content_selector = f"{best.name}.{'.'.join(best['class'])}"
-                else:
-                    content_selector = best.name
-            else:
-                content_selector = "body"
+                title_selector = candidates[0].title_selector
                 
         remove_selectors = [
             "script",

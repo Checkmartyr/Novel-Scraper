@@ -9,6 +9,9 @@ from bs4 import BeautifulSoup
 
 from src.agent.classifier import ChapterLink
 from src.core.obscura_client import ObscuraClient
+from src.scraper.runtime import belongs_to_observed_novel
+from src.scraper.recovery import catalog_soup
+from src.scraper.telemetry import measured_sync
 from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
 
 logger = logging.getLogger("agent.toc.tools")
@@ -20,11 +23,11 @@ class ClaimInspector:
     @staticmethod
     def inspect(html: str, url: str) -> Tuple[Optional[int], str, Optional[str], Optional[str]]:
         """Return (claimed_count, novel_title, author, description)."""
-        soup = BeautifulSoup(html, "lxml")
+        soup = catalog_soup(html)
         claimed_count: Optional[int] = None
 
         # 1. Title & Meta
-        h1_el = soup.find("h1")
+        h1_el = soup.select_one(".entry-title, .novel-title, [itemprop=name]") or soup.find("h1")
         h1_title = h1_el.get_text(strip=True) if h1_el else ""
         raw_title = h1_title or (soup.title.get_text(strip=True) if soup.title else "")
         cleaned_title = re.sub(r"^[【\[].*?[】\]]\s*", "", raw_title)
@@ -146,6 +149,8 @@ class ClaimInspector:
             range_candidates = []
             for b in soup.find_all(["button", "a", "span"]):
                 text = b.get_text(strip=True)
+                if re.search(r"chapter|episode|prologue|epilogue", text, re.I) or b.find_parent("a"):
+                    continue
                 m = re.search(r"\b\d+\s*[〜~–-]\s*(\d+)\b", text)
                 if m:
                     try:
@@ -164,6 +169,7 @@ class EmbeddedStateExtractor:
     """Extracts complete TOC directly from SSR hydration payloads (Next.js Apollo, Redux, Nuxt, JSON-LD)."""
 
     @staticmethod
+    @measured_sync("structured_data")
     def extract(html: str, url: str) -> List[ChapterLink]:
         """Extract chapters from embedded JSON frameworks."""
         soup = BeautifulSoup(html, "lxml")
@@ -305,8 +311,9 @@ class DomLinkExtractor:
     """Extracts chapter links directly from current DOM structure."""
 
     @staticmethod
+    @measured_sync("catalog_dom")
     def extract(html: str, url: str) -> List[ChapterLink]:
-        soup = BeautifulSoup(html, "lxml")
+        soup = catalog_soup(html)
         chapters: List[ChapterLink] = []
         seen_urls: Set[str] = set()
 
@@ -318,6 +325,8 @@ class DomLinkExtractor:
                 if not href or "/episodes/" not in href:
                     continue
                 full_url = urljoin(url, href)
+                if not belongs_to_observed_novel(url, full_url):
+                    continue
 
                 if full_url in seen_urls:
                     continue
@@ -342,6 +351,8 @@ class DomLinkExtractor:
                 if not href or href.startswith("javascript:") or href.startswith("#"):
                     continue
                 full_url = urljoin(url, href)
+                if not belongs_to_observed_novel(url, full_url):
+                    continue
                 if full_url in seen_urls:
                     continue
                 seen_urls.add(full_url)
@@ -364,6 +375,8 @@ class DomLinkExtractor:
                 if not href or href.startswith("javascript:") or href.startswith("#") or "/catalog" in href:
                     continue
                 full_url = urljoin(url, href)
+                if not belongs_to_observed_novel(url, full_url):
+                    continue
                 if full_url in seen_urls:
                     continue
                 seen_urls.add(full_url)
@@ -397,6 +410,8 @@ class DomLinkExtractor:
                     continue
 
                 full_url = urljoin(url, href)
+                if not belongs_to_observed_novel(url, full_url):
+                    continue
                 if full_url in seen_urls:
                     continue
                 seen_urls.add(full_url)
@@ -430,6 +445,8 @@ class DomLinkExtractor:
                 continue
 
             full_url = urljoin(url, href)
+            if not belongs_to_observed_novel(url, full_url):
+                continue
 
             lower_text = text.lower()
             lower_url = full_url.lower()
@@ -437,7 +454,7 @@ class DomLinkExtractor:
             is_chapter = False
             if any(k in lower_url for k in ["/episodes/", "/chapter-", "/chapter/", "/c/", "/read/", "viewlongc.php", "chapter="]):
                 is_chapter = True
-            elif re.search(r"第\s*\d+\s*[話章节回]", text) or re.search(r"\b(?:chapter|ch|episode)\s*\d+\b", lower_text):
+            elif re.search(r"第\s*\d+\s*[話章节回]", text) or re.search(r"\b(?:chapter|ch|episode)\s*\d+\b|^(?:prologue|epilogue)\b", lower_text):
                 is_chapter = True
             else:
                 # Check numeric chapter path pattern (e.g. /n2273dh/1/)
@@ -490,7 +507,8 @@ class DomLinkExtractor:
             num_count = sum(1 for it in extracted_items if it["ch_num"] is not None)
             if num_count >= len(extracted_items) * 0.8 and len(extracted_items) > 1:
                 extracted_items.sort(
-                    key=lambda x: (x["ch_num"] if x["ch_num"] is not None else float("inf"), x["original_index"])
+                    key=lambda x: (x["ch_num"] if x["ch_num"] is not None else
+                                   (-1 if re.match(r"prologue\b", x["title"], re.I) else float("inf")), x["original_index"])
                 )
 
             for idx, it in enumerate(extracted_items, start=1):
@@ -512,55 +530,10 @@ class InteractiveDomExpander:
     @staticmethod
     async def expand(url: str, obscura: ObscuraClient) -> str:
         """Open page with Playwright, interactively expand all collapsed sections, and return enriched HTML."""
-        logger.info(f"Interactively expanding DOM for {url} via Playwright...")
-        async with obscura.get_playwright_page(stealth=True) as page:
-            await page.goto(url, wait_until="networkidle", timeout=30000)
+        from src.agent.toc.discovery import expand_catalog
+        expansion = await expand_catalog(url, obscura, DomLinkExtractor.extract)
+        return expansion.html
 
-            # 1. Expand all collapsed accordions
-            expand_js = """
-            async () => {
-                // A. Click accordion headers with ranges or collapsed triggers
-                const buttons = Array.from(document.querySelectorAll("button, [role='button'], .WorkTocAccordion_trigger"));
-                for (const b of buttons) {
-                    const text = b.innerText || "";
-                    // Range buttons like 1〜30, 31〜60, or Volume headers
-                    if (text.match(/\\d+〜\\d+/) || b.classList.contains("WorkTocAccordion_trigger")) {
-                        const target = b.closest("button") || b;
-                        target.click();
-                    }
-                }
-                await new Promise(r => setTimeout(r, 800));
-
-                // B. Repeatedly click 'Show More' / 'Load More' buttons
-                for (let round = 0; round < 10; round++) {
-                    const moreBtns = Array.from(document.querySelectorAll("button")).filter(b => {
-                        const t = (b.innerText || "").trim();
-                        return t.includes("つづきを表示") || t.includes("もっと見る") || t.includes("Load more") || t.includes("展開");
-                    });
-                    if (moreBtns.length === 0) break;
-                    let clicked = false;
-                    for (const mb of moreBtns) {
-                        mb.click();
-                        clicked = true;
-                    }
-                    if (!clicked) break;
-                    await new Promise(r => setTimeout(r, 600));
-                }
-
-                // C. Smooth scroll down to bottom and back up to trigger lazy rendering
-                window.scrollTo({ top: document.body.scrollHeight / 2, behavior: 'smooth' });
-                await new Promise(r => setTimeout(r, 500));
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                await new Promise(r => setTimeout(r, 800));
-            }
-            """
-            try:
-                await page.evaluate(expand_js)
-                await page.wait_for_timeout(1500)
-            except Exception as e:
-                logger.warning(f"Interactive expansion JS error: {e}")
-
-            return await page.content()
 
 
 class PaginatedTocCrawler:
@@ -568,7 +541,7 @@ class PaginatedTocCrawler:
 
     @staticmethod
     def detect_pagination_urls(html: str, base_url: str) -> List[str]:
-        soup = BeautifulSoup(html, "lxml")
+        soup = catalog_soup(html)
         cand_urls = []
         seen = {base_url}
 
@@ -654,7 +627,7 @@ class TocAuditor:
 
         # Check for unexpanded accordions or load more
         has_unexpanded_sections = False
-        soup = BeautifulSoup(html, "lxml")
+        soup = catalog_soup(html)
         for control in soup.select("button, [role=button], [aria-expanded=false]"):
             if control.has_attr("disabled") or control.has_attr("hidden") or control.get("aria-disabled") == "true" or control.find_parent("form"):
                 continue
@@ -742,6 +715,8 @@ class TocSynthesizer:
                 continue
 
             full_url = urljoin(url, href)
+            if not belongs_to_observed_novel(url, full_url):
+                continue
             parent = a.parent
             parent_sel = ""
             if parent and parent.name not in ["html", "body"]:

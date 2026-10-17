@@ -105,6 +105,9 @@ def belongs_to_recipe_novel(
     sample_chapter_url: str,
 ) -> Optional[bool]:
     """Return None when the saved examples cannot establish a novel boundary."""
+    from src.scraper.recovery import current_scope
+    if current_scope() and current_scope().allows(page_url, chapter_url):
+        return True
     if not _same_site(page_url, chapter_url):
         return False
     if not sample_toc_url or not sample_chapter_url or not _same_site(page_url, sample_toc_url, sample_chapter_url):

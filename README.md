@@ -262,7 +262,18 @@ Run the test suite from the repository root:
 uv run pytest
 ```
 
+On Windows, Python's default asyncio event loop opens a localhost socket during startup. Run tests in an environment that permits loopback connections; a sandbox that blocks localhost can stall before scraper code or tests begin.
+
 Tests cover classification and TOC extraction, chapter parser generation and review, domain recipes, platform handlers, batch scraping and storage, shared utilities, and the Textual interface. See [`tests/`](tests/) for the current test modules.
+
+For unfamiliar layouts, `NOVEL_SCRAPER_RECOVERY_MODE=maximum` enables higher finite
+recovery budgets. See [recovery methods and benchmark results](docs/recovery.md)
+for verified domain migrations, independent coverage checks, optional visual
+control selection, and the reproducible offline benchmark.
+
+The [research evaluation protocol](docs/research-evaluation.md) adds frozen
+website annotations, stage comparisons, isolated live workers, and a shared
+model-call budget. Raw source captures and full gold chapter text remain local.
 
 ---
 

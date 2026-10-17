@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "sites": [
+    {
+      "id": "novelbin",
+      "split": "development",
+      "url": "https://novelbin.xyz/novel/i-became-the-academys-pink-airhead"
+    },
+    {
+      "id": "wordpress",
+      "split": "development",
+      "url": "https://isekailunatic.wordpress.com/clearing-an-isekai-with-the-zero-believers-goddess-the-weakest-mage-among-the-classmates/"
+    },
+    {
+      "id": "syosetu",
+      "split": "development",
+      "url": "https://ncode.syosetu.com/n2273dh/"
+    },
+    {
+      "id": "kakuyomu",
+      "split": "development",
+      "url": "https://kakuyomu.jp/works/16817330663722833570"
+    },
+    {
+      "id": "freewebnovel",
+      "split": "development",
+      "url": "https://freewebnovel.com/novel/the-harem-system-rewards-me-for-everything"
+    },
+    {
+      "id": "empirenovel",
+      "split": "development",
+      "url": "https://www.empirenovel.com/novel/i-will-create-a-good-ending-for-the-yandere-villainess"
+    },
+    {
+      "id": "royalroad",
+      "split": "development",
+      "url": "https://www.royalroad.com/fiction/21220/mother-of-learning",
+      "split_reason": "Initial evaluation runtime informed the shared ranking cache; no longer held out"
+    },
+    {
+      "id": "wanderinginn",
+      "split": "held_out",
+      "url": "https://wanderinginn.com/table-of-contents/"
+    },
+    {
+      "id": "bcnovels",
+      "split": "development",
+      "url": "https://bcnovels.com/table-contents-every-day-protagonist-wants-capture/",
+      "split_reason": "Initial evaluation runtime informed the shared ranking cache; no longer held out"
+    }
+  ]
+}

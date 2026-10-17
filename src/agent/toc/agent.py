@@ -11,6 +11,7 @@ from src.agent.toc.state import TocState
 from src.agent.toc.graph import TocGraphWorkflow
 from src.agent.classifier import ChapterLink, ClassificationResult
 from src.core.obscura_client import ObscuraClient
+from src.scraper.recovery import recovery_scope, before_deadline, current_scope
 
 logger = logging.getLogger("agent.toc.agent")
 
@@ -37,6 +38,22 @@ class TocAgent:
         self.app = self.workflow.build()
 
     async def extract_toc(self, url: str, html: Optional[str] = None) -> TocState:
+        previous_deadline = getattr(self.obscura, "discovery_deadline", None)
+        try:
+            with recovery_scope(url, self.obscura) as scope:
+                scope.deadline = min(scope.deadline, time.monotonic() + self.limits.discovery_seconds)
+                self.obscura.discovery_deadline = scope.deadline
+                if html is None:
+                    html = await before_deadline(self.obscura.fetch_html(url), scope.deadline)
+                await scope.observe_catalog(url, html, self.obscura)
+                return await self._extract_toc(url, html)
+        finally:
+            if previous_deadline is None:
+                self.obscura.__dict__.pop("discovery_deadline", None)
+            else:
+                self.obscura.discovery_deadline = previous_deadline
+
+    async def _extract_toc(self, url: str, html: Optional[str] = None) -> TocState:
         """Run the LangGraph workflow to extract all chapters from a TOC page."""
         if not html:
             logger.info(f"TocAgent fetching initial page HTML for: {url}")
@@ -53,7 +70,7 @@ class TocAgent:
                 if ok and len(chapters) >= 1:
                     is_complete, conf, unexpanded, pagination, issues = TocAuditor.audit(chapters, claimed, html)
                     # Valid if confidence high or if no claimed count and no unexpanded accordions/pagination
-                    if is_complete and not pagination and not unexpanded:
+                    if is_complete and not pagination and not unexpanded and not current_scope().unresolved:
                         log_msg = f"[DomainMemory] Successfully extracted {len(chapters)} chapters using saved recipe for '{recipe.domain}' (Confidence: {conf})."
                         logger.info(log_msg)
                         if self.on_log:
@@ -105,7 +122,7 @@ class TocAgent:
             "max_iterations": self.max_iterations,
             "issues": [],
             "logs": [],
-            "deadline": time.monotonic() + self.limits.discovery_seconds,
+            "deadline": current_scope().deadline,
             "last_count": -1,
             "stagnant_attempts": 0,
             "expanded": False,
@@ -114,7 +131,7 @@ class TocAgent:
 
         logger.info(f"TocAgent launching LangGraph execution on {url}...")
         try:
-            final_state: TocState = await asyncio.wait_for(self.app.ainvoke(initial_state, config={"recursion_limit": max(50, self.max_iterations * 8)}), timeout=self.limits.discovery_seconds)
+            final_state: TocState = await before_deadline(self.app.ainvoke(initial_state, config={"recursion_limit": max(50, self.max_iterations * 8)}), initial_state["deadline"])
         except asyncio.TimeoutError:
             final_state = getattr(self.workflow, "last_state", initial_state).copy()
             final_state["is_complete"] = False

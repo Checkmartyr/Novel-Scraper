@@ -140,6 +140,16 @@ def extract_chapter_number(title: str, url: str = "") -> Optional[float]:
     return None
 
 
+def chapter_number_bounds(title: str):
+    """A linked post can represent a range; its final label is not an entry count."""
+    match = re.search(r"(?:chapter|ch[.-]?|episode|ep[.-]?|ตอนที่|ตอน|第)\s*(\d+(?:\.\d+)?)(?:\s*[-–—]\s*(\d+(?:\.\d+)?))?", title, re.I)
+    if not match:
+        return None
+    start = float(match[1])
+    end = float(match[2]) if match[2] else start
+    return start, end
+
+
 def detect_and_fix_reverse_order(chapters: List[Any]) -> Tuple[List[Any], bool]:
     """Detect if chapter list is in reverse chronological order and invert to reading order (1..N).
     

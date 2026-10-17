@@ -71,8 +71,8 @@ def test_multi_container_extraction_sub_selector():
     assert "お読みいただきありがとうございました！" in res.content_markdown
 
 
-def test_fallback_when_selector_matches_only_short_preface():
-    """Verify that if content_selector only targets the preface (< 150 chars), fallback finds div.p-novel__body."""
+def test_short_preface_is_rejected_until_an_explicit_complete_plan_is_selected():
+    """Keep parser behavior identical to its plan; the coordinator selects fallbacks."""
     plan = DOMStructurePlan(
         title_selector="h1.p-novel__title",
         content_selector=".p-novel__text--preface",
@@ -83,8 +83,10 @@ def test_fallback_when_selector_matches_only_short_preface():
     res = generator.extract(SYOSETU_SAMPLE_HTML)
 
     assert res.success is True
-    # Fallback should have kicked in to grab the full body
-    assert "５匹の狼が、一人の少女を襲っている。" in res.content_markdown
+    assert res.content_markdown == "リンネ視点です。"
+    assert generator.test_and_verify(SYOSETU_SAMPLE_HTML).coverage_issues
+    complete = ChapterCodeGenerator(plan.model_copy(update={"content_selector": "div.p-novel__body"}))
+    assert not complete.test_and_verify(SYOSETU_SAMPLE_HTML).coverage_issues
 
 
 def test_analyzer_heuristic_detects_syosetu_elements():
