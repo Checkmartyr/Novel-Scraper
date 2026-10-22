@@ -67,6 +67,15 @@ class ReviewLoopOrchestrator:
         """Run iterative extraction review and refinement loop until Observer approves."""
         from src.scraper.telemetry import stage, mark_validated
         page_analysis = page_analysis or PageAnalysis(html)
+        from src.agent.ch.candidates import story_regions, is_unpopulated, selector_for, title_selector
+        regions = story_regions(page_analysis.soup)
+        if regions and all(is_unpopulated(region) for region in regions):
+            plan = DOMStructurePlan(title_selector=title_selector(page_analysis.soup),
+                                    content_selector=selector_for(regions[0], page_analysis.soup))
+            verification = ChapterCodeGenerator(plan).test_and_verify(html, page_analysis=page_analysis)
+            review = ExtractionReview(is_accurate=False, quality_score=0,
+                                      issues=["Witnessed story container is empty or still loading; render before analysis"])
+            return ReviewLoopResult(plan, verification, review, 0, [], False)
         # Check Domain Memory for cached chapter extraction plan
         try:
             from src.agent.domain_memory import domain_memory

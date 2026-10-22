@@ -292,9 +292,9 @@ class ObscuraClient:
                     logger.warning("Browser page cleanup did not finish within its budget")
 
     @asynccontextmanager
-    async def get_catalog_page(self, origin="default"):
+    async def get_catalog_page(self, origin="default", stealth=True, allow_private_network=False):
         """Use standard DOM events when a CDP engine lacks native select APIs."""
-        async with self.get_playwright_page(origin=origin) as page:
+        async with self.get_playwright_page(origin=origin, stealth=stealth, allow_private_network=allow_private_network) as page:
             try:
                 supported = await before_deadline(page.evaluate("""() => {
                     const select = document.createElement('select');
@@ -328,12 +328,12 @@ class ObscuraClient:
                 context = self._contexts[key]
         except Exception as error:
             logger.warning("Standard catalog browser unavailable: %s", type(error).__name__)
-            async with self.get_playwright_page(origin=origin) as page:
+            async with self.get_playwright_page(origin=origin, stealth=stealth, allow_private_network=allow_private_network) as page:
                 yield page
             return
         if getattr(self, "on_progress", None):
             self.on_progress({"type": "progress", "stage": "discovery", "current": 0, "total": 0,
-                              "message": "Using installed browser for interactive catalog controls"})
+                              "message": "Using installed browser for interactive page controls"})
         async with self._page_limits[origin]:
             page = await context.new_page()
             try:
@@ -343,6 +343,10 @@ class ObscuraClient:
                     await before_deadline(page.close(), time.monotonic() + self.limits.cleanup_seconds)
                 except (Exception, asyncio.CancelledError):
                     logger.warning("Catalog browser page cleanup exceeded its budget")
+
+    def get_interactive_page(self, **kwargs):
+        """Share the capability-based browser and authorized session for readers."""
+        return self.get_catalog_page(**kwargs)
 
     async def pace(self, url: str):
         origin = urlsplit(url).netloc
@@ -606,7 +610,8 @@ class ObscuraClient:
             task = asyncio.create_task(capture(response))
             capture_tasks.add(task)
             task.add_done_callback(capture_tasks.discard)
-        async with self.get_playwright_page(stealth=stealth, allow_private_network=allow_private_network, origin=urlsplit(url).netloc) as page:
+        page_context = self.get_interactive_page if readiness == "chapter" else self.get_playwright_page
+        async with page_context(stealth=stealth, allow_private_network=allow_private_network, origin=urlsplit(url).netloc) as page:
             page.on("response", observe)
             # Block aggressive ad networks that crash frame execution contexts
             try:
@@ -620,13 +625,16 @@ class ObscuraClient:
 
             deadline = self._deadline(timeout)
             if readiness == "chapter" and not content_selector:
-                content_selector = ".reader-content, #chapter-content, #novel_honbun, .entry-content, [itemprop=articleBody], article, main"
+                content_selector = '.reader-content, #chapter-content, #novel_honbun, .entry-content, [itemprop=articleBody], [class*="chapter-text"], [class*="chapter_text"], [class*="chapter-body"], [class*="episode-body"], article, main'
             expression = "selector => Array.from(document.querySelectorAll(selector)).some(element => element.textContent.trim().length > 0 && !element.matches('.skeleton, [aria-busy=true]') && !element.querySelector('.skeleton, [aria-busy=true]') && !/^(loading|please wait|加载中|読み込み中)[.\\s…]*$/i.test(element.textContent.trim()))"
             if readiness == "catalog":
                 content_selector = content_selector or "body"
                 expression = "selector => Array.from(document.querySelectorAll(selector)).some(element => Array.from(element.querySelectorAll('a[href]')).filter(a => /chapter|episode|第|ตอน/i.test(a.textContent)).length >= 2)"
             try:
-                response = await before_deadline(page.goto(url, wait_until=wait_until, timeout=timeout * 1000), deadline)
+                # Reader readiness is witnessed prose, not completion of unrelated
+                # advertising/scripts that can delay DOMContentLoaded indefinitely.
+                navigation_wait = "commit" if readiness == "chapter" else wait_until
+                response = await before_deadline(page.goto(url, wait_until=navigation_wait, timeout=timeout * 1000), deadline)
                 final = getattr(page, "url", url)
                 self._record_fetch(url, final if isinstance(final, str) else url,
                     response.status if response and isinstance(response.status, int) else 0,

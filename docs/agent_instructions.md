@@ -61,3 +61,12 @@ it, the client can use an already-installed Chrome, Edge, or Playwright Chromium
 with the same authorized storage state and page/deadline limits. No browser is
 downloaded. Owned fallback contexts and browsers close with the client; if no
 standard browser is installed, existing bounded recovery remains available.
+
+Chapter readiness also uses the capability-based interactive browser. Readiness
+selectors come from witnessed story containers, including unfamiliar chapter
+text/body regions; settings, controls, and bookmark panels are not story evidence.
+An empty/loading witnessed story region is rejected before model selection.
+If every representative layout fails approval, record outcomes for the remaining
+requested chapters without fetching the entire catalog with an unapproved plan.
+Validation reports retain the upstream extraction failure and group its causes;
+a failed extraction without a filename is not a filename-format defect.
