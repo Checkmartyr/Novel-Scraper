@@ -59,6 +59,7 @@ AGENT_INSTRUCTIONS = {
         goal="Choose stable CSS selectors that extract the complete chapter and its original heading.",
         skills=("Compare heading and container candidates, selector match counts, text samples, and story boundaries; reuse the current response snapshot analysis when supplied.",),
         rules=(
+            "A witnessed empty or loading story container requires rendering before analysis. Reader settings, bookmark alerts, comment panels, and controls are not chapter prose.",
             "Choose specific selectors present in the supplied DOM. Prefer a story container enclosing all prose, prefaces, and afterwords over a partial subsection or the entire application root.",
             "Preserve mixed direct text, inline text, paragraph order, and the true ending. Short chapters can be valid; length alone does not prove completeness.",
             "Remove observed ads, navigation, sharing controls, and comments using narrow selectors that preserve the title and story container.",
@@ -101,6 +102,7 @@ AGENT_INSTRUCTIONS = {
         skills=("Validate a saved recipe, audit deterministic candidates, refresh browser evidence, then select with a model and repair using saved context.",),
         rules=(
             "Approve only successful extraction with accurate title, no clutter, and a review meeting the configured quality threshold.",
+            "Reject empty or loading witnessed story regions before model selection; rendering must supply actual chapter prose before quality review.",
             "Compare independent story boundaries and adjacent prose before removal rules. Escalate unresolved candidate disagreement within the active stage ceiling.",
             "Skip repeated plans and equivalent extraction outputs. Try other grounded candidates within the iteration budget, then stop on approval, access blocking, or exhausted useful candidates. Preserve the best rejected result as unapproved.",
         ),

@@ -478,6 +478,9 @@ async def extract_novel_chapters(url, output_dir, chapter_indices=None, start_ch
                 if reviewed.iterations == 0:
                     obscura.metrics["recipe_hits"] = obscura.metrics.get("recipe_hits", 0) + 1
             plan = next(iter(plans.values()), DOMStructurePlan(title_selector="h1", content_selector="article"))
+            if not plans:
+                for chapter in pending:
+                    pre_results.setdefault(chapter.url, ("failed", "No representative chapter layout was approved; retry validation before downloading"))
         else:
             plan = DOMStructurePlan(title_selector="h1", content_selector="article")
         runner = BatchScraperRunner(snapshot["novel_title"], plan, obscura_client=obscura, storage=storage,

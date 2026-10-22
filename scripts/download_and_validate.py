@@ -6,6 +6,7 @@ Edit the settings below, then run:
 Rerun the same URL to resume. Validation is local and never fetches chapter text.
 """
 import asyncio
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -57,6 +58,9 @@ def validate_download(directory: Path) -> dict:
         label = f"Chapter {record['index']}"
         if record['index'] != catalog_indices.get(canonical_url(record['url'])):
             errors.append(f'{label}: index differs from the catalog')
+        if not record.get('success'):
+            errors.append(f"{label}: {record.get('status', 'failed')}: {record.get('error') or 'extraction did not succeed'}")
+            continue
         name = record.get('file', '')
         path = (directory / name).resolve()
         if not name or path.parent != directory or path.suffix.lower() != '.md' or name in filenames:
@@ -91,6 +95,8 @@ def validate_download(directory: Path) -> dict:
         errors.append('Untracked Markdown files: ' + ', '.join(extras))
     return {'passed': not errors, 'output_dir': str(directory), 'catalog_entries': len(expected),
             'files_checked': verified, 'errors': errors,
+            'outcome_counts': dict(Counter(record.get('status', 'unknown') for record in records)),
+            'failure_reasons': dict(Counter(record.get('error') or 'extraction did not succeed' for record in records if not record.get('success'))),
             'validation_scope': 'Local catalog coverage, ordering, Markdown structure, duplicate bodies, hashes and source receipts; no new source-content audit.'}
 
 

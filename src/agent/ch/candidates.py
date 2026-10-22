@@ -13,8 +13,33 @@ from src.core.page_analysis import PageAnalysis
 
 
 AD_CONTAINER_SELECTORS = ".ad-banner, .adsbygoogle, [data-ad-slot], .adsterra-banner-container"
-NOISE = "script, style, noscript, nav, header, footer, aside, form, button, #comments, .comments, .comment-list, .cheer-widget, .nav-bottom, .site-nav, .sharedaddy, .c-announce, .l-foot-contents, .entry-meta, .jp-relatedposts, .post-views, " + AD_CONTAINER_SELECTORS
-STORY = re.compile(r"chapter.?content|story|reader.?content|novel.?body|novel_honbun|entry.?content|episode.?body|p-novel__body|cha-words", re.I)
+NOISE = "script, style, noscript, nav, header, footer, aside, form, button, select, input, textarea, label, [role=dialog], [aria-hidden=true], [hidden], #comments, .comments, .comment-list, .cheer-widget, .nav-bottom, .site-nav, .sharedaddy, .c-announce, .l-foot-contents, .entry-meta, .jp-relatedposts, .post-views, " + AD_CONTAINER_SELECTORS
+STORY = re.compile(r"chapter.?content|chapter.?text|chapter.?body|story|reader.?content|novel.?body|novel_honbun|entry.?content|episode.?body|episode.?text|p-novel__body|cha-words", re.I)
+UI_REGION = re.compile(r"(?:^|[-_\s])(?:settings|controls?|comments?|toolbar|bookmark|pagination|navigation|toc)(?:$|[-_\s])", re.I)
+
+
+def is_ui_region(element):
+    return any(UI_REGION.search(" ".join([node.get("id", ""), *node.get("class", [])]))
+               or node.get("role") == "dialog" for node in [element, *element.parents]
+               if getattr(node, "attrs", None) is not None)
+
+
+def story_regions(soup):
+    return [node for node in soup.select("article, main, section, div")
+            if not is_ui_region(node) and (node.get("itemprop") == "articleBody" or
+                STORY.search(" ".join([node.get("id", ""), *node.get("class", [])])))]
+
+
+def is_unpopulated(element):
+    text = element.get_text(" ", strip=True)
+    return (not text or element.get("aria-busy") == "true" or
+            element.select_one('.skeleton, [aria-busy=true]') is not None or
+            re.fullmatch(r"(?:loading|please wait|加载中|読み込み中)[.\s…]*", text, re.I) is not None)
+
+
+def _noise_ids(root):
+    return ({id(node) for node in root.select(NOISE)} |
+            {id(node) for node in root.select('div, section, aside') if is_ui_region(node)})
 
 
 def selector_for(element, soup):
@@ -24,6 +49,11 @@ def selector_for(element, soup):
             return selector
     classes = element.get("class", [])
     if classes:
+        for value in classes:
+            if STORY.search(value):
+                stable = element.name + "." + soupsieve.escape(value)
+                if len(soup.select(stable)) == 1:
+                    return stable
         selector = element.name + "".join("." + soupsieve.escape(value) for value in classes[:3])
         if len(soup.select(selector)) == 1:
             return selector
@@ -68,16 +98,7 @@ def _text_excluding(element, excluded_ids, separator=" "):
 def _paragraphs_excluding(element, excluded_ids):
     """Extract paragraph-like blocks from the original tree, excluding noise."""
     from src.agent.ch.code_generator import extract_paragraphs
-    # Build a small isolated copy only when excluded descendants exist. This
-    # keeps the source evidence independent while avoiding serializing every
-    # candidate subtree during ranking.
-    if not any(id(node) in excluded_ids for node in element.descendants if getattr(node, "name", None)):
-        return extract_paragraphs(element)
-    clone = BeautifulSoup(str(element), "lxml")
-    copied = clone.find(element.name)
-    for node in list(copied.select(NOISE)) if copied else []:
-        node.decompose()
-    return extract_paragraphs(copied) if copied else []
+    return extract_paragraphs(element, excluded_ids)
 
 
 def region_signature(element, *, page_analysis=None):
@@ -134,9 +155,14 @@ def _rank_candidates_from_analysis(page_analysis, limit, signature_json):
     previous_signature = json.loads(signature_json)
     soup = page_analysis.soup
     title = title_selector(soup)
-    noise_ids = {id(element) for element in soup.select(NOISE)}
+    witnessed = story_regions(soup)
+    if witnessed and all(is_unpopulated(node) for node in witnessed):
+        return ()
+    noise_ids = _noise_ids(soup)
     ranked = []
     for element in page_analysis.select("article, main, section, div, body"):
+        if is_ui_region(element) or is_unpopulated(element):
+            continue
         if id(element) in noise_ids or any(id(parent) in noise_ids for parent in element.parents):
             continue
         local_noise = {id(node) for node in page_analysis.select_from(element, NOISE)}
@@ -187,7 +213,7 @@ def independent_evidence(html, extracted_text, *, page_analysis=None):
             break
         if page_analysis.select_one_from(parent, "article") and region.name != "article":
             break
-        excluded = {id(node) for node in page_analysis.select_from(parent, NOISE)}
+        excluded = _noise_ids(parent)
         content = _text_excluding(parent, excluded).strip()
         linked = sum(len(anchor.get_text(" ", strip=True)) for anchor in page_analysis.select_from(parent, "a") if id(anchor) not in excluded)
         headings = [heading for heading in page_analysis.select_from(parent, "h1, h2") if id(heading) not in excluded and re.search(r"chapter|episode|prologue|epilogue|第|ตอน", heading.get_text(), re.I)]
@@ -198,7 +224,7 @@ def independent_evidence(html, extracted_text, *, page_analysis=None):
             region = parent
         if parent.name in {"article", "main"}:
             break
-    excluded = {id(node) for node in page_analysis.select_from(region, NOISE)}
+    excluded = _noise_ids(region)
     source = _paragraphs_excluding(region, excluded)
     normalized = lambda value: re.sub(r"\s+", " ", value).strip()
     extracted = [normalized(part) for part in extracted_text.split("\n\n") if normalized(part)]
@@ -234,11 +260,20 @@ def readiness_selector(html, proposed=None, *, page_analysis=None):
     for selector in (".reader-content", "#chapter-content", "#novel_honbun", ".entry-content", "[itemprop=articleBody]"):
         if soup.select_one(selector) is not None:
             return selector
+    witnessed = story_regions(soup)
+    if witnessed:
+        for value in witnessed[0].get("class", []):
+            prefix = re.sub(r"(?:__place|[-_]placeholder|[-_]loading)$", "", value, flags=re.I)
+            if prefix != value and STORY.search(prefix):
+                # Hydration may replace the placeholder class and add a random
+                # style token; retain the witnessed story prefix across that swap.
+                return witnessed[0].name + "[class*=" + json.dumps(prefix) + "]"
+        return selector_for(witnessed[0], soup)
     if proposed and proposed not in {"body", "html", "#root", "#app", "#__next"}:
         try:
             region = soup.select_one(proposed)
             navigation = soup.select("nav, header, footer, aside, .navbar, .site-nav")
-            if region is not None and not any(region is node or node in region.parents for node in navigation):
+            if region is not None and not is_ui_region(region) and not any(region is node or node in region.parents for node in navigation):
                 return proposed
         except Exception:
             pass
