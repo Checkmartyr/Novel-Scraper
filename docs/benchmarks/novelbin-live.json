@@ -1,0 +1,33 @@
+{
+  "url": "https://novelbin.xyz/novel/i-became-the-academys-pink-airhead",
+  "mode": "deterministic",
+  "live_acceptance": "passed",
+  "total_chapters": 133,
+  "claimed_chapter_count": 133,
+  "is_complete": true,
+  "saved": 3,
+  "test_seconds": 134.6,
+  "samples": [
+    {
+      "index": 1,
+      "title": "Chapter 0: Character Summaries",
+      "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-1",
+      "status": "saved",
+      "sha256": "4bd02a44c4466a1a5b3df8d308fc0041c3d85696bcec9077359635d5cd165d67"
+    },
+    {
+      "index": 67,
+      "title": "Chapter 66: The Witch’s Story☆ (7)",
+      "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-67",
+      "status": "saved",
+      "sha256": "cab5f1ddb9d7f996bbe73610928c7b8006c5602b4730016830f4def7ea3119d6"
+    },
+    {
+      "index": 133,
+      "title": "Chapter 131",
+      "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-133",
+      "status": "saved",
+      "sha256": "c846f7da16eea1c4c8b2071adf52a4b18ba0c5a30c755ecaff5141514bbff587"
+    }
+  ]
+}

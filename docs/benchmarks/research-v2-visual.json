@@ -1,0 +1,47 @@
+{
+  "status": "evaluated",
+  "runs": [
+    {
+      "fixture": 1,
+      "visual_enabled": false,
+      "success": false,
+      "status": "unmeasured",
+      "reason": "Page.set_content: Timeout 30000ms exceeded.\nCall log:\n  - setting frame content, waiting until \"domcontentloaded\"\n",
+      "model_calls": 0,
+      "visual_calls": 0
+    },
+    {
+      "fixture": 1,
+      "visual_enabled": true,
+      "success": false,
+      "status": "unmeasured",
+      "reason": "Page.set_content: Timeout 30000ms exceeded.\nCall log:\n  - setting frame content, waiting until \"domcontentloaded\"\n",
+      "model_calls": 0,
+      "visual_calls": 0
+    },
+    {
+      "fixture": 2,
+      "visual_enabled": false,
+      "success": false,
+      "status": "unmeasured",
+      "reason": "Page.set_content: Timeout 30000ms exceeded.\nCall log:\n  - setting frame content, waiting until \"domcontentloaded\"\n",
+      "model_calls": 0,
+      "visual_calls": 0
+    },
+    {
+      "fixture": 2,
+      "visual_enabled": true,
+      "success": false,
+      "status": "unmeasured",
+      "reason": "Page.set_content: Timeout 30000ms exceeded.\nCall log:\n  - setting frame content, waiting until \"domcontentloaded\"\n",
+      "model_calls": 0,
+      "visual_calls": 0
+    }
+  ],
+  "model_budget": {
+    "model_calls": 0,
+    "visual_calls": 0,
+    "max_model_calls": 30,
+    "max_visual_calls": 6
+  }
+}

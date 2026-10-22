@@ -64,6 +64,7 @@ class ReviewLoopOrchestrator:
         on_progress: Optional[Callable[[int, int, DOMStructurePlan, ParserVerificationResult, ExtractionReview], None]] = None,
     ) -> ReviewLoopResult:
         """Run iterative extraction review and refinement loop until Observer approves."""
+        from src.scraper.telemetry import stage, mark_validated
         # Check Domain Memory for cached chapter extraction plan
         try:
             from src.agent.domain_memory import domain_memory
@@ -74,6 +75,9 @@ class ReviewLoopOrchestrator:
                 deterministic_review = self.observer._heuristic_review(html, saved_plan, verification)
                 selector_present = bool(BeautifulSoup(html, "lxml").select(saved_plan.content_selector))
                 if selector_present and verification.success and deterministic_review.is_accurate and recipe.chapter_config.quality_score >= MIN_QUALITY_SCORE:
+                    with stage("recipe") as measurement:
+                        mark_validated(measurement, ["chapter:" + url])
+                        measurement.update(outcome="approved", reason="Saved recipe independently verified")
                     logger.info(f"[DomainMemory] Successfully verified saved chapter recipe for '{recipe.domain}' ({verification.word_count} words).")
                     saved_review = ExtractionReview(
                         quality_score=recipe.chapter_config.quality_score or 1.0,
@@ -103,91 +107,87 @@ class ReviewLoopOrchestrator:
         except Exception as e:
             logger.debug(f"Domain memory chapter check exception: {e}")
 
-        review_history: List[ExtractionReview] = []
-        best_plan: Optional[DOMStructurePlan] = None
-        best_verification: Optional[ParserVerificationResult] = None
-        best_review: Optional[ExtractionReview] = None
-        best_score = -1.0
-        last_interaction_id: Optional[str] = None
-        current_plan: Optional[DOMStructurePlan] = None
+        from src.scraper.telemetry import stage, stage_enabled
+        from src.scraper.runtime import ScraperLimits
+        from src.agent.domain_memory import domain_memory
+        remembered = domain_memory.get_recipe(url)
+        signature = getattr(getattr(remembered, "chapter_config", None), "structural_signature", None)
+        deterministic = ChapterAnalyzer(self.llm)
+        history, seen_plans, seen_outputs = [], set(), set()
+        best = None
+        last_interaction_id = None
 
-        for iteration in range(1, self.max_iterations + 1):
-            logger.info(f"[Review Loop] Starting iteration {iteration}/{self.max_iterations} for {url}...")
+        async def evaluate(plan, phase):
+            nonlocal best
+            key = (plan.title_selector, plan.content_selector, tuple(sorted(set(plan.remove_selectors))), plan.clean_paragraphs)
+            if key in seen_plans:
+                return None
+            seen_plans.add(key)
+            with stage(phase) as measurement:
+                verification = ChapterCodeGenerator(plan).test_and_verify(html)
+                output_key = (verification.chapter_title, verification.preview_markdown, tuple(verification.coverage_issues))
+                if output_key in seen_outputs:
+                    measurement.update(outcome="skipped", reason="Equivalent extraction already audited")
+                    return None
+                seen_outputs.add(output_key)
+                if hasattr(self.observer, "_heuristic_review"):
+                    review = self.observer._heuristic_review(html, plan, verification)
+                    if verification.coverage_issues:
+                        review = ExtractionReview(is_accurate=False, quality_score=0.4, issues=verification.coverage_issues)
+                    elif phase in {"model_selection", "contextual_repair"} and verification.success and not review.is_accurate:
+                        review = await self.observer.review(url, html, plan, verification,
+                            previous_interaction_id=last_interaction_id)
+                else:
+                    review = await self.observer.review(url, html, plan, verification)
+                approved = bool(verification.success and not verification.coverage_issues and not verification.is_paywalled
+                    and review.is_accurate and review.title_accurate and not review.has_clutter
+                    and review.quality_score >= MIN_QUALITY_SCORE)
+                history.append(review)
+                measurement.update(outcome="approved" if approved else "rejected",
+                    reason="Verified chapter boundaries" if approved else "; ".join(review.issues))
+                if approved:
+                    mark_validated(measurement, ["chapter:" + url])
+                result = ReviewLoopResult(plan, verification, review, len(history), list(history), approved, last_interaction_id)
+                if best is None or (review.quality_score > best.review.quality_score):
+                    best = result
+                if on_progress:
+                    on_progress(len(history), self.max_iterations, plan, verification, review)
+                return result
 
-            # 1. Generate or refine plan
-            if iteration == 1 or current_plan is None:
-                current_plan = await self.analyzer.analyze(html, url, previous_interaction_id=last_interaction_id)
-            else:
-                current_plan = await self.analyzer.refine(
-                    html=html,
-                    url=url,
-                    current_plan=current_plan,
-                    review=review_history[-1],
-                    previous_interaction_id=last_interaction_id,
-                )
-            analyzer_llm = getattr(self.analyzer, "llm", None)
-            if analyzer_llm and getattr(analyzer_llm, "last_interaction_id", None):
-                last_interaction_id = analyzer_llm.last_interaction_id
+        if stage_enabled("deterministic"):
+            plans = [deterministic._heuristic_analyze(html), *deterministic.candidate_plans(html)]
+            for plan in plans[:ScraperLimits.from_env().candidate_limit]:
+                result = await evaluate(plan, "deterministic_candidates")
+                if result and (result.approved or result.verification.is_paywalled):
+                    return result
 
-            # 2. Synthesize & test parser
-            generator = ChapterCodeGenerator(current_plan)
-            verification = generator.test_and_verify(html)
-            if verification.is_paywalled:
-                review = ExtractionReview(is_accurate=False, quality_score=0, issues=[verification.error or "Access blocked"])
-                return ReviewLoopResult(plan=current_plan, verification=verification, review=review,
-                    iterations=iteration, review_history=[*review_history, review], approved=False,
-                    last_interaction_id=last_interaction_id)
+        if stage_enabled("model") and self.llm.is_available:
+            current_plan = None
+            for _ in range(self.max_iterations):
+                if current_plan is None:
+                    proposed = await self.analyzer.analyze(html, url, previous_interaction_id=last_interaction_id)
+                else:
+                    proposed = await self.analyzer.refine(html=html, url=url, current_plan=current_plan,
+                        review=history[-1], previous_interaction_id=last_interaction_id)
+                last_interaction_id = getattr(getattr(self.analyzer, "llm", None), "last_interaction_id", None)
+                result = await evaluate(proposed, "model_selection")
+                if result is None:
+                    break
+                current_plan = proposed
+                if result.approved or result.verification.is_paywalled:
+                    return result
 
-            # 3. Observer reviews extraction
-            review = await self.observer.review(
-                url=url,
-                html=html,
-                plan=current_plan,
-                verification=verification,
-                previous_interaction_id=last_interaction_id,
-            )
-            observer_llm = getattr(self.observer, "llm", None)
-            if observer_llm and getattr(observer_llm, "last_interaction_id", None):
-                last_interaction_id = observer_llm.last_interaction_id
-            review_history.append(review)
+        if signature and stage_enabled("repair"):
+            for plan in deterministic.candidate_plans(html, signature)[:2]:
+                result = await evaluate(plan, "contextual_repair")
+                if result and result.approved:
+                    return result
 
-            logger.info(
-                f"[Review Loop] Iteration {iteration} result: score={review.quality_score}, "
-                f"accurate={review.is_accurate}, title_ok={review.title_accurate}, clutter={review.has_clutter}"
-            )
-
-            if on_progress:
-                on_progress(iteration, self.max_iterations, current_plan, verification, review)
-
-            # Track best result
-            if review.quality_score > best_score:
-                best_score = review.quality_score
-                best_plan = current_plan
-                best_verification = verification
-                best_review = review
-
-            # 4. Check approval condition
-            if verification.success and review.is_accurate and review.title_accurate and not review.has_clutter and review.quality_score >= MIN_QUALITY_SCORE:
-                logger.info(f"[Review Loop] Observer APPROVED extraction plan at iteration {iteration} (score={review.quality_score})!")
-                return ReviewLoopResult(
-                    plan=current_plan,
-                    verification=verification,
-                    review=review,
-                    iterations=iteration,
-                    review_history=review_history,
-                    approved=True,
-                    last_interaction_id=last_interaction_id,
-                )
-
-        logger.warning(
-            f"[Review Loop] Max iterations ({self.max_iterations}) reached. Returning best plan (score={best_score})."
-        )
-        return ReviewLoopResult(
-            plan=best_plan or current_plan,
-            verification=best_verification or verification,
-            review=best_review or review,
-            iterations=self.max_iterations,
-            review_history=review_history,
-            approved=False,
-            last_interaction_id=last_interaction_id,
-        )
+        if best is None:
+            plan = deterministic._heuristic_analyze(html)
+            verification = ChapterCodeGenerator(plan).test_and_verify(html)
+            review = ExtractionReview(is_accurate=False, quality_score=0,
+                issues=["Recovery ceiling or exhausted candidates prevented chapter approval"])
+            best = ReviewLoopResult(plan, verification, review, 0, [], False)
+        best.iterations, best.review_history = len(history), history
+        return best

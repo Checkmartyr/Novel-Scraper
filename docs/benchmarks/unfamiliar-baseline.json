@@ -1,0 +1,441 @@
+{
+  "corpus": "synthetic-unfamiliar-v1",
+  "mode": "deterministic",
+  "runs": [
+    {
+      "family": "static",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2962,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "static",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2537,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "delayed",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.281,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 3
+    },
+    {
+      "family": "delayed",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.4022,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 3
+    },
+    {
+      "family": "wordpress-migration",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 0.0,
+      "catalog_recall": 0.0,
+      "false_completion": true,
+      "success": false,
+      "seconds": 0.07,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "wordpress-migration",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 0.0,
+      "catalog_recall": 0.0,
+      "false_completion": true,
+      "success": false,
+      "seconds": 0.0288,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        },
+        {
+          "precision": 0.0,
+          "recall": 0.0,
+          "title_correct": false,
+          "ending_preserved": false,
+          "published": false
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "split-story",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2687,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "split-story",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.262,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "short-prologue",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2717,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "short-prologue",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2735,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "changed-layout",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2639,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 0
+    },
+    {
+      "family": "changed-layout",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2548,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "browser_renders": 0
+    }
+  ],
+  "success_rate": 0.8333333333333334,
+  "false_completions": 2,
+  "corpus_sha256": "46640341bd7df35e0223a79860280b64d7e08d3ae93624f8254f2d4339adc3fc"
+}

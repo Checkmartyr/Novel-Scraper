@@ -7,6 +7,7 @@ import sys
 import time
 import uuid
 import hashlib
+import re
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 from urllib.parse import urljoin
@@ -28,8 +29,27 @@ from src.scraper.batch_runner import BatchScraperRunner
 from src.scraper.storage import NovelStorage
 from src.scraper.runtime import ScraperLimits, ChapterCheckpoint, DestinationLock, atomic_json, canonical_url, fingerprint, belongs_to_observed_novel, safe_error
 from src.utils.novel_url import belongs_to_recipe_novel
+from src.scraper.recovery import before_deadline, recovery_scope, current_scope, operation_scope
+from src.scraper.telemetry import traced_job, stage, stage_enabled, recovery_ceiling
+from src.scraper.telemetry import mark_validated
 
 logger = logging.getLogger("api_bridge")
+
+
+def _confirmed_chapter(html, url):
+    from src.agent.ch.candidates import rank_candidates
+    from src.agent.ch.code_generator import extract_paragraphs
+    soup = BeautifulSoup(html, "lxml")
+    heading = soup.select_one(".reader-header-chapter, .chapter-title, .episode-title, .p-novel__title, .widget-episodeTitle")
+    heading = heading or next((node for node in soup.select("h1, h2") if re.match(
+        r"\s*(?:chapter|episode|prologue|epilogue)\b|\s*第.+[話章]|\s*ตอน", node.get_text(" ", strip=True), re.I)), None)
+    route = re.search(r"/(?:chapter[-/]|episodes/|read/.+/chapter-|n[a-z0-9]+/\d+/)", url, re.I)
+    candidates = rank_candidates(html, limit=1)
+    if not candidates or not (heading or route):
+        return False
+    candidate = candidates[0]
+    region = soup.select_one(candidate.selector)
+    return candidate.signature["link_density"] < 0.2 and bool(extract_paragraphs(region))
 
 
 def _scope_chapters(url, chapters):
@@ -37,7 +57,8 @@ def _scope_chapters(url, chapters):
     recipe = domain_memory.get_recipe(url)
     if recipe:
         chapters = [chapter for chapter in chapters if belongs_to_recipe_novel(
-            url, chapter.url, recipe.sample_toc_url, recipe.sample_chapter_url) is not False]
+            url, chapter.url, recipe.sample_toc_url, recipe.sample_chapter_url) is not False or
+            (current_scope() and current_scope().allows(url, chapter.url))]
     unique = {}
     for chapter in chapters:
         if belongs_to_observed_novel(url, chapter.url):
@@ -70,26 +91,69 @@ def select_chapters(chapters, chapter_indices=None, start_chapter=None, end_chap
 
 def partial_discovery(url, obscura):
     state = getattr(obscura, "last_toc_state", {})
-    chapters = state.get("extracted_chapters", [])
+    scope = getattr(obscura, "novel_scope", None)
+    chapters = list({canonical_url(chapter.url): chapter for chapter in state.get("extracted_chapters", [])
+                     if belongs_to_observed_novel(url, chapter.url) or (scope and scope.allows(url, chapter.url))}.values())
     return {"url": url, "success": bool(chapters), "novel_title": state.get("novel_title") or "Unknown Novel",
             "chapters": [chapter.model_dump() for chapter in chapters], "total_chapters": len(chapters),
+            "linked_entry_count": len(chapters), "source_scope": scope.export() if scope else {},
             "is_complete": False, "issues": state.get("issues", []) + ["Discovery deadline exhausted"],
             "completeness_evidence": state.get("completeness_evidence", [])}
 
 
 async def discover(url, obscura, llm):
+    previous_deadline = getattr(obscura, "discovery_deadline", None)
+    try:
+        with recovery_scope(url, obscura) as scope:
+            deadline = previous_deadline or time.monotonic() + ScraperLimits.from_env().discovery_seconds
+            obscura.discovery_deadline = scope.deadline = min(scope.deadline, deadline)
+            with stage("catalog_audit") as measurement:
+                result = await before_deadline(_discover(url, obscura, llm), scope.deadline)
+                mark_validated(measurement, ("catalog:" + chapter["url"] for chapter in result.get("chapters", [])))
+                measurement.update(outcome="complete" if result.get("is_complete") else "incomplete",
+                                   reason="; ".join(result.get("issues", [])) or "Observed catalog coverage resolved")
+                return result
+    finally:
+        if previous_deadline is None:
+            obscura.__dict__.pop("discovery_deadline", None)
+        else:
+            obscura.discovery_deadline = previous_deadline
+
+
+async def _discover(url, obscura, llm):
     limits = ScraperLimits.from_env()
     toc = TocAgent(obscura_client=obscura, llm_client=llm)
     classifier = PageClassifier(llm_client=llm, obscura_client=obscura, toc_agent=toc)
+    requested_url = url
     html = await obscura.fetch_html(url)
-    classification = await classifier.classify(url, html)
+    record = getattr(obscura, "fetch_records", {}).get(url)
+    if record is not None:
+        url = record.final_url
+    scope = current_scope()
+    await scope.observe_catalog(url, html, obscura)
+    with recovery_ceiling("deterministic"):
+        classification = await classifier.classify(url, html)
+    if classification.page_type == "CHAPTER" and not _confirmed_chapter(html, url) and not classification.toc_url:
+        if stage_enabled("browser"):
+            try:
+                html = await obscura.fetch_html(url, force_browser=True)
+                await scope.observe_catalog(url, html, obscura)
+                with recovery_ceiling("deterministic"):
+                    classification = await classifier.classify(url, html)
+            except Exception as error:
+                logger.info("Uncertain page rendering failed: %s", safe_error(error))
+        if classification.page_type == "CHAPTER" and not _confirmed_chapter(html, url) and stage_enabled("model"):
+            classification = await classifier.classify(url, html)
     state = classification.toc_state or {}
     catalog_url = url if classification.page_type == "TOC" else None
     if classification.page_type == "TOC":
         if not state:
             state = await toc.extract_toc(url, html=html)
-        if not state.get("extracted_chapters"):
-            rendered = await obscura.fetch_html(url, force_browser=True)
+        count = len(state.get("extracted_chapters", []))
+        if stage_enabled("browser") and (not count or state.get("has_unexpanded_sections") or
+                (state.get("claimed_chapter_count") and count < state["claimed_chapter_count"])):
+            rendered = await obscura.fetch_html(url, force_browser=True, readiness="catalog")
+            await scope.observe_catalog(url, rendered, obscura)
             state = await toc.extract_toc(url, html=rendered)
     else:
         navigation = observed_navigation(html, url)
@@ -108,7 +172,8 @@ async def discover(url, obscura, llm):
         else:
             # Follow only observed chapter navigation; never invent chapter URLs.
             current = ChapterLink(index=1, title=classification.chapter_title or "Chapter 1", url=url)
-            before, after, seen, issues = [], [], {canonical_url(url)}, []
+            before, after, seen = [], [], {canonical_url(url)}
+            issues = [] if _confirmed_chapter(html, url) else ["Page identity remains ambiguous; chapter or catalog evidence is unresolved"]
             for direction, destination in (("previous", before), ("next", after)):
                 page_html, page_url = html, url
                 while len(seen) < limits.toc_pages:
@@ -124,42 +189,76 @@ async def discover(url, obscura, llm):
                     except Exception as error:
                         issues.append(str(error))
                         break
+                    if not _confirmed_chapter(page_html, target):
+                        issues.append("Unconfirmed chapter identity in observed navigation")
+                        break
                     page_url = target
                     soup = BeautifulSoup(page_html, "lxml")
                     heading = soup.select_one("h1, h2")
                     destination.append(ChapterLink(index=1, title=heading.get_text(" ", strip=True) if heading else "Chapter", url=target))
                 else:
                     issues.append("Chapter navigation budget exhausted")
-            state = {"extracted_chapters": list(reversed(before)) + [current] + after,
+            state = {"extracted_chapters": list(reversed(before)) + ([current] if _confirmed_chapter(html, url) else []) + after,
                      "is_complete": not issues, "issues": issues,
                      "completeness_evidence": ["Observed previous/next chapter chain exhausted"] if not issues else [],
                      "extraction_strategy": "chapter_navigation", "novel_title": classification.novel_title}
     chapters = _scope_chapters(url, state.get("extracted_chapters", classification.chapter_links))
+    issues = list(state.get("issues", []))
+    claimed_count = state.get("claimed_chapter_count")
+    coverage_complete = bool(chapters) and not (
+        classification.page_type == "TOC" and claimed_count and len(chapters) < claimed_count
+    )
+    if classification.page_type == "TOC":
+        if not chapters:
+            issues.append("No in-scope chapter links were found in the catalog.")
+        elif claimed_count and len(chapters) < claimed_count:
+            issue = f"Chapter count discrepancy after scope validation: extracted {len(chapters)} of {claimed_count}."
+            if issue not in issues:
+                issues.append(issue)
+        if not coverage_complete:
+            state["is_complete"] = False
+    if scope.unresolved:
+        state["is_complete"] = False
+        issues.append(f"Unresolved cross-domain catalog coverage: {len(scope.unresolved)} observed links.")
+        issues.extend(f"Unverified chapter source: {cause}" for cause in dict.fromkeys(scope.unresolved.values()))
+    from src.utils.title_cleaner import chapter_number_bounds
+    ranges = [{"url": chapter.url, "start": bounds[0], "end": bounds[1]}
+              for chapter in chapters if (bounds := chapter_number_bounds(chapter.title))]
+    observed_bounds = [bounds for title in scope.observed_links.values() if (bounds := chapter_number_bounds(title))]
     return {
-        "success": bool(chapters), "url": url, "page_type": classification.page_type,
+        "success": bool(chapters), "url": requested_url, "final_url": url, "page_type": classification.page_type,
         "novel_title": state.get("novel_title") or classification.novel_title or "Unknown Novel",
         "author": state.get("author") or classification.author,
         "description": state.get("description") or classification.description,
         "total_chapters": len(chapters),
+        "linked_entry_count": len(chapters),
+        "observed_linked_entry_count": len(scope.observed_links),
+        "highest_observed_chapter_number": max((bounds[1] for bounds in observed_bounds), default=None),
+        "highest_chapter_number": max((bounds["end"] for bounds in ranges), default=None),
+        "numbered_chapter_ranges": ranges,
+        "source_scope": scope.export(),
         "chapters": [chapter.model_dump() for chapter in chapters],
-        "is_complete": bool(chapters) and bool(state.get("is_complete")),
-        "claimed_chapter_count": state.get("claimed_chapter_count"),
+        "is_complete": coverage_complete and bool(state.get("is_complete")),
+        "claimed_chapter_count": claimed_count,
         "confidence_score": state.get("confidence_score", 0),
         "completeness_evidence": state.get("completeness_evidence", []),
-        "issues": state.get("issues", []), "extraction_strategy": state.get("extraction_strategy"),
+        "issues": issues, "extraction_strategy": state.get("extraction_strategy"),
         "toc_url": catalog_url,
     }
 
 
+@traced_job
 async def inspect_novel_url(url: str):
     obscura = ObscuraClient()
+    llm = LLMClient()
     try:
         start = time.monotonic()
         try:
-            result = await asyncio.wait_for(discover(url, obscura, LLMClient()), ScraperLimits.from_env().discovery_seconds)
+            result = await discover(url, obscura, llm)
         except asyncio.TimeoutError:
             result = partial_discovery(url, obscura)
-        result["metrics"] = {**obscura.metrics, "discovery_seconds": time.monotonic() - start}
+        result["metrics"] = {**obscura.metrics, "discovery_seconds": time.monotonic() - start,
+                             "model_calls": getattr(llm, "call_count", 0)}
         return result
     except Exception as error:
         return {"success": False, "url": url, "error": safe_error(error), "total_chapters": 0, "chapters": [], "is_complete": False}
@@ -167,6 +266,7 @@ async def inspect_novel_url(url: str):
         await obscura.close()
 
 
+@traced_job
 async def extract_novel_chapters(url, output_dir, chapter_indices=None, start_chapter=None, end_chapter=None,
                                  concurrency=3, include_frontmatter=False, on_progress=None, overwrite=False,
                                  state_dir=None, job_id=None, snapshot_file=None):
@@ -197,7 +297,7 @@ async def extract_novel_chapters(url, output_dir, chapter_indices=None, start_ch
             snapshot = None
         if snapshot is None or not snapshot.get("is_complete"):
             try:
-                snapshot = await asyncio.wait_for(discover(url, obscura, llm), ScraperLimits.from_env().discovery_seconds)
+                snapshot = await discover(url, obscura, llm)
             except asyncio.TimeoutError:
                 recovered = partial_discovery(url, obscura)
                 if recovered["chapters"] or snapshot is None:
@@ -220,16 +320,22 @@ async def extract_novel_chapters(url, output_dir, chapter_indices=None, start_ch
                     break
                 sample = pending[position]
                 try:
-                    html = await obscura.fetch_html(sample.url)
+                    sample_deadline = time.monotonic() + ScraperLimits.from_env().discovery_seconds
+                    html = await before_deadline(obscura.fetch_html(sample.url), sample_deadline)
                     sample_html[sample.url] = html
                     orchestrator = ReviewLoopOrchestrator(analyzer=ChapterAnalyzer(llm), llm_client=llm)
-                    reviewed = await asyncio.wait_for(orchestrator.run(html, sample.url), ScraperLimits.from_env().discovery_seconds)
-                    if not reviewed.approved or not reviewed.verification.success:
-                        html = await obscura.fetch_html(sample.url, force_browser=True)
+                    with recovery_ceiling("deterministic"):
+                        reviewed = await before_deadline(orchestrator.run(html, sample.url), sample_deadline)
+                    if (not reviewed.approved or not reviewed.verification.success) and stage_enabled("browser"):
+                        from src.agent.ch.candidates import readiness_selector
+                        html = await before_deadline(obscura.fetch_html(sample.url, force_browser=True, wait_until="domcontentloaded",
+                            content_selector=readiness_selector(html, getattr(getattr(reviewed, "plan", None), "content_selector", None)), readiness="chapter"), sample_deadline)
                         sample_html[sample.url] = html
-                        reviewed = await asyncio.wait_for(orchestrator.run(html, sample.url), ScraperLimits.from_env().discovery_seconds)
+                        reviewed = await before_deadline(orchestrator.run(html, sample.url), sample_deadline)
                     if not reviewed.approved or not reviewed.verification.success:
-                        error = getattr(reviewed.verification, "error", None) or "Sample chapter validation rejected"
+                        error = (getattr(reviewed.verification, "error", None) or
+                                 "; ".join(getattr(getattr(reviewed, "review", None), "issues", [])) or
+                                 "Sample chapter validation rejected")
                         pre_results[sample.url] = ("blocked" if getattr(reviewed.verification, "is_paywalled", False) or "unsupported" in error.lower() else "failed", error)
                         continue
                 except PermissionError as error:
@@ -257,6 +363,8 @@ async def extract_novel_chapters(url, output_dir, chapter_indices=None, start_ch
         runner.require_layout_approval = True
         runner.pre_results = pre_results
         summary = await runner.run(selected, url, author=snapshot.get("author"), description=snapshot.get("description"))
+        summary.setdefault("metrics", {}).update({"model_calls": getattr(llm, "call_count", 0),
+            "browser_launches": obscura.metrics.get("browser_launches", 0), "browser_renders": obscura.metrics.get("rendered", 0)})
         status = ("cancelled" if summary["cancelled"] or checkpoint.cancelled() else
                   "paused" if summary["blocked"] else
                   "completed" if not summary["failed"] and snapshot.get("is_complete") else "partial")

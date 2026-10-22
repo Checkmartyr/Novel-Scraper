@@ -1,0 +1,1567 @@
+{
+  "corpus": "synthetic-unfamiliar-v1",
+  "mode": "deterministic",
+  "corpus_sha256": "46640341bd7df35e0223a79860280b64d7e08d3ae93624f8254f2d4339adc3fc",
+  "runs": [
+    {
+      "family": "static",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.3185,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.000458,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.004359,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.067751,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.004782,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "static",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2686,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.002638,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.051915,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "delayed",
+      "split": "development",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.4038,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.000317,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.002977,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.046465,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.001742,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source story is empty, inaccessible, or still loading"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.006306,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.003523,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source story is empty, inaccessible, or still loading"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 9e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.003681,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source story is empty, inaccessible, or still loading"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "delayed",
+      "split": "development",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2826,
+      "model_calls": 0,
+      "browser_launches": 1,
+      "browser_renders": 3,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.002871,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.051036,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.001661,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source story is empty, inaccessible, or still loading"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.001724,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source story is empty, inaccessible, or still loading"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.002259,
+          "newly_validated": 0,
+          "outcome": "rejected",
+          "reason": "Source story is empty, inaccessible, or still loading"
+        },
+        {
+          "stage": "browser",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "wordpress-migration",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2902,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 3e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.000347,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.003611,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.048719,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.008005,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.007834,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.007952,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "wordpress-migration",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.273,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 3e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 3e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.002436,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.055536,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.004493,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.00423,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.004448,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "split-story",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.3127,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.000516,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.002642,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.049595,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.005882,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "split-story",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.274,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.002456,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.049055,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "short-prologue",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2856,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.000343,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.003004,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.052506,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.004131,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "short-prologue",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2604,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.002539,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.0508,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 4e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "changed-layout",
+      "split": "held_out",
+      "recipes": "cold",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2918,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 8e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "structured_data",
+          "attempts": 1,
+          "seconds": 0.00033,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 0
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.0034,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.048912,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "deterministic_candidates",
+          "attempts": 1,
+          "seconds": 0.004149,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Verified chapter boundaries"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    },
+    {
+      "family": "changed-layout",
+      "split": "held_out",
+      "recipes": "warm",
+      "catalog_precision": 1.0,
+      "catalog_recall": 1.0,
+      "false_completion": false,
+      "success": true,
+      "seconds": 0.2748,
+      "model_calls": 0,
+      "browser_launches": 0,
+      "browser_renders": 0,
+      "chapters": [
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        },
+        {
+          "precision": 1.0,
+          "recall": 1.0,
+          "title_correct": true,
+          "ending_preserved": true,
+          "published": true
+        }
+      ],
+      "recovery_stages": [
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "catalog_dom",
+          "attempts": 1,
+          "seconds": 0.00374,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Deterministic evidence awaits coverage audit",
+          "newly_discovered": 5
+        },
+        {
+          "stage": "catalog_audit",
+          "attempts": 1,
+          "seconds": 0.051887,
+          "newly_validated": 5,
+          "outcome": "complete",
+          "reason": "Observed catalog coverage resolved"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 6e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        },
+        {
+          "stage": "retrieval",
+          "attempts": 1,
+          "seconds": 7e-06,
+          "newly_validated": 0,
+          "outcome": "observed",
+          "reason": "Frozen evidence retrieved; content awaits audit"
+        },
+        {
+          "stage": "recipe",
+          "attempts": 1,
+          "seconds": 5e-06,
+          "newly_validated": 1,
+          "outcome": "approved",
+          "reason": "Saved recipe independently verified"
+        }
+      ],
+      "pipeline_status": "completed",
+      "failure_reasons": []
+    }
+  ],
+  "success_rate": 1.0,
+  "false_completions": 0,
+  "trafilatura": {
+    "status": "not_installed"
+  },
+  "source_sha256": "b4e69adfc3f5b6244fc1c3aeb23d245e9f2cc53f82c5e18ba87640ba9f2a0f95"
+}

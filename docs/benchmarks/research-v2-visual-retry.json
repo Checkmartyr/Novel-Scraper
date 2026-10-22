@@ -1,0 +1,43 @@
+{
+  "status": "evaluated",
+  "runs": [
+    {
+      "fixture": 1,
+      "visual_enabled": false,
+      "success": false,
+      "status": "measured",
+      "model_calls": 1,
+      "visual_calls": 0
+    },
+    {
+      "fixture": 1,
+      "visual_enabled": true,
+      "success": true,
+      "status": "measured",
+      "model_calls": 2,
+      "visual_calls": 1
+    },
+    {
+      "fixture": 2,
+      "visual_enabled": false,
+      "success": false,
+      "status": "measured",
+      "model_calls": 1,
+      "visual_calls": 0
+    },
+    {
+      "fixture": 2,
+      "visual_enabled": true,
+      "success": true,
+      "status": "measured",
+      "model_calls": 2,
+      "visual_calls": 1
+    }
+  ],
+  "model_budget": {
+    "model_calls": 6,
+    "visual_calls": 2,
+    "max_model_calls": 30,
+    "max_visual_calls": 6
+  }
+}

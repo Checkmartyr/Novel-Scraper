@@ -1,0 +1,8 @@
+{
+  "status": "Initial replay completed before the stop guard; full pre-cache results preserved in research-v2-captured-initial.json",
+  "profiled_site": "bcnovels",
+  "operation": "rank_candidates(html, limit=1)",
+  "seconds_with_profiler": 5.0564534,
+  "dominant_work": "Repeated BeautifulSoup/soupsieve region cleaning",
+  "protocol_change": "royalroad and bcnovels move to development after this measurement informed a shared ranking cache"
+}

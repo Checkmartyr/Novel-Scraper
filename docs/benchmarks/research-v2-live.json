@@ -1,0 +1,1992 @@
+{
+  "source_sha256": "0ad9a949df22cecfd080b336381417a0b30fde0e61001eeb68b1ca7ba252bb25",
+  "runs": [
+    {
+      "site": "novelbin",
+      "split_at_evaluation": "development",
+      "success": true,
+      "linked_entry_count": 133,
+      "observed_linked_entry_count": 133,
+      "is_complete": true,
+      "claimed_chapter_count": 133,
+      "saved": 3,
+      "issues": [],
+      "error": null,
+      "inspection_metrics": {
+        "requests": 2,
+        "rendered": 1,
+        "browser_launches": 1,
+        "recipe_hits": 0,
+        "repair_calls": 0,
+        "discovery_seconds": 35.622504799976014,
+        "model_calls": 0,
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.325932,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.018057,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 1
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 0.000261,
+            "newly_validated": 0,
+            "outcome": "failed",
+            "reason": "Browser retrieval is beyond the active recovery ceiling"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.004484,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.014523,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 1
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.014384,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 1
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 34.572456,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.010001,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.117364,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 133
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 35.622015,
+            "newly_validated": 133,
+            "outcome": "complete",
+            "reason": "Observed catalog coverage resolved"
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 0.037032,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 0,
+        "visual_calls": 0,
+        "max_model_calls": 30,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": [
+        {
+          "index": 1,
+          "title": "Chapter 0: Character Summaries",
+          "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-1",
+          "status": "saved",
+          "success": true,
+          "downloaded": true,
+          "file": "0001 - Chapter 0 Character Summaries.md",
+          "sha256": "4bd02a44c4466a1a5b3df8d308fc0041c3d85696bcec9077359635d5cd165d67",
+          "content_sha256": "d11c13e8834cf6d8283eb4f2a7a3de8a9477d95b88784069729393c65f3f3d06",
+          "recipe_version": "9e3ee73c897cdfbf",
+          "attempts": 1
+        },
+        {
+          "index": 67,
+          "title": "Chapter 66: The Witch’s Story☆ (7)",
+          "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-67",
+          "status": "saved",
+          "success": true,
+          "downloaded": true,
+          "file": "0067 - Chapter 66 The Witch’s Story☆ (7).md",
+          "sha256": "03c29b3c2d4fc728169ec9d121a705887ffe38761e43b479e1d61df17f75c357",
+          "content_sha256": "98188e18a1213b43fc88eb4f2c75bff8c436cba20e1cb93747970dc14cf6b9f0",
+          "recipe_version": "6bcf6cf67a64cc6a",
+          "attempts": 1
+        },
+        {
+          "index": 133,
+          "title": "Chapter 131",
+          "url": "https://novelbin.xyz/read/i-became-the-academys-pink-airhead/chapter-133",
+          "status": "saved",
+          "success": true,
+          "downloaded": true,
+          "file": "0133 - Chapter 131.md",
+          "sha256": "a20a34c7914773f70943d12c39bb1a3080bfa3f8a160c8128a28aaa91b616674",
+          "content_sha256": "f0e93a25315e899a16e5a53e1fbd6b6df59662d036a282a50ba5e082cdcea8b2",
+          "recipe_version": "6bcf6cf67a64cc6a",
+          "attempts": 1
+        }
+      ]
+    },
+    {
+      "site": "wordpress",
+      "split_at_evaluation": "development",
+      "success": false,
+      "linked_entry_count": 40,
+      "observed_linked_entry_count": 286,
+      "is_complete": false,
+      "claimed_chapter_count": null,
+      "saved": 0,
+      "issues": [
+        "Unverified migrated catalog links: 246",
+        "Unresolved cross-domain catalog coverage: 246 observed links.",
+        "Unverified chapter source: Source domain serves a parking redirect instead of chapter content"
+      ],
+      "error": null,
+      "inspection_metrics": {
+        "requests": 2,
+        "rendered": 0,
+        "browser_launches": 0,
+        "recipe_hits": 0,
+        "repair_calls": 0,
+        "discovery_seconds": 2.951093599986052,
+        "model_calls": 0,
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.651657,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.748831,
+            "newly_validated": 0,
+            "outcome": "failed",
+            "reason": "Source domain serves a parking redirect instead of chapter content"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.0536,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.162364,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 40
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 2.950712,
+            "newly_validated": 40,
+            "outcome": "incomplete",
+            "reason": "Unverified migrated catalog links: 246; Unresolved cross-domain catalog coverage: 246 observed links.; Unverified chapter source: Source domain serves a parking redirect instead of chapter content"
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 0.000725,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 0,
+        "visual_calls": 0,
+        "max_model_calls": 30,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": []
+    },
+    {
+      "site": "syosetu",
+      "split_at_evaluation": "development",
+      "success": true,
+      "linked_entry_count": 2649,
+      "observed_linked_entry_count": 0,
+      "is_complete": true,
+      "claimed_chapter_count": null,
+      "saved": 3,
+      "issues": [],
+      "error": null,
+      "inspection_metrics": {
+        "requests": 28,
+        "rendered": 1,
+        "browser_launches": 1,
+        "recipe_hits": 0,
+        "repair_calls": 0,
+        "discovery_seconds": 46.50376610000967,
+        "model_calls": 1,
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.908732,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 3.592924,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "model",
+            "attempts": 1,
+            "seconds": 15.592352,
+            "newly_validated": 0,
+            "outcome": "proposed",
+            "reason": "Structured proposal awaits deterministic verification"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.031355,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.066374,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.582505,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.18063,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.757389,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.030484,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.061884,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.030738,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.067607,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.031356,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.056503,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.587274,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.172722,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.723754,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.028387,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.056603,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.030067,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.069239,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.032786,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.05839,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.522396,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.115734,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.557138,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.033117,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.066647,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.027338,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.064616,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.028596,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.262858,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.601114,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.155565,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.603472,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.037778,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.06556,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.028324,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.057361,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.026151,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.06596,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.603878,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.156999,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.604505,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.026127,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.056215,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.024724,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.055117,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.024987,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.05984,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.553616,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.329147,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.926946,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.025383,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.064459,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.029082,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.058059,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.030873,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.061362,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.535761,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.062466,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.582146,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.024537,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.058826,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.025415,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.059698,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.029697,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.054512,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.519088,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.087989,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.641295,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.031452,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.053981,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.235607,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.055752,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.030105,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.056813,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.577487,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.138898,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.032626,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.053774,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 100
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.026157,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.042922,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 49
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 46.50335,
+            "newly_validated": 2649,
+            "outcome": "complete",
+            "reason": "Observed catalog coverage resolved"
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 0.033433,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 1,
+        "visual_calls": 0,
+        "max_model_calls": 30,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": [
+        {
+          "index": 1,
+          "title": "異世界は平和でした",
+          "url": "https://ncode.syosetu.com/n2273dh/1/",
+          "status": "saved",
+          "success": true,
+          "downloaded": true,
+          "file": "0001 - 異世界は平和でした.md",
+          "sha256": "69a5c400ed51dc90e5c7af6307941becaca45ccbb4de923be6614b107256c122",
+          "content_sha256": "370a20776452145285a17258f9c03eb8769dc6624ae10fbab9c87f92c4a37b86",
+          "recipe_version": "d33d41d3f4d806f8",
+          "attempts": 1
+        },
+        {
+          "index": 1325,
+          "title": "建国記念祭夜⑤",
+          "url": "https://ncode.syosetu.com/n2273dh/1325/",
+          "status": "saved",
+          "success": true,
+          "downloaded": true,
+          "file": "1325 - 建国記念祭夜⑤.md",
+          "sha256": "f7d2371d5ae8823033dcc89912e012e9a5d5fc512ecb3154801e6d069bd3da91",
+          "content_sha256": "74fa791c30a1f65c12b951346f4ce5a7f65598379a7239265ebac83af0d71b9e",
+          "recipe_version": "4beef13484f3fb22",
+          "attempts": 1
+        },
+        {
+          "index": 2649,
+          "title": "続・魔界の遊園地㉙",
+          "url": "https://ncode.syosetu.com/n2273dh/2649/",
+          "status": "saved",
+          "success": true,
+          "downloaded": true,
+          "file": "2649 - 続・魔界の遊園地㉙.md",
+          "sha256": "719048f3793eed3cbf478043d871d1ff3e57c38a24ffdcc07814d41a15858bef",
+          "content_sha256": "f6fb042cf8d7a40fbf80aa610777239dbd5bf4bf24298763692fee153e3bbe91",
+          "recipe_version": "3437b67ce7e390dc",
+          "attempts": 1
+        }
+      ]
+    },
+    {
+      "site": "kakuyomu",
+      "split_at_evaluation": "development",
+      "success": false,
+      "linked_entry_count": 131,
+      "observed_linked_entry_count": 0,
+      "is_complete": false,
+      "claimed_chapter_count": 111,
+      "saved": 0,
+      "issues": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "Browser expansion budget exhausted before catalog closure"
+      ],
+      "error": null,
+      "inspection_metrics": {
+        "requests": 2,
+        "rendered": 1,
+        "browser_launches": 1,
+        "recipe_hits": 0,
+        "repair_calls": 0,
+        "discovery_seconds": 69.5408779999998,
+        "model_calls": 0,
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 1.095905,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.021462,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 111
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.118309,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.116756,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.121917,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 3.137257,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.020648,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 111
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.120666,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.137623,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.128521,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.140146,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.139921,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.154307,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 21
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 69.540486,
+            "newly_validated": 131,
+            "outcome": "incomplete",
+            "reason": "Catalog navigation remains unresolved despite advertised count coverage.; Browser expansion budget exhausted before catalog closure"
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 0.034382,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 0,
+        "visual_calls": 0,
+        "max_model_calls": 29,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": []
+    },
+    {
+      "site": "freewebnovel",
+      "split_at_evaluation": "development",
+      "success": false,
+      "linked_entry_count": 46,
+      "observed_linked_entry_count": 46,
+      "is_complete": false,
+      "claimed_chapter_count": 50,
+      "saved": 0,
+      "issues": [
+        "Chapter count discrepancy: Extracted 46 chapters, but page indicates 50 chapters.",
+        "Browser expansion budget exhausted before catalog closure",
+        "Chapter count discrepancy after scope validation: extracted 46 of 50."
+      ],
+      "error": null,
+      "inspection_metrics": {
+        "requests": 3,
+        "rendered": 2,
+        "browser_launches": 1,
+        "recipe_hits": 0,
+        "repair_calls": 0,
+        "discovery_seconds": 76.12576569998055,
+        "model_calls": 0,
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 8.038604,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.103095,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 0.000321,
+            "newly_validated": 0,
+            "outcome": "failed",
+            "reason": "Browser retrieval is beyond the active recovery ceiling"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.028622,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.09846,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.087139,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.116489,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 1.122445,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.026853,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.091186,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.097115,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.097882,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.098043,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.107051,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.13462,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.094335,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 46
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 76.125364,
+            "newly_validated": 46,
+            "outcome": "incomplete",
+            "reason": "Chapter count discrepancy: Extracted 46 chapters, but page indicates 50 chapters.; Browser expansion budget exhausted before catalog closure; Chapter count discrepancy after scope validation: extracted 46 of 50."
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 0.034171,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 0,
+        "visual_calls": 0,
+        "max_model_calls": 29,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": []
+    },
+    {
+      "site": "empirenovel",
+      "split_at_evaluation": "development",
+      "success": false,
+      "linked_entry_count": 0,
+      "observed_linked_entry_count": null,
+      "is_complete": false,
+      "claimed_chapter_count": null,
+      "saved": 0,
+      "issues": [],
+      "error": "CAPTCHA or browser security challenge requires user action",
+      "inspection_metrics": {
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 3.840777,
+            "newly_validated": 0,
+            "outcome": "failed",
+            "reason": "CAPTCHA or browser security challenge requires user action"
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 3.864413,
+            "newly_validated": 0,
+            "outcome": "failed",
+            "reason": "CAPTCHA or browser security challenge requires user action"
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 0.038298,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 0,
+        "visual_calls": 0,
+        "max_model_calls": 29,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": []
+    },
+    {
+      "site": "royalroad",
+      "split_at_evaluation": "held_out",
+      "success": false,
+      "linked_entry_count": 132,
+      "observed_linked_entry_count": null,
+      "is_complete": false,
+      "claimed_chapter_count": null,
+      "saved": 0,
+      "issues": [
+        "Catalog navigation remains unresolved despite advertised count coverage.",
+        "Discovery deadline exhausted"
+      ],
+      "error": null,
+      "inspection_metrics": {
+        "requests": 3,
+        "rendered": 2,
+        "browser_launches": 1,
+        "recipe_hits": 0,
+        "repair_calls": 0,
+        "discovery_seconds": 70.10869230001117,
+        "model_calls": 0,
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 6.797056,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.289689,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 132
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.060516,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.28052,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 132
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.294515,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 132
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.473915,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 132
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 60.125851,
+            "newly_validated": 0,
+            "outcome": "failed",
+            "reason": "Discovery deadline exhausted"
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 70.1067,
+            "newly_validated": 0,
+            "outcome": "failed",
+            "reason": "Discovery deadline exhausted"
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 2.432071,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 0,
+        "visual_calls": 0,
+        "max_model_calls": 29,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": []
+    },
+    {
+      "site": "wanderinginn",
+      "split_at_evaluation": "held_out",
+      "success": false,
+      "linked_entry_count": 840,
+      "observed_linked_entry_count": 3,
+      "is_complete": false,
+      "claimed_chapter_count": 20015,
+      "saved": 0,
+      "issues": [
+        "Chapter count discrepancy: Extracted 840 chapters, but page indicates 20015 chapters.",
+        "Browser expansion budget exhausted before catalog closure",
+        "Chapter count discrepancy after scope validation: extracted 840 of 20015."
+      ],
+      "error": null,
+      "inspection_metrics": {
+        "requests": 3,
+        "rendered": 2,
+        "browser_launches": 1,
+        "recipe_hits": 0,
+        "repair_calls": 0,
+        "discovery_seconds": 84.8977779999841,
+        "model_calls": 0,
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 4.651173,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.157476,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.574558,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.515378,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.703358,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 0.640923,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.163486,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.72823,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.546545,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.516795,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.52038,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.499347,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.629555,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.505233,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.508884,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.568477,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.583945,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.521635,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.508146,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.508458,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.515325,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.536432,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.799936,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.506313,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 3
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 84.897285,
+            "newly_validated": 840,
+            "outcome": "incomplete",
+            "reason": "Chapter count discrepancy: Extracted 840 chapters, but page indicates 20015 chapters.; Browser expansion budget exhausted before catalog closure; Chapter count discrepancy after scope validation: extracted 840 of 20015."
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 0.044563,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 0,
+        "visual_calls": 0,
+        "max_model_calls": 29,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": []
+    },
+    {
+      "site": "bcnovels",
+      "split_at_evaluation": "held_out",
+      "success": false,
+      "linked_entry_count": 90,
+      "observed_linked_entry_count": 90,
+      "is_complete": false,
+      "claimed_chapter_count": null,
+      "saved": 0,
+      "issues": [
+        "Page contains unexpanded accordion sections or 'load more' buttons.",
+        "Browser expansion budget exhausted before catalog closure"
+      ],
+      "error": null,
+      "inspection_metrics": {
+        "requests": 2,
+        "rendered": 1,
+        "browser_launches": 1,
+        "recipe_hits": 0,
+        "repair_calls": 0,
+        "discovery_seconds": 16.0679123000009,
+        "model_calls": 0,
+        "recovery_stages": [
+          {
+            "stage": "retrieval",
+            "attempts": 1,
+            "seconds": 0.496998,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.031321,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.113379,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 90
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.124482,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 90
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.10914,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 90
+          },
+          {
+            "stage": "browser",
+            "attempts": 1,
+            "seconds": 4.039198,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Source retrieved; content awaits audit"
+          },
+          {
+            "stage": "structured_data",
+            "attempts": 1,
+            "seconds": 0.035908,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 0
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.121875,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 90
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.123917,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 90
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.130848,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 90
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.121575,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 90
+          },
+          {
+            "stage": "catalog_dom",
+            "attempts": 1,
+            "seconds": 0.116875,
+            "newly_validated": 0,
+            "outcome": "observed",
+            "reason": "Deterministic evidence awaits coverage audit",
+            "newly_discovered": 90
+          },
+          {
+            "stage": "catalog_audit",
+            "attempts": 1,
+            "seconds": 16.067454,
+            "newly_validated": 90,
+            "outcome": "incomplete",
+            "reason": "Page contains unexpanded accordion sections or 'load more' buttons.; Browser expansion budget exhausted before catalog closure"
+          },
+          {
+            "stage": "cleanup",
+            "attempts": 1,
+            "seconds": 0.038133,
+            "newly_validated": 0,
+            "outcome": "completed",
+            "reason": "Owned browser cleanup budget enforced"
+          }
+        ]
+      },
+      "model_budget": {
+        "model_calls": 0,
+        "visual_calls": 0,
+        "max_model_calls": 29,
+        "max_visual_calls": 6
+      },
+      "sample_outcomes": []
+    }
+  ],
+  "passed": 2,
+  "total": 9,
+  "remaining_model_calls": 29,
+  "remaining_visual_calls": 6
+}

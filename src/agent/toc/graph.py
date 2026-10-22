@@ -8,6 +8,7 @@ import re
 from bs4 import BeautifulSoup
 from urllib.parse import urlsplit
 from src.scraper.runtime import ScraperLimits, canonical_url, belongs_to_observed_novel
+from src.scraper.recovery import current_scope
 from src.agent.toc.discovery import expand_catalog, network_chapters
 from typing import Dict, Any, List, Optional, Callable
 from langgraph.graph import StateGraph, END
@@ -208,6 +209,9 @@ class TocGraphWorkflow:
         if state.get("expansion_incomplete"):
             is_complete = False
             issues.append("Browser expansion budget exhausted before catalog closure")
+        if current_scope() and current_scope().unresolved:
+            is_complete = False
+            issues.append(f"Unverified migrated catalog links: {len(current_scope().unresolved)}")
 
         log_msg = f"[Audit] Complete: {is_complete}, Confidence: {conf}, Chapters: {len(chapters)}/{claimed or '?'}, Issues: {issues}"
         self._emit_log(log_msg)
@@ -316,6 +320,8 @@ class TocGraphWorkflow:
                 if error:
                     issues.append(f"Unresolved catalog page {page_url}: {error}")
                     continue
+                if current_scope():
+                    await current_scope().observe_catalog(page_url, html, self.obscura)
                 try:
                     data = json.loads(html)
                     chapters, next_urls = network_chapters([{"url": page_url, "data": data}], page_url)
@@ -325,6 +331,8 @@ class TocGraphWorkflow:
                     if not chapters:
                         try:
                             rendered = await self.obscura.fetch_html(page_url, force_browser=True)
+                            if current_scope():
+                                await current_scope().observe_catalog(page_url, rendered, self.obscura)
                             chapters = EmbeddedStateExtractor.extract(rendered, page_url) + DomLinkExtractor.extract(rendered, page_url)
                             next_urls += PaginatedTocCrawler.detect_pagination_urls(rendered, page_url)
                         except Exception as error:

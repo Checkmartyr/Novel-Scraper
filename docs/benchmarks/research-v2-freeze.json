@@ -1,0 +1,28 @@
+{
+  "source_sha256": "b4e69adfc3f5b6244fc1c3aeb23d245e9f2cc53f82c5e18ba87640ba9f2a0f95",
+  "frozen_at": "2026-10-17T05:58:18.431962+00:00",
+  "offline_tests": {
+    "passed": 211,
+    "skipped_live": 10
+  },
+  "baseline": "research-v2-baseline.json",
+  "initial_freeze": "research-v2-initial-freeze.json",
+  "model_calls_cap": 30,
+  "screenshot_calls_cap": 6,
+  "held_out": [
+    "wanderinginn"
+  ],
+  "promoted_to_development": [
+    "royalroad",
+    "bcnovels"
+  ],
+  "live_discovery_seconds": 180,
+  "live_recovery_mode": "maximum",
+  "final_fixes": [
+    "bounded identical-source ranking cache",
+    "synthetic DOM initialization without unsupported readiness event",
+    "reject extra prose outside chapter boundaries",
+    "retain replay retrieval failure reasons",
+    "shared witnessed ad-container exclusions for parser and source evidence"
+  ]
+}

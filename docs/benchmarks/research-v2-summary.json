@@ -1,0 +1,59 @@
+{
+  "source_sha256": "b4e69adfc3f5b6244fc1c3aeb23d245e9f2cc53f82c5e18ba87640ba9f2a0f95",
+  "offline_tests": {
+    "passed": 211,
+    "skipped_live": 10
+  },
+  "synthetic": {
+    "successful_runs": 12,
+    "runs": 12,
+    "false_completions": 0
+  },
+  "initial_live": {
+    "passed": 2,
+    "sites": 9,
+    "note": "Historical initial-freeze run; incomplete/blocking cases remain failures"
+  },
+  "final_novelbin": {
+    "entries": 133,
+    "saved_samples": 3,
+    "success": true
+  },
+  "captured": {
+    "successful_runs": 0,
+    "measured_runs": 16,
+    "false_completions": 0,
+    "unmeasured": [
+      {
+        "site": "wanderinginn",
+        "reason": "Published entry is Patreon Exclusive; complete chapter text is inaccessible",
+        "success": false,
+        "validator_reason": "Independent source annotations have not been reviewed"
+      }
+    ]
+  },
+  "configured_model_replay": {
+    "successful_runs": 0,
+    "measured_runs": 8,
+    "model_calls": 8
+  },
+  "visual_controls": {
+    "dom_success": 0,
+    "visual_success": 2,
+    "fixtures": 2,
+    "note": "Synthetic control selection only"
+  },
+  "evaluation_usage": {
+    "model_calls": 23,
+    "visual_calls": 2,
+    "model_calls_cap": 30,
+    "visual_calls_cap": 6
+  },
+  "remaining_limitations": [
+    "Catalog scoping and closure failures on broader sites",
+    "Count metadata and title/cleanup disagreements",
+    "Unrecorded browser transitions or missing captured URLs",
+    "Parked migration hosts, browser access challenge, and Patreon-only last sample",
+    "No successful unseen-site extraction rate established"
+  ]
+}

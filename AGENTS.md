@@ -226,6 +226,10 @@ When websites employ non-DOM architectures (such as proprietary client-side encr
 
 ## 8. Guidelines for Adding or Modifying Agents
 
+When changing agent goals, prompts, procedural skills, or approval rules, read
+[`docs/agent_instructions.md`](docs/agent_instructions.md) and update the role
+contracts in `src/agent/instructions.py` with their callers and regression checks.
+
 1. **Keep Agents Focused**:
    - Navigation and chapter enumeration belong in `src/agent/toc/`.
    - Content extraction, selector refinement, and quality scoring belong in `src/agent/ch/`.

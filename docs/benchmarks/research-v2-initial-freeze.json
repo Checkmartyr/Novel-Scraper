@@ -1,0 +1,18 @@
+{
+  "source_sha256": "0ad9a949df22cecfd080b336381417a0b30fde0e61001eeb68b1ca7ba252bb25",
+  "frozen_at": "2026-10-17T05:29:11.095003+00:00",
+  "offline_tests": {
+    "passed": 208,
+    "skipped_live": 10
+  },
+  "baseline": "research-v2-baseline.json",
+  "model_calls_cap": 30,
+  "screenshot_calls_cap": 6,
+  "held_out": [
+    "royalroad",
+    "wanderinginn",
+    "bcnovels"
+  ],
+  "live_discovery_seconds": 180,
+  "live_recovery_mode": "maximum"
+}

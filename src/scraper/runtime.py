@@ -22,10 +22,17 @@ class ScraperLimits:
     browser_pages: int = 2
     request_attempts: int = 3
     no_progress_attempts: int = 2
+    cleanup_seconds: float = 5
+    candidate_limit: int = 6
+    visual_attempts: int = 1
 
     @classmethod
     def from_env(cls):
-        values = {}
+        mode = os.getenv("NOVEL_SCRAPER_RECOVERY_MODE", "standard")
+        if mode not in {"standard", "maximum"}:
+            raise ValueError("NOVEL_SCRAPER_RECOVERY_MODE must be standard or maximum")
+        values = ({"discovery_seconds": 900, "toc_cycles": 16, "repair_attempts": 5,
+                   "candidate_limit": 10, "visual_attempts": 2} if mode == "maximum" else {})
         for name, field in cls.__dataclass_fields__.items():
             value = os.getenv(f"NOVEL_SCRAPER_{name.upper()}")
             if value is not None:
@@ -84,10 +91,19 @@ def fingerprint(html: str) -> str:
 def belongs_to_observed_novel(source: str, candidate: str) -> bool:
     """Reject conflicting route identities; keep ambiguous layouts for later validation."""
     origin, target = urlsplit(source), urlsplit(candidate)
+    from src.scraper.recovery import current_scope
+    scope = current_scope()
+    if target.scheme in {"http", "https"} and scope and scope.allows(source, candidate):
+        return True
     if target.scheme not in {"http", "https"} or (target.hostname or "").lower().removeprefix("www.") != (origin.hostname or "").lower().removeprefix("www."):
         return False
     source_parts, target_parts = origin.path.strip("/").split("/"), target.path.strip("/").split("/")
     if len(source_parts) >= 2 and source_parts[0] in {"novel", "book", "works", "fiction", "series", "b"}:
+        if source_parts[0] == "novel":
+            if target_parts[0] == "read":
+                return len(target_parts) >= 2 and source_parts[1] == target_parts[1]
+            if target_parts[0] in {"", "genre", "genres", "category", "categories", "tag", "tags", "author", "authors", "search", "ranking", "rankings", "browse", "login", "register"}:
+                return False
         if len(target_parts) < 2 or target_parts[0] != source_parts[0]:
             return True
         def identity(part):
@@ -115,6 +131,9 @@ def belongs_to_observed_novel(source: str, candidate: str) -> bool:
 def access_error(html: str):
     soup = BeautifulSoup(html, "lxml")
     title = soup.title.get_text(" ", strip=True).lower() if soup.title else ""
+    if any(re.search(r"https?://(?:router\.)?parklogic\.com/", script.get("src", "") + script.get_text())
+           for script in soup.select("script")) and not soup.select_one("article p, .reader-content p, #chapter-content p"):
+        return "Source domain serves a parking redirect instead of chapter content"
     if any(word in title for word in ("just a moment", "security verification", "access denied")) or soup.select_one("#challenge-form, .cf-chl-widget, iframe[src*='captcha']"):
         return "CAPTCHA or browser security challenge requires user action"
     if soup.select_one("input[type='password']") and not soup.select_one("#chapter-content, #novel_honbun, article p"):

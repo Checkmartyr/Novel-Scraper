@@ -1,0 +1,13 @@
+{
+  "root_cause": "Source ancestor expansion included repeated advertisement labels outside the story container",
+  "affected_samples": [
+    67,
+    133
+  ],
+  "cache_clear_resolves": false,
+  "exclude_witnessed_ad_containers_resolves": true,
+  "reversed_story_order_still_rejected": true,
+  "regression_test": "tests/test_research_sequence.py::test_advertisement_containers_are_not_adjacent_story_prose",
+  "captured_originals_reverified": true,
+  "generated_parser_equivalence": true
+}

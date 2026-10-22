@@ -15,6 +15,8 @@ from src.core.obscura_client import ObscuraClient
 from src.scraper.storage import NovelStorage
 from src.scraper.runtime import ChapterCheckpoint, ScraperLimits, access_error, fingerprint, canonical_url, safe_error
 from src.config import DEFAULT_CONCURRENCY, MIN_DELAY_SECONDS, MAX_DELAY_SECONDS
+from src.scraper.telemetry import stage_enabled
+from src.scraper.recovery import before_deadline, operation_scope
 
 logger = logging.getLogger("scraper.batch")
 
@@ -87,6 +89,12 @@ class BatchScraperRunner:
 
     async def _scrape_single_chapter(self, link, semaphore=None):
         await self._pause_event.wait()
+        deadline = time.monotonic() + self.limits.discovery_seconds
+        with operation_scope(deadline):
+            return await before_deadline(self._scrape_chapter(link, semaphore), deadline)
+
+    async def _scrape_chapter(self, link, semaphore=None):
+        await self._pause_event.wait()
         if self.cancelled():
             return self._result(link, "cancelled")
         if link.url in self.pre_results:
@@ -112,8 +120,10 @@ class BatchScraperRunner:
         result = self._verified_extract(plan, html)
         if self.require_layout_approval and layout not in self._layout_plans:
             result = result.model_copy(update={"success": False, "error": "Chapter layout requires approval"})
-        if not result.success and not result.is_paywalled:
-            html = await self.obscura.fetch_html(link.url, force_browser=True, content_selector=plan.content_selector)
+        if not result.success and not result.is_paywalled and stage_enabled("browser"):
+            from src.agent.ch.candidates import readiness_selector
+            html = await self.obscura.fetch_html(link.url, force_browser=True,
+                content_selector=readiness_selector(html, plan.content_selector), readiness="chapter")
             layout = fingerprint(html)
             plan = self._layout_plans.get(layout, self.plan)
             result = self._verified_extract(plan, html)

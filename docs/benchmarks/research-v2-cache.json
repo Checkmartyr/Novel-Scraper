@@ -1,0 +1,8 @@
+{
+  "operation": "rank_candidates on identical frozen HTML",
+  "uncached_seconds": 1.6929862000106368,
+  "cached_seconds": 0.0001010000123642385,
+  "identical_results": true,
+  "cache_maxsize": 12,
+  "note": "Same-process warm-call measurement; not a live extraction success rate"
+}
