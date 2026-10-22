@@ -94,6 +94,8 @@ async def test_tui_action_analyze_toc(tmp_path):
         "confidence_score": 0.95,
         "audit_passed": True,
         "claimed_chapters": 2,
+        "is_complete": True,
+        "claimed_chapter_count": 2,
     }
     
     mock_classification = ClassificationResult(
@@ -207,6 +209,7 @@ async def test_tui_safe_call_and_batch_execution(tmp_path):
         chapter_links=[ChapterLink(index=1, title="Ch 1", url="https://example.com/ch1")],
     )
     app.plan = DOMStructurePlan(title_selector="h1", content_selector="#content")
+    app.toc_state = {"is_complete": True}
 
     async with app.run_test() as pilot:
         # 1. Test direct safe_call on main thread (should not raise RuntimeError)
@@ -309,6 +312,7 @@ async def test_tui_single_chapter_fallback_populates_toc_and_preview(tmp_path):
         toc_url=None,
     )
     mock_plan = DOMStructurePlan(title_selector="h1", content_selector=".content")
+    catalog = {"is_complete": True, "chapters": [ChapterLink(index=1, title="Chapter 1: The Lonely Hero", url="https://example.com/ch1").model_dump()]}
     mock_verification = ParserVerificationResult(
         success=True,
         word_count=350,
@@ -326,7 +330,8 @@ async def test_tui_single_chapter_fallback_populates_toc_and_preview(tmp_path):
         approved=True,
     )
 
-    with patch.object(app.obscura, "fetch_html", new=AsyncMock(return_value="<html><body>Mock</body></html>")), \
+    with patch("src.api_bridge.discover", new=AsyncMock(return_value=catalog)), \
+         patch.object(app.obscura, "fetch_html", new=AsyncMock(return_value="<html><body>Mock</body></html>")), \
          patch.object(app.classifier, "classify", new=AsyncMock(return_value=mock_classification)), \
          patch("src.ui.app.ReviewLoopOrchestrator.run", new=AsyncMock(return_value=mock_loop_result)):
 

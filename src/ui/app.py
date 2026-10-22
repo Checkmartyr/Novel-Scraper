@@ -550,6 +550,9 @@ class NovelScraperApp(App):
         # Disable analyze button during work
         btn_analyze = self.query_one("#btn-analyze", Button)
         btn_analyze.disabled = True
+        self.toc_state = None
+        self._plan_approved = False
+        self.query_one("#btn-approve", Button).disabled = True
 
         try:
             # 1. Fetch target page HTML
@@ -587,8 +590,8 @@ class NovelScraperApp(App):
 
                 strategy = (self.toc_state or {}).get("extraction_strategy", "dom")
                 confidence = (self.toc_state or {}).get("confidence_score", 1.0)
-                audit_passed = (self.toc_state or {}).get("audit_passed", True)
-                claimed = (self.toc_state or {}).get("claimed_chapters")
+                audit_passed = (self.toc_state or {}).get("is_complete", False)
+                claimed = (self.toc_state or {}).get("claimed_chapter_count")
 
                 self.query_one("#detail-strategy", Static).update(f"Strategy: {strategy} ({int(confidence * 100)}%)")
                 audit_str = "Passed" if audit_passed else "Warning"
@@ -628,7 +631,7 @@ class NovelScraperApp(App):
                         strategy = self.toc_state.get("extraction_strategy", "default")
                         confidence = self.toc_state.get("confidence_score", 1.0)
                         self.query_one("#detail-strategy", Static).update(f"Strategy: {strategy} ({int(confidence * 100)}%)")
-                        self.query_one("#detail-audit", Static).update("Audit: Passed" if self.toc_state.get("audit_passed") else "Audit: Warning")
+                        self.query_one("#detail-audit", Static).update("Audit: Passed" if self.toc_state.get("is_complete") else "Audit: Warning")
 
                         self.populate_toc_table(self.classification.chapter_links)
                         self.log_msg(f"TOC loaded! Discovered {total_ch} chapters.", "info")
@@ -639,6 +642,23 @@ class NovelScraperApp(App):
                     ChapterLink(index=1, title=self.classification.chapter_title or "Chapter 1", url=sample_chapter_url)
                 ]
                 self.populate_toc_table(self.classification.chapter_links)
+
+            if not self.toc_state:
+                from src.api_bridge import discover
+                self.toc_state = await discover(url, self.obscura, self.classifier.llm)
+                self.classification.chapter_links = [ChapterLink.model_validate(ch) for ch in self.toc_state.get("chapters", [])]
+                self.populate_toc_table(self.classification.chapter_links)
+            if not self.toc_state.get("is_complete"):
+                from src.scraper.runtime import atomic_json
+                folder = self.storage.get_novel_dir(self.classification.novel_title)
+                snapshot = {key: value for key, value in self.toc_state.items() if key != "html"}
+                snapshot["extracted_chapters"] = [ch.model_dump() for ch in self.classification.chapter_links]
+                atomic_json(folder / ".scraper" / "incomplete-catalog.json", snapshot)
+                self.query_one("#btn-approve", Button).disabled = True
+                self._plan_approved = False
+                self.log_msg("Catalog incomplete; extraction paused: " + "; ".join(self.toc_state.get("issues", [])), "warning")
+                progress.set_status("Catalog incomplete. Analyze again to retry discovery.")
+                return
 
             self.sample_chapter_url = sample_chapter_url
             self.sample_chapter_title = (
@@ -659,7 +679,7 @@ class NovelScraperApp(App):
                 chapter_index_list=self.classification.chapter_links,
                 token_usage=token_tracker.get_summary(),
                 extraction_strategy=(self.toc_state or {}).get("extraction_strategy"),
-                audit_passed=(self.toc_state or {}).get("audit_passed"),
+                audit_passed=(self.toc_state or {}).get("is_complete", False),
             )
             self.log_msg(f"Novel folder created: '{novel_folder}'", "info")
             self.log_msg(f"Saved initial metadata.json with {len(self.classification.chapter_links)} chapters: '{meta_path.name}'", "info")
@@ -778,6 +798,9 @@ class NovelScraperApp(App):
 
     async def action_start_batch(self) -> None:
         """Start batch scraping after approval."""
+        if not self.toc_state or not self.toc_state.get("is_complete"):
+            self.log_msg("Full catalog verification is required before downloading", "warning")
+            return
         if not self.classification or not self.plan:
             return
         if not getattr(self, "_plan_approved", True):

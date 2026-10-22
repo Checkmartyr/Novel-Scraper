@@ -61,7 +61,8 @@ def test_claim_inspector_empirenovel():
         EMPIRE_SAMPLE_HTML,
         "https://www.empirenovel.com/novel/i-will-create-a-good-ending-for-the-yandere-villainess"
     )
-    assert claimed == 665
+    # A latest chapter number does not advertise the number of catalog entries.
+    assert claimed is None
     assert title == "I Will Create a Good Ending for the Yandere Villainess"
     assert author == "PagE_PickEr"
 

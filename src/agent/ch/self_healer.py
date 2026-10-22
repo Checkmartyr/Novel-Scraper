@@ -27,6 +27,7 @@ class SelfHealer:
         html: str,
         current_plan: DOMStructurePlan,
         previous_interaction_id: Optional[str] = None,
+        *, page_analysis=None,
     ) -> Tuple[bool, DOMStructurePlan, Optional[ExtractedChapter]]:
         """Re-analyze broken chapter DOM, patch selectors, and verify recovery using Observer review."""
         from src.agent.ch.review_loop import ReviewLoopOrchestrator
@@ -35,10 +36,10 @@ class SelfHealer:
             return False, current_plan, None
         try:
             reviewed = await ReviewLoopOrchestrator(analyzer=self.analyzer, observer=self.observer,
-                llm_client=self.llm).run(html, url)
+                llm_client=self.llm).run(html, url, page_analysis=page_analysis)
             if (reviewed.approved and reviewed.verification.success and not reviewed.verification.coverage_issues
                     and reviewed.review.quality_score >= MIN_QUALITY_SCORE):
-                extracted = ChapterCodeGenerator(reviewed.plan).extract(html)
+                extracted = ChapterCodeGenerator(reviewed.plan).extract(html, page_analysis=page_analysis)
                 if extracted.success and not extracted.is_paywalled:
                     return True, reviewed.plan, extracted
         except Exception as error:

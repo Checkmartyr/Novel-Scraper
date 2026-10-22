@@ -281,3 +281,52 @@ async def test_toc_agent_full_langgraph_flow(tmp_path):
     assert "Graph Verified Novel" in content
     assert "Total Chapters: 10" in content
     assert "Episode 10: Tale" in content
+
+
+@pytest.mark.asyncio
+async def test_toc_agent_keeps_dom_entries_when_embedded_count_matches_claim():
+    payload = {
+        "props": {"pageProps": {"__APOLLO_STATE__": {
+            "Work:12345": {"id": "12345", "title": "Reconciled Novel"},
+            "TableOfContentsChapter:": {"episodeUnions": [{"__ref": "Episode:a"}, {"__ref": "Episode:b"}]},
+            "Episode:a": {"id": "a", "title": "Chapter 1"},
+            "Episode:b": {"id": "b", "title": "Chapter 2"},
+        }}}
+    }
+    html = f'''<html><head><title>Reconciled Novel</title></head><body>
+      <span>2 chapters</span>
+      <script id="__NEXT_DATA__" type="application/json">{json.dumps(payload)}</script>
+      <ol class="toc-container">
+        <li><a href="/works/12345/episodes/c">Chapter 1 alternate</a></li>
+        <li><a href="/works/12345/episodes/d">Chapter 2 alternate</a></li>
+      </ol>
+    </body></html>'''
+
+    state = await TocAgent(max_iterations=1).extract_toc("https://kakuyomu.jp/works/12345", html=html)
+
+    assert {chapter.url for chapter in state["extracted_chapters"]} == {
+        "https://kakuyomu.jp/works/12345/episodes/a",
+        "https://kakuyomu.jp/works/12345/episodes/b",
+        "https://kakuyomu.jp/works/12345/episodes/c",
+        "https://kakuyomu.jp/works/12345/episodes/d",
+    }
+    assert state["is_complete"] is False
+
+
+@pytest.mark.asyncio
+async def test_toc_agent_keeps_failed_pagination_as_unresolved_frontier():
+    class FailedPageClient:
+        async def fetch_html(self, url, **kwargs):
+            raise OSError("fixture network failure")
+
+    html = '''<html><body><span>1 chapter</span>
+      <a href="/novel/episodes/1">Chapter 1</a>
+      <nav><a href="/novel?page=2">Next</a></nav>
+    </body></html>'''
+    state = await TocAgent(obscura_client=FailedPageClient(), max_iterations=2).extract_toc(
+        "https://example.com/novel", html=html
+    )
+
+    assert state["is_complete"] is False
+    assert state["pagination_urls"] == ["https://example.com/novel?page=2"]
+    assert any("Unresolved catalog page" in issue for issue in state["issues"])

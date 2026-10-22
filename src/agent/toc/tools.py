@@ -10,9 +10,10 @@ from bs4 import BeautifulSoup
 from src.agent.classifier import ChapterLink
 from src.core.obscura_client import ObscuraClient
 from src.scraper.runtime import belongs_to_observed_novel
-from src.scraper.recovery import catalog_soup
+from src.scraper.recovery import catalog_soup, CATALOG_NOISE, shared_catalog_links
 from src.scraper.telemetry import measured_sync
 from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
+from src.core.page_analysis import PageAnalysis
 
 logger = logging.getLogger("agent.toc.tools")
 
@@ -21,9 +22,50 @@ class ClaimInspector:
     """Inspects page text, meta tags, and data attributes to discover claimed chapter counts and metadata."""
 
     @staticmethod
-    def inspect(html: str, url: str) -> Tuple[Optional[int], str, Optional[str], Optional[str]]:
+    def explicit_counts(html: str, *, page_analysis=None) -> Set[int]:
+        """Read total claims, excluding recent-list headings and unrelated cards."""
+        soup = (page_analysis or PageAnalysis(html)).copy_soup()
+        for element in soup.select(CATALOG_NOISE):
+            if element.parent is not None:
+                element.decompose()
+        counts = set()
+        for element in soup.find_all(["span", "div", "p", "dt", "dd", "li", "strong"]):
+            if element.find(["div", "p", "li", "dt", "dd"]):
+                continue
+            text = element.get_text(" ", strip=True)
+            if re.fullmatch(r"(?:(?:loaded|total|number of)\s+)?(?:chapters|episodes)\s*:?", text, re.I):
+                sibling = element.find_next_sibling()
+                value = sibling.get_text(" ", strip=True) if sibling else ""
+                if re.fullmatch(r"\d[\d,]*", value):
+                    counts.add(int(value.replace(",", "")))
+            match = re.fullmatch(r"(?:(?:loaded|total|number of)\s+)?(?:chapters|episodes)\s*:\s*(\d[\d,]*)|(?:(?:total|all)\s+)?(\d[\d,]*)\s+(?:chapters|episodes)", text, re.I)
+            if match:
+                counts.add(int((match[1] or match[2]).replace(",", "")))
+        # Restrict structured totals to the novel's own record, not related works.
+        def visit(value):
+            if isinstance(value, dict):
+                for key, item in value.items():
+                    if re.fullmatch(r"publicEpisodeCount|totalEpisodes|episodeCount|chapterCount|totalChapterNum|chapterNum", key, re.I):
+                        if str(item).isdigit():
+                            counts.add(int(item))
+                    elif key.lower() not in {"related", "recommendations", "similar", "books", "comments"}:
+                        visit(item)
+            elif isinstance(value, list) and len(value) == 1:
+                visit(value[0])
+        for script in soup.select('script[type="application/ld+json"], script[type="application/json"], script#__NEXT_DATA__'):
+            try:
+                visit(json.loads(script.string or ""))
+            except (ValueError, TypeError):
+                pass
+        return {count for count in counts if count > 0}
+
+    @staticmethod
+    def inspect(html: str, url: str, *, page_analysis=None) -> Tuple[Optional[int], str, Optional[str], Optional[str]]:
         """Return (claimed_count, novel_title, author, description)."""
-        soup = catalog_soup(html)
+        source = (page_analysis or PageAnalysis(html)).copy_soup()
+        for element in source.select("nav:not([role=doc-toc]), aside, footer, form, #comments, .comments, .comment-list, .related, .recommendations, #actionbar, .sharedaddy"):
+            element.decompose()
+        soup = source
         claimed_count: Optional[int] = None
 
         # 1. Title & Meta
@@ -105,32 +147,22 @@ class ClaimInspector:
             except Exception:
                 pass
 
-        # 2. Extract Claimed Count from Embedded JSON (highest precision)
-        # Next.js / JSON-LD / Redux / WebNovel g_data
-        if claimed_count is None:
-            json_matches = re.findall(r'"(?:publicEpisodeCount|totalEpisodes|episodeCount|chapterCount|totalChapterNum|chapterNum)":\s*(\d+)', html, re.I)
-            if json_matches:
-                try:
-                    claimed_count = int(json_matches[0])
-                except ValueError:
-                    pass
+        explicit = ClaimInspector.explicit_counts(html, page_analysis=page_analysis)
+        if explicit:
+            claimed_count = max(explicit)
 
-        # 3. Extract Claimed Count from Header Cards & Page Text Badges
-        if claimed_count is None:
-            # Header cards like "Last Chapter Chapter 665" or "Latest Chapter: 665"
-            last_ch_match = re.search(r"(?:Last|Latest)\s*Chapter\s*(?:Chapter)?\s*[:\s]*(\d+)", html, re.I)
-            if last_ch_match:
-                claimed_count = int(last_ch_match.group(1))
-
+        # Chapter-number labels are not advertised entry counts.
         if claimed_count is None:
             # Patterns like 全111話 or 全 111 章
-            badge_match = re.search(r"全\s*(\d+)\s*[話章节回]", html)
+            badge_match = re.search(r"全\s*(\d+)\s*[話章节回]", soup.get_text(" ", strip=True))
             if badge_match:
                 claimed_count = int(badge_match.group(1))
 
         if claimed_count is None:
             # Patterns like "111 話" or "111 Chapters"
-            count_match = re.search(r"\b(\d{1,5})\s*(?:話|chapters?|episodes?)\b", html, re.I)
+            count_text = soup.get_text(" ", strip=True)
+            count_text = re.sub(r"\b(?:last|latest|recent|first)\s+\d+\s+(?:chapters?|episodes?)\b", "", count_text, flags=re.I)
+            count_match = re.search(r"\b(\d{1,5})\s*(?:話|chapters|episodes)\b", count_text, re.I)
             if count_match:
                 claimed_count = int(count_match.group(1))
 
@@ -170,9 +202,9 @@ class EmbeddedStateExtractor:
 
     @staticmethod
     @measured_sync("structured_data")
-    def extract(html: str, url: str) -> List[ChapterLink]:
+    def extract(html: str, url: str, *, page_analysis=None) -> List[ChapterLink]:
         """Extract chapters from embedded JSON frameworks."""
-        soup = BeautifulSoup(html, "lxml")
+        soup = (page_analysis or PageAnalysis(html)).soup
         chapters: List[ChapterLink] = []
 
         # A. Next.js Apollo Cache (__NEXT_DATA__)
@@ -312,8 +344,12 @@ class DomLinkExtractor:
 
     @staticmethod
     @measured_sync("catalog_dom")
-    def extract(html: str, url: str) -> List[ChapterLink]:
-        soup = catalog_soup(html)
+    def extract(html: str, url: str, *, page_analysis=None) -> List[ChapterLink]:
+        analysis = page_analysis or PageAnalysis(html)
+        shared = shared_catalog_links(html, url)
+        soup = analysis.copy_soup()
+        for element in soup.select("nav:not([role=doc-toc]), aside, footer, form, #comments, .comments, .comment-list, .related, .recommendations, #actionbar, .sharedaddy"):
+            element.decompose()
         chapters: List[ChapterLink] = []
         seen_urls: Set[str] = set()
 
@@ -445,7 +481,7 @@ class DomLinkExtractor:
                 continue
 
             full_url = urljoin(url, href)
-            if not belongs_to_observed_novel(url, full_url):
+            if not belongs_to_observed_novel(url, full_url) and full_url not in shared:
                 continue
 
             lower_text = text.lower()
@@ -472,8 +508,11 @@ class DomLinkExtractor:
 
                 # Parse chapter number
                 ch_num = None
+                suffix_number = re.match(r"\s*(\d+(?:\.\d+)?)\s+(?:chapters?|episodes?)\b", final_title, re.I)
+                if suffix_number:
+                    ch_num = float(suffix_number[1])
                 m_num = re.search(r"\b(?:chapter|ch|episode|ตอนที่|ตอน|第)\s*(\d+(?:\.\d+)?)\b", final_title, re.I)
-                if m_num:
+                if m_num and ch_num is None:
                     try:
                         ch_num = float(m_num.group(1))
                     except ValueError:
@@ -540,8 +579,11 @@ class PaginatedTocCrawler:
     """Discovers and crawls multi-page TOC pagination links (e.g. ?p=2..27)."""
 
     @staticmethod
-    def detect_pagination_urls(html: str, base_url: str) -> List[str]:
-        soup = catalog_soup(html)
+    def detect_pagination_urls(html: str, base_url: str, *, page_analysis=None) -> List[str]:
+        # Navigation is part of discovery evidence. `catalog_soup` intentionally
+        # strips page chrome (including <nav>), so inspect the untouched response.
+        analysis = page_analysis or PageAnalysis(html)
+        soup = analysis.soup
         cand_urls = []
         seen = {base_url}
 
@@ -612,6 +654,7 @@ class TocAuditor:
         claimed_count: Optional[int],
         html: str,
         check_pagination: bool = True,
+        *, page_analysis=None, check_expansion=True,
     ) -> Tuple[bool, float, bool, bool, List[str]]:
         """Evaluate extraction completeness.
 
@@ -624,20 +667,31 @@ class TocAuditor:
         """
         issues: List[str] = []
         count = len(chapters)
+        explicit = ClaimInspector.explicit_counts(html, page_analysis=page_analysis)
+        conflicting_counts = len(explicit) > 1 or bool(explicit and claimed_count and claimed_count not in explicit)
 
         # Check for unexpanded accordions or load more
         has_unexpanded_sections = False
-        soup = catalog_soup(html)
-        for control in soup.select("button, [role=button], [aria-expanded=false]"):
+        analysis = page_analysis or PageAnalysis(html)
+        soup = analysis.copy_soup()
+        for element in soup.select(CATALOG_NOISE):
+            element.decompose()
+        for control in soup.select("button, [role=button], [aria-expanded=false]") if check_expansion else []:
             if control.has_attr("disabled") or control.has_attr("hidden") or control.get("aria-disabled") == "true" or control.find_parent("form"):
                 continue
             if control.get("aria-expanded") == "false" or re.search(r"load more|show more|つづきを表示|もっと見る|加载更多|เพิ่มเติม", control.get_text(" ", strip=True), re.I) or (control.get("aria-expanded") != "true" and "WorkTocAccordion_trigger" in control.get("class", [])):
                 has_unexpanded_sections = True
+        if check_expansion:
+            from src.agent.toc.discovery import catalog_controls, pending_catalog_actions
+            controls = catalog_controls(html)
+            selected = {(control["selector"], option["value"]) for control in controls
+                        for option in control.get("options", []) if option["selected"]}
+            has_unexpanded_sections = has_unexpanded_sections or bool(pending_catalog_actions(controls, set(), selected))
 
         # Check for multi-page pagination
         has_pagination = False
         if check_pagination:
-            for anchor in soup.select("a[href]"):
+            for anchor in analysis.select("a[href]"):
                 if re.search(r"chapter|episode|第.+[話章]|ตอน", anchor.get_text(" ", strip=True), re.I):
                     continue
                 if re.search(r"[?&](?:page|p)=\d+|/page/\d+|[?&](?:cursor|offset|start)=", anchor["href"], re.I) or "next" in anchor.get("rel", []):
@@ -679,6 +733,10 @@ class TocAuditor:
             is_complete = False
             confidence = min(confidence, 0.6)
             issues.append("Catalog navigation remains unresolved despite advertised count coverage.")
+        if conflicting_counts:
+            is_complete = False
+            confidence = min(confidence, 0.5)
+            issues.append("Conflicting advertised chapter totals remain unresolved.")
         return is_complete, confidence, has_unexpanded_sections, has_pagination, issues
 
 
@@ -690,9 +748,10 @@ class TocSynthesizer:
         html: str,
         url: str,
         claimed_count: Optional[int] = None,
+        *, page_analysis=None,
     ) -> Tuple[List[ChapterLink], Optional[str], Optional[str]]:
         """Cluster links by container and score candidates to recover novel chapter links."""
-        soup = BeautifulSoup(html, "lxml")
+        soup = (page_analysis or PageAnalysis(html)).soup
 
         # Action button and nav link filter
         action_btn_re = re.compile(

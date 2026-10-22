@@ -33,6 +33,9 @@ class TocState(TypedDict):
     has_unexpanded_sections: bool
     has_pagination: bool
     pagination_urls: List[str]
+    # Request-aware observed API pages (including POST cursor bodies).
+    pagination_requests: List[Dict[str, Any]]
+    api_recipe_candidates: List[Dict[str, Any]]
     is_complete: bool
     
     # Self-healing synthesis
@@ -52,3 +55,7 @@ class TocState(TypedDict):
     completeness_evidence: List[str]
     crawl_issues: List[str]
     expansion_incomplete: bool
+    pending_catalog_controls: List[Dict[str, Any]]
+    # Per-source observations are additive, JSON-safe evidence records. ChapterLink
+    # remains the backwards-compatible public result shape.
+    evidence_observations: List[Dict[str, Any]]

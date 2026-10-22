@@ -41,20 +41,23 @@ AGENT_INSTRUCTIONS = {
     "toc": AgentInstructions(
         goal="Discover the requested novel's complete accessible catalog with coverage evidence.",
         skills=(
-            "Inspect claimed counts; hydrate embedded state; extract and scope DOM links; crawl observed pagination.",
+            "Inspect claimed counts; retain separately labeled embedded, DOM, API, and witnessed-navigation observations; crawl observed pagination.",
             "Expand witnessed catalog controls; deduplicate canonical URLs; audit coverage and retain unresolved findings.",
         ),
         rules=(
-            "For a browser action request, return at most eight click, scroll, or stop actions. Click selectors must come from the supplied controls and expand the catalog.",
+            "For a browser action request, return at most eight click, select, scroll, or stop actions. Selectors must come from supplied catalog controls. Select values must exactly match supplied enabled options; re-observe the DOM after each action.",
+            "Visit all witnessed catalog ranges and tabs, retaining intermediate chapter links. Unvisited options, failed controls, conflicting totals, and exhausted budgets keep coverage incomplete; unchanged counts alone do not prove closure.",
             "Use stop when there is no useful catalog expansion control. Restrict interaction to catalog expansion; navigation, sign-in, purchases, and destructive actions are outside this role.",
             "Count unique linked entries separately from chapter-number labels; a bundled chapter range is one linked entry. A highest chapter number alone does not prove coverage.",
+            "Cross-check current DOM links even when embedded data meets the advertised count or contains many entries. Equal counts with different URLs are a conflict, not proof of agreement.",
+            "Never invent chapter URLs from numeric gaps. Keep failed or pending discovery requests unresolved through audit and finalization.",
             "Respect discovery, pagination, and no-progress limits. Finalization preserves incomplete audits and access blockers.",
         ),
         completion="Claim complete only when advertised coverage is resolved or observed catalog navigation is exhausted, with no unresolved expansion or pagination.",
     ),
     "chapter_analyzer": AgentInstructions(
         goal="Choose stable CSS selectors that extract the complete chapter and its original heading.",
-        skills=("Compare heading and container candidates, selector match counts, text samples, and story boundaries.",),
+        skills=("Compare heading and container candidates, selector match counts, text samples, and story boundaries; reuse the current response snapshot analysis when supplied.",),
         rules=(
             "Choose specific selectors present in the supplied DOM. Prefer a story container enclosing all prose, prefaces, and afterwords over a partial subsection or the entire application root.",
             "Preserve mixed direct text, inline text, paragraph order, and the true ending. Short chapters can be valid; length alone does not prove completeness.",
@@ -81,6 +84,7 @@ AGENT_INSTRUCTIONS = {
             "Check that the title is the actual chapter heading and that navigation, ads, comments, and copyright footers are absent from extracted prose.",
             "Base completeness on source coverage and the actual ending, rather than literary coherence, word count alone, or the largest container. Short chapters and bundled chapter ranges can be legitimate.",
             "Treat source containers and extraction plans as proposals, not proof. Reject unexplained coverage gaps, loading skeletons, and inaccessible content.",
+            "Judge coverage against untouched source evidence independently of proposed removal selectors.",
             "Set is_accurate true only when quality_score >= {min_quality_score}, title_accurate is true, has_clutter is false, and the supplied evidence supports coverage.",
             "Report concrete defects and evidence-supported selector fixes. Keep a catalog count audit separate from chapter-content approval.",
         ),
@@ -113,6 +117,16 @@ AGENT_INSTRUCTIONS = {
         skills=("Validate recipe selectors against current HTML, route identity, and structural fingerprint; preserve layout variants.",),
         rules=("Promote approved recipes only. A stale recipe returns control to normal discovery or analysis.",),
         completion="Return a currently validated recipe hit or an explicit cache miss.",
+    ),
+    "api_recipe": AgentInstructions(
+        goal="Capture and replay only observed, safe API requests that reproduce audited catalog or chapter evidence.",
+        skills=("Bind exact witnessed endpoints, request bodies, response mappings, and representations; retain cursor requests as distinct frontiers.",),
+        rules=(
+            "Keep credentials in the active browser or HTTP session; never serialize authentication headers, cookies, tokens, or secret-bearing values.",
+            "Allow GET, handler-declared read-only POST, and one conservatively validated GraphQL query. Reject writes, subscriptions, batching, fragments, and opaque persisted queries.",
+            "Preserve paragraph order and HTML-valued chapter content. Stale, incomplete, or identity-mismatched responses fall back to browser and DOM discovery.",
+        ),
+        completion="Promote a recipe only after novel identity and the normal TOC or chapter quality checks pass; retain API provenance.",
     ),
 }
 

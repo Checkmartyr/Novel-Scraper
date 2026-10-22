@@ -81,10 +81,14 @@ def canonical_url(url: str) -> str:
     return urlunsplit((parts.scheme.lower(), parts.netloc.lower(), parts.path or "/", urlencode(query), ""))
 
 
-def fingerprint(html: str) -> str:
-    soup = BeautifulSoup(html, "lxml")
+def fingerprint(html: str, *, page_analysis=None) -> str:
+    if page_analysis is None:
+        soup = BeautifulSoup(html, "lxml")
+        matches = soup.select("h1, h2, article, main, div[id], div[class], section")
+    else:
+        matches = page_analysis.select("h1, h2, article, main, div[id], div[class], section")
     structure = [(tag.name, re.sub(r"\d+", "{id}", tag.get("id", "")), sorted(tag.get("class", [])))
-                 for tag in soup.select("h1, h2, article, main, div[id], div[class], section")]
+                 for tag in matches]
     return hashlib.sha256(json.dumps(structure, sort_keys=True).encode()).hexdigest()[:16]
 
 
@@ -128,8 +132,8 @@ def belongs_to_observed_novel(source: str, candidate: str) -> bool:
                if key.lower() in {"novel", "novelid", "book", "bookid", "storyid"})
 
 
-def access_error(html: str):
-    soup = BeautifulSoup(html, "lxml")
+def access_error(html: str, *, page_analysis=None):
+    soup = page_analysis.soup if page_analysis is not None else BeautifulSoup(html, "lxml")
     title = soup.title.get_text(" ", strip=True).lower() if soup.title else ""
     if any(re.search(r"https?://(?:router\.)?parklogic\.com/", script.get("src", "") + script.get_text())
            for script in soup.select("script")) and not soup.select_one("article p, .reader-content p, #chapter-content p"):

@@ -1,6 +1,5 @@
 import re
 from typing import List, Optional
-from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 
 from src.agent.llm import LLMClient
@@ -8,6 +7,7 @@ from src.agent.instructions import agent_system_instruction
 from src.agent.ch.analyzer import DOMStructurePlan
 from src.agent.ch.code_generator import ParserVerificationResult
 from src.config import MIN_QUALITY_SCORE
+from src.core.page_analysis import PageAnalysis
 
 class ExtractionReview(BaseModel):
     """Structured evaluation returned by the Quality Control Observer Agent."""
@@ -32,6 +32,7 @@ class ExtractionObserver:
         plan: DOMStructurePlan,
         verification: ParserVerificationResult,
         previous_interaction_id: Optional[str] = None,
+        *, page_analysis=None,
     ) -> ExtractionReview:
         """Critique extracted sample chapter using Gemini Interactions API or heuristic fallback."""
         if not verification.success:
@@ -103,13 +104,14 @@ Extracted Text Preview (Ending):
             except Exception:
                 pass  # Fall back to heuristic
 
-        return self._heuristic_review(html, plan, verification)
+        return self._heuristic_review(html, plan, verification, page_analysis=page_analysis)
 
     def _heuristic_review(
         self,
         html: str,
         plan: DOMStructurePlan,
         verification: ParserVerificationResult,
+        *, page_analysis=None,
     ) -> ExtractionReview:
         """Deterministic heuristic quality audit when LLM is unavailable."""
         issues: List[str] = []
@@ -124,7 +126,7 @@ Extracted Text Preview (Ending):
 
         title = verification.chapter_title.strip()
         preview = verification.preview_markdown
-        soup = BeautifulSoup(html, "lxml")
+        soup = (page_analysis or PageAnalysis(html)).soup
         alternative_titles = [tag.get_text(" ", strip=True) for tag in soup.select("h1, h2, [class*=chapter-title], [class*=episode-title]")]
         if not re.search(r"chapter|episode|第.+[話章]|ตอน", title, re.I) and any(re.search(r"chapter|episode|第.+[話章]|ตอน", heading, re.I) for heading in alternative_titles if heading != title):
             title_accurate = False

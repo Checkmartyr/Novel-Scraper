@@ -4,6 +4,7 @@ import time
 import re
 import os
 import socket
+import json
 from urllib.parse import urlsplit
 from email.utils import parsedate_to_datetime
 from datetime import datetime, timezone
@@ -12,6 +13,7 @@ from src.scraper.runtime import ScraperLimits, access_error
 from src.scraper.recovery import FetchRecord, before_deadline, current_scope, wordpress_resource, operation_deadline
 from pathlib import Path
 from typing import Optional, Dict, Any
+import hashlib
 from contextlib import asynccontextmanager
 from functools import wraps
 from src.scraper.telemetry import stage, stage_enabled
@@ -21,15 +23,28 @@ from bs4 import BeautifulSoup
 
 import logging
 from src.core.binary_manager import ensure_obscura
+from src.core.response_cache import ResponseCache
 from src.config import NAVIGATION_TIMEOUT, WAIT_UNTIL
 
 logger = logging.getLogger("core.obscura_client")
+
+
+def _safe_network_headers(headers):
+    """Keep useful representation metadata while dropping credential-bearing headers."""
+    sensitive = ("authorization", "auth", "cookie", "token", "secret", "api-key", "apikey",
+                 "proxy-auth", "credential", "bearer", "signature", "jwt", "session")
+    return {name: value for name, value in (headers or {}).items()
+            if not any(marker in name.lower() for marker in sensitive)}
 
 
 def measured_fetch(function):
     @wraps(function)
     async def wrapped(self, url, *args, **kwargs):
         with stage("browser" if kwargs.get("force_browser") else "retrieval") as measurement:
+            progress = getattr(self, "on_progress", None)
+            if progress:
+                progress({"type": "progress", "stage": "discovery", "current": 0, "total": 0,
+                          "message": "Rendering source" if kwargs.get("force_browser") else "Retrieving source"})
             try:
                 timeout = kwargs.get("timeout", 60 if os.getenv("NOVEL_SCRAPER_RECOVERY_MODE") == "maximum" else NAVIGATION_TIMEOUT)
                 html = await before_deadline(function(self, url, *args, **kwargs), self._deadline(timeout))
@@ -42,6 +57,9 @@ def measured_fetch(function):
                     previous.status if previous else 0, previous.headers if previous else {},
                     previous.redirects if previous else (), "browser" if kwargs.get("force_browser") else "http",
                     safe_error(error))
+                if progress:
+                    progress({"type": "progress", "stage": "discovery", "current": 0, "total": 0,
+                              "message": "Retrieval failed: " + safe_error(error)})
                 raise
     return wrapped
 
@@ -73,7 +91,8 @@ async def _is_port_open(host: str, port: int) -> bool:
 class ObscuraClient:
     """Client for driving Obscura via Playwright connected over CDP."""
 
-    def __init__(self, bin_path: Optional[Path] = None, cdp_port: Optional[int] = None):
+    def __init__(self, bin_path: Optional[Path] = None, cdp_port: Optional[int] = None,
+                 state_dir: Optional[Path] = None):
         self.bin_path = bin_path
         if cdp_port is None:
             with socket.socket() as candidate:
@@ -83,6 +102,7 @@ class ObscuraClient:
         self._server_process: Optional[asyncio.subprocess.Process] = None
         self._playwright: Optional[Playwright] = None
         self._browser: Optional[Browser] = None
+        self._catalog_browser: Optional[Browser] = None
         self._browser_loop: Optional[asyncio.AbstractEventLoop] = None
         self._lock = asyncio.Lock()
         self._cached_cookies: Dict[str, str] = {}
@@ -98,6 +118,7 @@ class ObscuraClient:
         self.fetch_history = []
         self.metrics = {"requests": 0, "rendered": 0, "browser_launches": 0, "recipe_hits": 0, "repair_calls": 0}
         self._storage_state = os.getenv("NOVEL_SCRAPER_STORAGE_STATE") or None
+        self._response_cache = ResponseCache(Path(state_dir) / "response-cache") if state_dir else None
 
     def _record_fetch(self, requested, final, status=200, headers=None, redirects=(), transport="http", error=""):
         record = FetchRecord(requested, final, status, dict(headers or {}), tuple(redirects), transport, error)
@@ -133,6 +154,45 @@ class ObscuraClient:
             canonical = url
         self._record_fetch(url, canonical, response.status_code, response.headers, transport="wordpress_api")
         return document
+
+    async def request_api_json(self, method: str, url: str, *, headers=None, json_body=None,
+                               timeout: int = 15, trusted_read_only: bool = False):
+        """Replay one witnessed GET or declared read-only POST with the current session."""
+        method = (method or "").upper()
+        if method not in {"GET", "POST"} or (method == "POST" and not trusted_read_only):
+            raise ValueError("Only observed GET and trusted read-only POST requests can be replayed")
+        from src.agent.api_recipes import sanitize_api_request
+        safe_request = sanitize_api_request(method=method, url=url, headers=headers,
+            request_body=json_body if method == "POST" else None,
+            page_url=url, trusted_read_only=trusted_read_only)
+        if not safe_request or safe_request["url"] != url:
+            raise ValueError("API request contains unsupported or secret-bearing values")
+        safe_headers = safe_request["headers"]
+        json_body = safe_request["body"]
+        client = await self.http_client()
+        await self.pace(url)
+        self.metrics["requests"] += 1
+        response = await before_deadline(client.request(method, url, headers=safe_headers,
+            json=json_body if method == "POST" else None), self._deadline(timeout))
+        self._record_fetch(url, str(response.url), response.status_code, response.headers,
+                           [str(item.url) for item in response.history], transport="api")
+        response.raise_for_status()
+        try:
+            return response.json()
+        except (ValueError, json.JSONDecodeError) as error:
+            raise ValueError("Observed API response is no longer valid JSON") from error
+
+    async def replay_api_recipe(self, recipe):
+        """Return replayed API JSON, or None so callers can fall back to browser extraction."""
+        try:
+            from src.agent.api_recipes import ApiRecipe
+            candidate = ApiRecipe.model_validate(recipe)
+            return await self.request_api_json(candidate.method, candidate.endpoint,
+                headers=candidate.request_headers, json_body=candidate.request_body,
+                trusted_read_only=candidate.trusted_read_only)
+        except Exception as error:
+            logger.debug("API recipe replay failed; browser fallback remains available: %s", error)
+            return None
 
     async def start_cdp_server(self, stealth: bool = True, allow_private_network: bool = False) -> None:
         """Start obscura serve in background if not already running."""
@@ -202,6 +262,7 @@ class ObscuraClient:
                     pass
                 self._playwright = None
                 self._browser = None
+                self._catalog_browser = None
                 self._contexts.clear()
                 self._page_limits.clear()
 
@@ -229,6 +290,59 @@ class ObscuraClient:
                     await before_deadline(page.close(), time.monotonic() + self.limits.cleanup_seconds)
                 except (Exception, asyncio.CancelledError):
                     logger.warning("Browser page cleanup did not finish within its budget")
+
+    @asynccontextmanager
+    async def get_catalog_page(self, origin="default"):
+        """Use standard DOM events when a CDP engine lacks native select APIs."""
+        async with self.get_playwright_page(origin=origin) as page:
+            try:
+                supported = await before_deadline(page.evaluate("""() => {
+                    const select = document.createElement('select');
+                    const option = document.createElement('option');
+                    return typeof option.label === 'string' && typeof select.options === 'object';
+                }"""), self._deadline(5))
+            except Exception:
+                supported = False
+            if supported is True:
+                yield page
+                return
+        try:
+            async with self._lock:
+                if self._catalog_browser is None:
+                    errors = []
+                    # Only existing browser installations; never download one.
+                    for channel in ("chrome", "msedge", None):
+                        try:
+                            self._catalog_browser = await before_deadline(
+                                self._playwright.chromium.launch(channel=channel, headless=True, timeout=10000),
+                                self._deadline(10))
+                            break
+                        except Exception as error:
+                            errors.append(type(error).__name__)
+                    if self._catalog_browser is None:
+                        raise RuntimeError("No installed standards browser is available: " + ", ".join(errors))
+                    self.metrics["browser_launches"] += 1
+                key = "catalog:" + origin
+                if key not in self._contexts:
+                    self._contexts[key] = await self._catalog_browser.new_context(storage_state=self._storage_state)
+                context = self._contexts[key]
+        except Exception as error:
+            logger.warning("Standard catalog browser unavailable: %s", type(error).__name__)
+            async with self.get_playwright_page(origin=origin) as page:
+                yield page
+            return
+        if getattr(self, "on_progress", None):
+            self.on_progress({"type": "progress", "stage": "discovery", "current": 0, "total": 0,
+                              "message": "Using installed browser for interactive catalog controls"})
+        async with self._page_limits[origin]:
+            page = await context.new_page()
+            try:
+                yield page
+            finally:
+                try:
+                    await before_deadline(page.close(), time.monotonic() + self.limits.cleanup_seconds)
+                except (Exception, asyncio.CancelledError):
+                    logger.warning("Catalog browser page cleanup exceeded its budget")
 
     async def pace(self, url: str):
         origin = urlsplit(url).netloc
@@ -329,8 +443,10 @@ class ObscuraClient:
         force_browser: bool = False,
         content_selector: Optional[str] = None,
         readiness: Optional[str] = None,
+        refresh: bool = False,
     ) -> str:
         """Fetch page HTML using Playwright over Obscura CDP, with automatic Cloudflare fallback."""
+        refresh = bool(refresh or getattr(self, "refresh_mode", False))
         if os.getenv("NOVEL_SCRAPER_RECOVERY_MODE") == "maximum" and timeout == NAVIGATION_TIMEOUT:
             timeout = max(timeout, 60)
         # Check platform handler registry for direct API or synthesized HTML bypass
@@ -350,13 +466,43 @@ class ObscuraClient:
         # Fast HTTP attempt (avoids browser overhead & ad context crashes on static novel pages)
         if not force_browser:
             client = await self.http_client()
+            request_headers = dict(client.headers)
+            session_material = "\n".join(sorted(f"{cookie.domain}|{cookie.path}|{cookie.name}|{cookie.value}"
+                                                   for cookie in client.cookies.jar))
+            session_material += "|browser-cookies:" + json.dumps(self._cached_cookies, sort_keys=True)
+            for name, value in client.headers.items():
+                if name.lower() in {"authorization", "proxy-authorization"}:
+                    session_material += f"|{name.lower()}:{hashlib.sha256(value.encode()).hexdigest()}"
+            if self._storage_state:
+                # Include the configured browser-state identity without persisting its contents.
+                session_material += "|" + str(Path(self._storage_state).resolve())
+            session = hashlib.sha256(session_material.encode("utf-8")).hexdigest()
+            cached = self._response_cache.load(url, session, request_headers) if refresh and self._response_cache else None
+            conditional = {}
+            if cached:
+                if cached.headers.get("etag"):
+                    conditional["If-None-Match"] = cached.headers["etag"]
+                if cached.headers.get("last-modified"):
+                    conditional["If-Modified-Since"] = cached.headers["last-modified"]
             for attempt in range(self.limits.request_attempts):
                 try:
                     await self.pace(url)
                     self.metrics["requests"] += 1
-                    resp = await before_deadline(client.get(url), self._deadline(timeout))
+                    resp = await before_deadline(client.get(url, headers=conditional or None), self._deadline(timeout))
                     self._record_fetch(url, str(resp.url), resp.status_code, resp.headers,
                                        [str(item.url) for item in resp.history])
+                    if resp.status_code == 304:
+                        validated = (self._response_cache.revalidate_304(url, session, request_headers, resp.headers)
+                                     if self._response_cache and cached else None)
+                        if validated:
+                            text = httpx.Response(200, content=validated.body,
+                                                  headers=validated.headers).text
+                            return text
+                        # An unmatched 304 has no usable representation; retry without validators.
+                        conditional = {}
+                        resp = await before_deadline(client.get(url), self._deadline(timeout))
+                        self._record_fetch(url, str(resp.url), resp.status_code, resp.headers,
+                                           [str(item.url) for item in resp.history])
                     if resp.status_code in (401, 403):
                         # Browser state can carry tokens in local storage instead of cookies.
                         break
@@ -381,6 +527,8 @@ class ObscuraClient:
                                 break
                             raise PermissionError(blocker)
                         if len(resp.text) > 200 and not is_cloudflare_challenge(resp.text):
+                            if self._response_cache:
+                                self._response_cache.store(url, session, request_headers, resp.headers, resp.content)
                             soup = BeautifulSoup(resp.text, "lxml")
                             story = soup.select_one(".entry-content, [itemprop=articleBody], article")
                             if wordpress_resource(resp.text, str(resp.url), resp.headers) and (not story or not story.get_text(strip=True)):
@@ -399,6 +547,9 @@ class ObscuraClient:
                         break
 
         content: Optional[str] = None
+        if getattr(self, "on_progress", None):
+            self.on_progress({"type": "progress", "stage": "discovery", "current": 0, "total": 0,
+                              "message": "HTTP evidence unavailable; trying browser fallback"})
         if not stage_enabled("browser"):
             raise RuntimeError("Browser retrieval is beyond the active recovery ceiling")
         await self.pace(url)
@@ -413,8 +564,42 @@ class ObscuraClient:
             try:
                 body = await response.body()
                 if len(body) <= 2_000_000 and len(self.network_responses) < 100:
-                    import json
-                    self.network_responses.append({"url": response.url, "data": json.loads(body)})
+                    request = response.request
+                    try:
+                        response_data = json.loads(body)
+                    except (ValueError, UnicodeDecodeError):
+                        return
+                    try:
+                        post_data = request.post_data
+                    except Exception:
+                        post_data = None
+                    try:
+                        request_headers_observed = await request.all_headers()
+                    except Exception:
+                        request_headers_observed = request.headers
+                    try:
+                        request_body = json.loads(post_data) if post_data else None
+                    except (ValueError, TypeError):
+                        request_body = post_data
+                    trusted_read_only = False
+                    if request.method.upper() == "POST":
+                        try:
+                            from src.handlers import registry
+                            handler = registry.find_handler(url)
+                            trusted_read_only = bool(handler and handler.is_read_only_api_request(
+                                request.method, response.url, _safe_network_headers(request_headers_observed),
+                                request_body))
+                        except Exception:
+                            trusted_read_only = False
+                    self.network_responses.append({
+                        "url": response.url,
+                        "data": response_data,
+                        "method": request.method,
+                        "headers": _safe_network_headers(request_headers_observed),
+                        "post_data": request_body,
+                        "source_page_url": url,
+                        "trusted_read_only": trusted_read_only,
+                    })
             except Exception:
                 pass
         def observe(response):
@@ -543,6 +728,9 @@ class ObscuraClient:
         if self._http_client:
             await self._http_client.aclose()
             self._http_client = None
+        if self._catalog_browser:
+            await self._catalog_browser.close()
+            self._catalog_browser = None
         await asyncio.gather(*(context.close() for context in self._contexts.values()), return_exceptions=True)
         self._contexts.clear()
         if self._browser and self._server_process:

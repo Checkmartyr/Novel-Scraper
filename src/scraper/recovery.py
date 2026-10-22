@@ -28,7 +28,7 @@ def operation_scope(deadline):
         yield
     finally:
         _operation_deadline.reset(token)
-CATALOG_NOISE = "nav:not([role=doc-toc]), aside, footer, form, #comments, .comments, .comment-list, .related, .recommendations, #actionbar, .sharedaddy"
+CATALOG_NOISE = "nav:not([role=doc-toc]):not([role=tablist]), aside, footer, form, #comments, .comments, .comment-list, .related, .recommendations, #actionbar, .sharedaddy"
 
 
 def catalog_soup(html):
@@ -77,11 +77,29 @@ def catalog_links(html, url):
     links = {}
     for anchor in (anchor for root in roots for anchor in root.select("a[href]")):
         label = anchor.get_text(" ", strip=True)
-        if re.search(r"(?:chapter|episode|prologue|epilogue|第|ตอน)\s*[\d:：]|^(?:prologue|epilogue)\b", label, re.I):
+        if re.search(r"(?:chapter|episode|prologue|epilogue|第|ตอน)\s*[\d:：]|^\d+(?:\.\d+)?\s+(?:chapter|episode)\b|^(?:prologue|epilogue)\b", label, re.I):
             target = canonical_url(urljoin(url, anchor["href"]))
             if urlsplit(target).scheme in {"http", "https"}:
                 links.setdefault(target, label)
     return links
+
+
+def shared_catalog_links(html, url):
+    """Admit exact witnessed links on shared chapter routes, never whole routes."""
+    soup = catalog_soup(html)
+    labeled = catalog_links(html, url)
+    result = set()
+    for anchor in soup.select("a[href]"):
+        target = canonical_url(urljoin(url, anchor["href"]))
+        if target not in labeled or host(target) != host(url):
+            continue
+        if not re.fullmatch(r"/(?:book/|novel/|series/)?(?:chapter|episode|read)/[^/]+/?", urlsplit(target).path, re.I):
+            continue
+        context = [anchor, *list(anchor.parents)[:3]]
+        if any(re.search(r"chapter|episode|\btoc\b", " ".join(node.get("class", [])) + " " + node.get("id", ""), re.I)
+               or node.get("role") == "doc-toc" for node in context if getattr(node, "attrs", None) is not None):
+            result.add(target)
+    return result
 
 
 def _chapter_matches(label, html):
@@ -135,11 +153,12 @@ class NovelScope:
         self.observed.add(marker)
         self.catalogs.add(canonical_url(url))
         links = catalog_links(html, url)
+        shared = shared_catalog_links(html, url)
         self.observed_links.update(links)
         foreign = {}
         for target, label in links.items():
             if host(target) == host(url):
-                if belongs_to_observed_novel(url, target):
+                if belongs_to_observed_novel(url, target) or target in shared:
                     self.approved_links.add(target)
             elif target not in self.approved_links:
                 foreign.setdefault(host(target), []).append((target, label))

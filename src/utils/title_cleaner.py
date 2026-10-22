@@ -90,6 +90,9 @@ def clean_chapter_title(raw_title: str) -> str:
 
 def extract_chapter_number(title: str, url: str = "") -> Optional[float]:
     """Extract numeric chapter indicator from chapter title or URL path."""
+    suffix = re.match(r"\s*(\d+(?:\.\d+)?)\s+(?:chapters?|episodes?)\b", title, re.I)
+    if suffix:
+        return float(suffix[1])
     # 1. Search title for explicit chapter tokens
     m = re.search(r"\b(?:chapter|ch[\.-]?|ep[\.-]?|episode|ตอนที่|ตอน|第)\s*(\d+(?:\.\d+)?)\b", title, re.I)
     if m:
@@ -142,9 +145,11 @@ def extract_chapter_number(title: str, url: str = "") -> Optional[float]:
 
 def chapter_number_bounds(title: str):
     """A linked post can represent a range; its final label is not an entry count."""
-    match = re.search(r"(?:chapter|ch[.-]?|episode|ep[.-]?|ตอนที่|ตอน|第)\s*(\d+(?:\.\d+)?)(?:\s*[-–—]\s*(\d+(?:\.\d+)?))?", title, re.I)
+    match = re.match(r"\s*(\d+(?:\.\d+)?)(?:\s*[-–—]\s*(\d+(?:\.\d+)?))?\s+(?:chapters?|episodes?)\b", title, re.I)
     if not match:
-        return None
+        match = re.search(r"(?:chapter|ch[.-]?|episode|ep[.-]?|ตอนที่|ตอน|第)\s*(\d+(?:\.\d+)?)(?:\s*[-–—]\s*(\d+(?:\.\d+)?))?", title, re.I)
+        if not match:
+            return None
     start = float(match[1])
     end = float(match[2]) if match[2] else start
     return start, end
