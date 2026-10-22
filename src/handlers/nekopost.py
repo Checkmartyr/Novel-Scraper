@@ -260,5 +260,17 @@ class NekopostHandler(BasePlatformHandler):
     def matches(self, url: str) -> bool:
         return is_nekopost_url(url)
 
+    def is_read_only_api_request(self, method: str, url: str, headers: dict, body: Any) -> bool:
+        """Nekopost's catalog and chapter detail endpoints only read records."""
+        from urllib.parse import urlsplit
+        if method.upper() != "POST" or urlsplit(url).hostname not in {"www.nekopost.net", "nekopost.net"}:
+            return False
+        path = urlsplit(url).path.rstrip("/")
+        if path == "/api/project/detail2":
+            return isinstance(body, dict) and set(body) == {"pid"} and isinstance(body["pid"], (int, str))
+        if path == "/handler/cinfo":
+            return isinstance(body, dict) and set(body) == {"p", "c"} and all(isinstance(body[key], (int, str)) for key in ("p", "c"))
+        return False
+
     async def handle(self, url: str, obscura_client: Optional[Any] = None) -> Optional[str]:
         return await handle_nekopost_url(url)

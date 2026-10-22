@@ -12,6 +12,7 @@ from src.agent.llm import LLMClient
 from src.agent.instructions import agent_system_instruction
 from src.utils.title_cleaner import clean_chapter_title, detect_and_fix_reverse_order
 from src.utils.novel_url import belongs_to_recipe_novel, recipe_page_kind, toc_url_from_recipe
+from src.core.page_analysis import PageAnalysis, call_with_page_analysis
 
 logger = logging.getLogger("agent.classifier")
 
@@ -63,9 +64,9 @@ class PageClassifier:
         cleaned = re.split(r"\s*[-|–]\s*(?:Table of Contents|TOC|Index|目次|全話一覧|カクヨム|小説家になろう|Novel Updates|Syosetu)", cleaned, flags=re.I)[0]
         return cleaned.strip() or raw_title.strip()
 
-    def _extract_page_summary(self, html: str, base_url: str) -> dict:
+    def _extract_page_summary(self, html: str, base_url: str, *, page_analysis=None) -> dict:
         """Condense HTML into metadata and candidate links to save LLM tokens."""
-        soup = BeautifulSoup(html, "lxml")
+        soup = (page_analysis or PageAnalysis(html)).copy_soup()
 
         # Remove non-content tags
         for tag in soup(["script", "style", "svg", "noscript", "iframe"]):
@@ -118,9 +119,9 @@ class PageClassifier:
             "sample_links": prioritized_links[:150],  # sample candidate links prioritizing chapters
         }
 
-    def _extract_apollo_chapters(self, url: str, html: str) -> List[ChapterLink]:
+    def _extract_apollo_chapters(self, url: str, html: str, *, page_analysis=None) -> List[ChapterLink]:
         """Extract complete chapter list from Next.js Apollo state if present (e.g. Kakuyomu)."""
-        soup = BeautifulSoup(html, "lxml")
+        soup = (page_analysis or PageAnalysis(html)).soup
         next_data_script = soup.find("script", id="__NEXT_DATA__")
         if not next_data_script or not next_data_script.string:
             return []
@@ -161,7 +162,7 @@ class PageClassifier:
         return []
 
     @staticmethod
-    def _matching_book_metadata(html: str, url: str) -> Optional[dict]:
+    def _matching_book_metadata(html: str, url: str, *, page_analysis=None) -> Optional[dict]:
         """Find structured Book metadata that identifies this exact catalog page."""
         def visit(value):
             if isinstance(value, list):
@@ -179,7 +180,7 @@ class PageClassifier:
                     return visit(value["@graph"])
             return None
 
-        soup = BeautifulSoup(html, "lxml")
+        soup = (page_analysis or PageAnalysis(html)).soup
         for script in soup.select('script[type="application/ld+json"]'):
             try:
                 found = visit(json.loads(script.string or script.get_text()))
@@ -189,8 +190,9 @@ class PageClassifier:
                 return found
         return None
 
-    async def classify(self, url: str, html: str) -> ClassificationResult:
+    async def classify(self, url: str, html: str, *, page_analysis=None) -> ClassificationResult:
         """Classify page using Gemini with fallback to deterministic heuristic parser."""
+        page_analysis = page_analysis or PageAnalysis(html)
         recipe = None
         page_kind = None
         derived_toc_url = None
@@ -237,8 +239,7 @@ class PageClassifier:
                         )
 
                 # Check if this page is a single chapter page
-                soup = BeautifulSoup(html, "lxml")
-                has_content = bool(soup.select_one(recipe.chapter_config.content_selector))
+                has_content = bool(page_analysis.select_one(recipe.chapter_config.content_selector))
                 if (has_content and page_kind != "TOC" and
                         (page_kind == "CHAPTER" or recipe.chapter_config.content_selector != "body")):
                     ch_verif = domain_memory.test_chapter_recipe(recipe, html)
@@ -255,30 +256,31 @@ class PageClassifier:
         except Exception as e:
             logger.debug(f"Domain memory classifier bypass check failed: {e}")
 
-        book_metadata = self._matching_book_metadata(html, url)
+        book_metadata = self._matching_book_metadata(html, url, page_analysis=page_analysis)
         catalog_render_error = None
         catalog_claimed_count = None
         if book_metadata:
             from src.agent.toc.tools import ClaimInspector, DomLinkExtractor
 
             catalog_claimed_count, _, _, _ = ClaimInspector.inspect(html, url)
-            observed_count = len(DomLinkExtractor.extract(html, url))
+            observed_count = len(DomLinkExtractor.extract(html, url, page_analysis=page_analysis))
             if observed_count < 4 or (catalog_claimed_count and observed_count < catalog_claimed_count):
                 browser = self.obscura or self.toc_agent.obscura
                 try:
                     html = await browser.fetch_html(
                         url, force_browser=True, wait_until="domcontentloaded", readiness="catalog"
                     )
+                    page_analysis = PageAnalysis(html)
                 except Exception as error:
                     catalog_render_error = error
                     logger.warning("Could not render sparse Book catalog %s: %s", url, error)
                 else:
-                    book_metadata = self._matching_book_metadata(html, url) or book_metadata
+                    book_metadata = self._matching_book_metadata(html, url, page_analysis=page_analysis) or book_metadata
 
-        summary = self._extract_page_summary(html, url)
-        apollo_chapters = self._extract_apollo_chapters(url, html)
+        summary = self._extract_page_summary(html, url, page_analysis=page_analysis)
+        apollo_chapters = self._extract_apollo_chapters(url, html, page_analysis=page_analysis)
 
-        deterministic = self._heuristic_classify(url, html, summary)
+        deterministic = self._heuristic_classify(url, html, summary, page_analysis=page_analysis)
         if apollo_chapters or (deterministic.page_type == "TOC" and len(deterministic.chapter_links) >= 2):
             result = deterministic
             if apollo_chapters:
@@ -305,7 +307,7 @@ Sample links found ({min(len(summary['sample_links']), 150)} of {summary['total_
 
                 # Sanitize chapter links
                 witnessed = {canonical_url(urljoin(url, anchor["href"]))
-                             for anchor in BeautifulSoup(html, "lxml").select("a[href]")}
+                             for anchor in page_analysis.select("a[href]")}
                 if result.chapter_links:
                     seen_urls = set()
                     cleaned_links = []
@@ -334,10 +336,10 @@ Sample links found ({min(len(summary['sample_links']), 150)} of {summary['total_
 
             except Exception as e:
                 logger.warning(f"LLM classification failed: {e}. Falling back to heuristic classifier.")
-                result = self._heuristic_classify(url, html, summary)
+                result = self._heuristic_classify(url, html, summary, page_analysis=page_analysis)
         else:
             # Heuristic fallback
-            result = self._heuristic_classify(url, html, summary)
+            result = self._heuristic_classify(url, html, summary, page_analysis=page_analysis)
 
         if book_metadata:
             result.page_type = "TOC"
@@ -359,7 +361,8 @@ Sample links found ({min(len(summary['sample_links']), 150)} of {summary['total_
         # Autonomous TOC refinement via LangGraph agent
         if result.page_type == "TOC":
             try:
-                toc_state = await self.toc_agent.extract_toc(url, html=html)
+                toc_state = await call_with_page_analysis(
+                    self.toc_agent.extract_toc, url, html=html, page_analysis=page_analysis)
                 if toc_state:
                     result.toc_state = toc_state
                     if toc_state.get("extracted_chapters"):
@@ -421,9 +424,9 @@ Sample links found ({min(len(summary['sample_links']), 150)} of {summary['total_
 
         return result
 
-    def _heuristic_classify(self, url: str, html: str, summary: dict) -> ClassificationResult:
+    def _heuristic_classify(self, url: str, html: str, summary: dict, *, page_analysis=None) -> ClassificationResult:
         """Deterministic heuristic fallback when LLM is unavailable."""
-        soup = BeautifulSoup(html, "lxml")
+        soup = (page_analysis or PageAnalysis(html)).copy_soup()
         page_title = summary["title"]
 
         # Look for chapter patterns in links

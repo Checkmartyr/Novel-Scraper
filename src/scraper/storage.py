@@ -77,6 +77,7 @@ class NovelStorage:
         chapter_title: str,
         chapter: ExtractedChapter,
         source_url: str,
+        content_sha256: Optional[str] = None,
     ) -> Path:
         """Save chapter as Markdown file with clean raw text or optional YAML frontmatter."""
         if not chapter.success or chapter.is_paywalled:
@@ -147,6 +148,7 @@ class NovelStorage:
         # Write the source receipt before the file so a crash after replacement is recoverable.
         previous_hash = hashlib.sha256(filepath.read_bytes()).hexdigest() if filepath.exists() else None
         self.sources[source_key] = {"file": filepath.name, "sha256": hashlib.sha256(full_text.encode("utf-8")).hexdigest(),
+                                    "content_sha256": content_sha256,
                                     "state": "pending", "previous_sha256": previous_hash}
         self._source_owners[filepath.name] = source_key
         atomic_json(self.sources_dir / (hashlib.sha256(source_key.encode()).hexdigest() + ".json"),

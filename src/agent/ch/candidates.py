@@ -9,6 +9,7 @@ from functools import lru_cache
 
 from bs4 import BeautifulSoup
 import soupsieve
+from src.core.page_analysis import PageAnalysis
 
 
 AD_CONTAINER_SELECTORS = ".ad-banner, .adsbygoogle, [data-ad-slot], .adsterra-banner-container"
@@ -45,17 +46,45 @@ def title_selector(soup):
     return selector_for(preferred, soup) if preferred is not None else "h1"
 
 
-def cleaned_region(element):
+def _text_excluding(element, excluded_ids, separator=" "):
+    """Read prose without changing the witnessed source tree."""
+    chunks = []
+    def visit(node):
+        if id(node) in excluded_ids:
+            return
+        for child in getattr(node, "children", ()):
+            if getattr(child, "name", None) is None:
+                value = str(child).strip()
+                if value:
+                    chunks.append(value)
+            elif child.name == "br":
+                chunks.append(" ")
+            else:
+                visit(child)
+    visit(element)
+    return separator.join(chunks)
+
+
+def _paragraphs_excluding(element, excluded_ids):
+    """Extract paragraph-like blocks from the original tree, excluding noise."""
+    from src.agent.ch.code_generator import extract_paragraphs
+    # Build a small isolated copy only when excluded descendants exist. This
+    # keeps the source evidence independent while avoiding serializing every
+    # candidate subtree during ranking.
+    if not any(id(node) in excluded_ids for node in element.descendants if getattr(node, "name", None)):
+        return extract_paragraphs(element)
     clone = BeautifulSoup(str(element), "lxml")
-    for noise in clone.select(NOISE):
-        noise.decompose()
-    return clone
+    copied = clone.find(element.name)
+    for node in list(copied.select(NOISE)) if copied else []:
+        node.decompose()
+    return extract_paragraphs(copied) if copied else []
 
 
-def region_signature(element):
+def region_signature(element, *, page_analysis=None):
     text = element.get_text(" ", strip=True)
-    links = sum(len(link.get_text(" ", strip=True)) for link in element.select("a"))
-    lengths = sorted(len(p.get_text(" ", strip=True)) for p in element.select("p"))
+    select = page_analysis.select_from if page_analysis is not None else lambda root, selector: root.select(selector)
+    links = sum(len(link.get_text(" ", strip=True)) for link in select(element, "a"))
+    lengths = sorted(len(p.get_text(" ", strip=True)) for p in select(element, "p"))
     heading = element.find_previous(["h1", "h2", "h3"])
     semantic = lambda node: {key: str(node[key])[:100] for key in ("role", "itemprop", "aria-label") if node.get(key)}
     return {"tag": element.name, "classes": list(element.get("class", [])),
@@ -85,27 +114,38 @@ class ContentCandidate:
     signature: dict
 
 
-def rank_candidates(html, limit=6, previous_signature=None):
+def rank_candidates(html, limit=6, previous_signature=None, *, page_analysis=None):
     # Repeated plans audit identical source; retain only a small number of views.
+    if page_analysis is not None:
+        signature_json = json.dumps(previous_signature, sort_keys=True)
+        ranked = page_analysis.derive(
+            ("chapter_candidates", limit, signature_json),
+            lambda: _rank_candidates_from_analysis(page_analysis, limit, signature_json))
+        return copy.deepcopy(list(ranked))
     return copy.deepcopy(list(_rank_candidates(html, limit, json.dumps(previous_signature, sort_keys=True))))
 
 
 @lru_cache(maxsize=12)
 def _rank_candidates(html, limit, signature_json):
+    return _rank_candidates_from_analysis(PageAnalysis(html), limit, signature_json)
+
+
+def _rank_candidates_from_analysis(page_analysis, limit, signature_json):
     previous_signature = json.loads(signature_json)
-    soup = BeautifulSoup(html, "lxml")
+    soup = page_analysis.soup
     title = title_selector(soup)
     noise_ids = {id(element) for element in soup.select(NOISE)}
     ranked = []
-    for element in soup.select("article, main, section, div, body"):
+    for element in page_analysis.select("article, main, section, div, body"):
         if id(element) in noise_ids or any(id(parent) in noise_ids for parent in element.parents):
             continue
-        clone = cleaned_region(element)
-        text = clone.get_text(" ", strip=True)
-        if not text or clone.select_one(".skeleton, [aria-busy=true]"):
+        local_noise = {id(node) for node in page_analysis.select_from(element, NOISE)}
+        excluded = noise_ids | local_noise
+        text = _text_excluding(element, excluded).strip()
+        if not text or page_analysis.select_one_from(element, ".skeleton, [aria-busy=true]"):
             continue
-        paragraphs = clone.select("p")
-        signature = region_signature(element)
+        paragraphs = [node for node in page_analysis.select_from(element, "p") if id(node) not in excluded]
+        signature = region_signature(element, page_analysis=page_analysis)
         prose = sum(len(p.get_text(" ", strip=True)) for p in paragraphs)
         metadata = " ".join([element.get("id", ""), *element.get("class", [])])
         score = math.log1p(len(text)) + min(len(paragraphs), 30) * 0.35
@@ -131,35 +171,35 @@ def _rank_candidates(html, limit, signature_json):
     return tuple(ranked[:limit])
 
 
-def independent_evidence(html, extracted_text):
+def independent_evidence(html, extracted_text, *, page_analysis=None):
     """Use ranked source regions, never the plan's removal selectors, as evidence."""
     from src.agent.ch.code_generator import extract_paragraphs
-    candidates = rank_candidates(html, limit=1)
+    page_analysis = page_analysis or PageAnalysis(html)
+    candidates = rank_candidates(html, limit=1, page_analysis=page_analysis)
     if not candidates:
         return "", [], ["Source story is empty, inaccessible, or still loading"]
-    soup = BeautifulSoup(html, "lxml")
-    region = soup.select_one(candidates[0].selector)
+    soup = page_analysis.soup
+    region = page_analysis.select_one(candidates[0].selector)
     # Inspect adjacent prose in the nearest article/story wrapper before any
     # proposed removal rules. Never cross another article or a chapter heading.
     for parent in list(region.parents)[:3]:
         if parent.name not in {"article", "main", "section", "div"} or parent.get("id") in {"root", "app", "__next"}:
             break
-        if parent.select_one("article") and region.name != "article":
+        if page_analysis.select_one_from(parent, "article") and region.name != "article":
             break
-        clone = cleaned_region(parent)
-        content = clone.get_text(" ", strip=True)
-        linked = sum(len(anchor.get_text(" ", strip=True)) for anchor in clone.select("a"))
-        headings = [heading for heading in clone.select("h1, h2") if re.search(r"chapter|episode|prologue|epilogue|第|ตอน", heading.get_text(), re.I)]
+        excluded = {id(node) for node in page_analysis.select_from(parent, NOISE)}
+        content = _text_excluding(parent, excluded).strip()
+        linked = sum(len(anchor.get_text(" ", strip=True)) for anchor in page_analysis.select_from(parent, "a") if id(anchor) not in excluded)
+        headings = [heading for heading in page_analysis.select_from(parent, "h1, h2") if id(heading) not in excluded and re.search(r"chapter|episode|prologue|epilogue|第|ตอน", heading.get_text(), re.I)]
         if len(headings) > 1 or linked / max(1, len(content)) > 0.2:
             break
-        root = clone.find(parent.name)
-        adjacent = extract_paragraphs(root) if root else []
+        adjacent = _paragraphs_excluding(parent, excluded)
         if adjacent and len("\n\n".join(adjacent)) > len(region.get_text(" ", strip=True)):
             region = parent
         if parent.name in {"article", "main"}:
             break
-    clone = cleaned_region(region)
-    source = extract_paragraphs(clone.find(region.name) or clone)
+    excluded = {id(node) for node in page_analysis.select_from(region, NOISE)}
+    source = _paragraphs_excluding(region, excluded)
     normalized = lambda value: re.sub(r"\s+", " ", value).strip()
     extracted = [normalized(part) for part in extracted_text.split("\n\n") if normalized(part)]
     expected = [normalized(part) for part in source if normalized(part)]
@@ -187,8 +227,8 @@ def independent_evidence(html, extracted_text):
     return selector_for(region, soup), source, list(dict.fromkeys(issues))
 
 
-def readiness_selector(html, proposed=None):
-    soup = BeautifulSoup(html, "lxml")
+def readiness_selector(html, proposed=None, *, page_analysis=None):
+    soup = page_analysis.soup if page_analysis is not None else BeautifulSoup(html, "lxml")
     # An unhydrated story can lose to visible navigation in a rejected plan.
     # Prefer witnessed story regions, even while their prose is still loading.
     for selector in (".reader-content", "#chapter-content", "#novel_honbun", ".entry-content", "[itemprop=articleBody]"):

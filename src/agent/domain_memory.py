@@ -23,6 +23,7 @@ from src.agent.ch import DOMStructurePlan, ChapterCodeGenerator, ExtractedChapte
 from src.agent.classifier import ChapterLink
 from src.utils.novel_url import belongs_to_recipe_novel
 from src.agent.ch.candidates import structural_signature
+from src.agent.api_recipes import ApiRecipe
 
 logger = logging.getLogger("agent.domain_memory")
 
@@ -67,6 +68,7 @@ class DomainRecipe(BaseModel):
     sample_chapter_url: str = ""
     toc_config: TocRecipeConfig
     chapter_config: ChapterRecipeConfig
+    api_recipes: List[ApiRecipe] = Field(default_factory=list)
     times_used: int = 0
     last_used_at: Optional[str] = None
 
@@ -163,6 +165,41 @@ class DomainMemoryManager:
             recipe.times_used += 1
             recipe.last_used_at = datetime.now(timezone.utc).isoformat()
             self._save_recipe_files(recipe)
+
+    def promote_api_recipe(self, domain_or_url: str, api_recipe: ApiRecipe, *,
+                           toc_complete: bool = False, novel_identity_verified: bool, quality_score: float,
+                           minimum_quality: float = 0.85) -> bool:
+        """Persist an observed API recipe after TOC, identity, and chapter-quality gates."""
+        if not toc_complete or not novel_identity_verified or quality_score < minimum_quality:
+            return False
+        try:
+            candidate = ApiRecipe.model_validate(api_recipe)
+        except Exception:
+            return False
+        domain = self.normalize_domain(domain_or_url)
+        if not domain:
+            return False
+        existing = self.get_recipe(domain)
+        if existing is None:
+            now = datetime.now(timezone.utc).isoformat()
+            default_plan = DOMStructurePlan(title_selector="h1", content_selector="body")
+            chapter_config = ChapterRecipeConfig(title_selector="h1", content_selector="body", quality_score=0.5,
+                code_script=ChapterCodeGenerator(default_plan).generate_code_string())
+            toc_config = TocRecipeConfig(strategy="dom_heuristic")
+            toc_config.code_script = self.generate_toc_script(toc_config, domain)
+            existing = DomainRecipe(domain=domain, created_at=now, updated_at=now,
+                sample_toc_url=candidate.page_evidence, sample_chapter_url="",
+                toc_config=toc_config, chapter_config=chapter_config)
+        # Preserve distinct cursor/body variants, but replace a recipe for the
+        # same exact observed request so stale mappings do not accumulate.
+        identity = (candidate.method, candidate.endpoint, json.dumps(candidate.request_body, sort_keys=True))
+        existing.api_recipes = [r for r in existing.api_recipes
+            if (r.method, r.endpoint, json.dumps(r.request_body, sort_keys=True)) != identity]
+        existing.api_recipes.append(candidate)
+        existing.updated_at = datetime.now(timezone.utc).isoformat()
+        self._save_recipe_files(existing)
+        self._cache[domain] = existing
+        return True
 
     def generate_toc_script(self, toc_config: TocRecipeConfig, domain: str) -> str:
         """Generate standalone Python code for extract_toc(html, base_url)."""

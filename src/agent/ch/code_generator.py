@@ -1,11 +1,11 @@
 import re
 from typing import Optional, Dict, Any, List
-from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 
 from src.agent.ch.analyzer import DOMStructurePlan
 from src.utils.title_cleaner import clean_chapter_title, clean_chapter_content
 from src.agent.ch.candidates import AD_CONTAINER_SELECTORS
+from src.core.page_analysis import PageAnalysis
 
 DEFAULT_NOISE_SELECTORS = [
     "script", "style", "noscript", "rt", "rp",
@@ -43,7 +43,7 @@ class ParserVerificationResult(BaseModel):
     coverage_issues: List[str] = Field(default_factory=list)
 
 
-def extract_paragraphs(container):
+def extract_paragraphs(container, excluded_ids=None):
     """Preserve mixed direct prose, inline markup, paragraph blocks, and line breaks."""
     paragraphs, current = [], []
     def flush():
@@ -52,7 +52,11 @@ def extract_paragraphs(container):
             paragraphs.append(text)
         current.clear()
     def walk(node):
+        if excluded_ids and id(node) in excluded_ids:
+            return
         for child in node.children:
+            if excluded_ids and id(child) in excluded_ids:
+                continue
             name = getattr(child, "name", None)
             if name is None:
                 current.append(str(child))
@@ -67,6 +71,22 @@ def extract_paragraphs(container):
     walk(container)
     flush()
     return paragraphs
+
+
+def _text_excluding(container, excluded_ids):
+    pieces = []
+    def walk(node):
+        if id(node) in excluded_ids:
+            return
+        for child in getattr(node, "children", ()):
+            if id(child) in excluded_ids:
+                continue
+            if getattr(child, "name", None) is None:
+                pieces.append(str(child))
+            else:
+                walk(child)
+    walk(container)
+    return "".join(pieces).strip()
 
 class ChapterCodeGenerator:
     """Generates and executes deterministic Python extraction code from DOM plan."""
@@ -146,20 +166,20 @@ def extract_chapter(html: str) -> dict:
 '''
         return code
 
-    def extract(self, html: str) -> ExtractedChapter:
+    def extract(self, html: str, *, page_analysis: Optional[PageAnalysis] = None) -> ExtractedChapter:
         """Execute extraction directly on HTML using the configured plan."""
-        soup = BeautifulSoup(html, "lxml")
+        page_analysis = page_analysis or PageAnalysis(html)
         locked = any(not node.get("hidden") and node.get("aria-hidden") != "true"
                      and "display:none" not in node.get("style", "").replace(" ", "")
                      and "hidden" not in node.get("class", [])
-                     for node in soup.select(".chapter-locked, .paywall-lock, .unlock-chapter"))
+                     for node in page_analysis.select(".chapter-locked, .paywall-lock, .unlock-chapter"))
         
         # Remove clutter and aggregator noise
+        excluded_ids = set()
         all_remove = set(self.plan.remove_selectors or []) | set(DEFAULT_NOISE_SELECTORS)
         for sel in all_remove:
             try:
-                for tag in soup.select(sel):
-                    tag.decompose()
+                excluded_ids.update(id(tag) for tag in page_analysis.select(sel))
             except Exception:
                 pass
                 
@@ -167,15 +187,15 @@ def extract_chapter(html: str) -> dict:
         title = "Chapter"
         if self.plan.title_selector:
             try:
-                title_el = soup.select_one(self.plan.title_selector)
+                title_el = page_analysis.select_one(self.plan.title_selector)
                 if title_el:
-                    title = title_el.get_text(strip=True)
+                    title = _text_excluding(title_el, excluded_ids).strip()
             except Exception:
                 for fb in ["h1", "h2", ".chapter-title", ".title"]:
                     try:
-                        title_el = soup.select_one(fb)
+                        title_el = page_analysis.select_one(fb)
                         if title_el:
-                            title = title_el.get_text(strip=True)
+                            title = _text_excluding(title_el, excluded_ids).strip()
                             break
                     except Exception:
                         pass
@@ -184,7 +204,7 @@ def extract_chapter(html: str) -> dict:
         # Content containers: select all matches and filter to top-level containers
         content_elements = []
         try:
-            matched = soup.select(self.plan.content_selector)
+            matched = page_analysis.select(self.plan.content_selector)
             content_elements = [
                 el for el in matched
                 if not any(other is not el and other in el.parents for other in matched)
@@ -204,7 +224,7 @@ def extract_chapter(html: str) -> dict:
             
         paragraphs: List[str] = []
         for container in content_elements:
-            paragraphs.extend(extract_paragraphs(container))
+            paragraphs.extend(extract_paragraphs(container, excluded_ids))
 
         # Filter aggregator disclaimers and detect paywalls
         clean_paras, is_paywalled = clean_chapter_content(paragraphs)
@@ -232,12 +252,14 @@ def extract_chapter(html: str) -> dict:
             is_paywalled=is_paywalled
         )
 
-    def test_and_verify(self, sample_html: str, result: Optional[ExtractedChapter] = None) -> ParserVerificationResult:
+    def test_and_verify(self, sample_html: str, result: Optional[ExtractedChapter] = None, *, page_analysis: Optional[PageAnalysis] = None) -> ParserVerificationResult:
         """Test extraction against sample chapter and produce preview."""
-        result = result or self.extract(sample_html)
+        page_analysis = page_analysis or PageAnalysis(sample_html)
+        result = result or self.extract(sample_html, page_analysis=page_analysis)
         code_str = self.generate_code_string()
         from src.agent.ch.candidates import independent_evidence
-        source_selector, source_paragraphs, coverage_issues = independent_evidence(sample_html, result.content_markdown)
+        source_selector, source_paragraphs, coverage_issues = independent_evidence(
+            sample_html, result.content_markdown, page_analysis=page_analysis)
         source_text = "\n\n".join(source_paragraphs)
         midpoint = max(0, len(source_text)//2 - 500)
         
@@ -261,7 +283,7 @@ def extract_chapter(html: str) -> dict:
             preview_markdown=preview or "Extraction yielded empty content.",
             generated_code=code_str,
             error="Chapter is locked or contains a premium teaser" if result.is_paywalled else result.error,
-            source_excerpt=BeautifulSoup(sample_html, "lxml").get_text(" ", strip=True)[:1200],
+            source_excerpt=page_analysis.text()[:1200],
             paragraph_count=len(result.content_markdown.split("\n\n")),
             char_count=result.char_count,
             source_head=source_text[:1000],
